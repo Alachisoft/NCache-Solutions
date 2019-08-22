@@ -6,7 +6,7 @@ Suppose you have a process that is scheduled to run every 24 hours and you are u
 
 NCache allows you to make your cache intelligent to deal with these problems along with its distributed nature. By using NCache server side features such as Read-Through Provider, Write Through Provider and Cache Startup Loader, you can make a persistent cache with NCache. In this article, I will show you how you can use these features to make our cache persistent.
 
-![Persistent Cache](resources/architecture.jpg)
+![Persistent Cache](Resources/architecture.jpg)
 
 The diagram represents the overall structure of this solution. `IPersistenceProvider` is the interface which is used by all NCache providers that are deployed with NCache, like *PersistenceReadThruProvider* *PersistenceWriteThruProvider* and *PersistenceStartupLoader*.
 
@@ -32,7 +32,7 @@ Scripts for creating database with all the required fields is provided with this
 8. `ItemPriority` is an `Enum` and can be stored in to the database as an `int` or `tinyint`.
 9. `InsertionTime` is a `DateTime` when item is added in to the cache.
 
-All these parameters are passed to our provider and provider will persist these attribute to persistent store along with the cache item, so next time when the item is fetched from database then these attributes will automatically be added and configured with cache.Other attributes can also be added in a similar way.[Sql Scripts](resources/create_db.sql) for creating database.
+All these parameters are passed to our provider and provider will persist these attribute to persistent store along with the cache item, so next time when the item is fetched from database then these attributes will automatically be added and configured with cache.Other attributes can also be added in a similar way.[Sql Scripts](Resources/create_db.sql) for creating database.
 
 ```sql
 /*    ==Scripting Parameters==
@@ -295,24 +295,24 @@ PersistenceReadThruProvider, PersistenceWriteThruProvider and PersistenceStartup
 
 2. `ConnectionString` is to be provided as providers params, you can change our database by changing the connection string provided by the params without any code change or assembly deployments.
 
-![Providers for NCache](resources/webmanager_writethru_configurations.jpg)
+![Providers for NCache](Resources/webmanager_writethru_configurations.jpg)
 
 Please refer to the following links to learn how to configure the providers in NCache:
-- [ReadThruProvider](http://www.alachisoft.com/resources/docs/ncache/admin-guide/read-through-provider.html) 
-- [WriteThruProvider](http://www.alachisoft.com/resources/docs/ncache/admin-guide/write-through-provider.html)
-- [CacheStartupLoader](http://www.alachisoft.com/resources/docs/ncache/admin-guide/configure-cache-startup-loader.html) 
+- [ReadThruProvider](http://www.alachisoft.com/Resources/docs/ncache/admin-guide/read-through-provider.html) 
+- [WriteThruProvider](http://www.alachisoft.com/Resources/docs/ncache/admin-guide/write-through-provider.html)
+- [CacheStartupLoader](http://www.alachisoft.com/Resources/docs/ncache/admin-guide/configure-cache-startup-loader.html) 
 
 # Building the Providers
 
 ##  Build
 Building providers is quite easy, providers are written in .NET Standard 2.0 and can be used with .Net Core Server or .NET Framework Server. We need to provide all the assemblies deployed with the cache. This solution has two projects:
 
-1. *Alachisoft.NCache.PersistenceProvider* project contains the implementation of IReadThru provider, IWriteThru provider and ICacheLoader. After building this project, you can deploy all the providers with cache as explained in [NCache Administrator's Guide](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html). Once these providers are deployed, you can easily change the database layer by just changing the configuration.
+1. *Alachisoft.NCache.PersistenceProvider* project contains the implementation of IReadThru provider, IWriteThru provider and ICacheLoader. After building this project, you can deploy all the providers with cache as explained in [NCache Administrator's Guide](https://www.alachisoft.com/Resources/docs/ncache/admin-guide/deploy-providers.html). Once these providers are deployed, you can easily change the database layer by just changing the configuration.
 
 2. *Alachisoft.NCache.PersistenceStore* project contains the actual db layer for the providers, IPersistenceProvider implementation is given in this project FQN for the implementation is required to be configured with providers in the provider project.
 
 ## Run 
-For using Read-thrugh/Write-through in your application, you need to use NCache API with [WriteThruOptions](http://www.alachisoft.com/resources/docs/ncache/dotnet-api-ref/Alachisoft.NCache.Runtime.Caching.WriteThruOptions.html) and [ReadThruOptions](http://www.alachisoft.com/resources/docs/ncache/prog-guide/using-read-through.html).
+For using Read-thrugh/Write-through in your application, you need to use NCache API with [WriteThruOptions](http://www.alachisoft.com/Resources/docs/ncache/dotnet-api-ref/Alachisoft.NCache.Runtime.Caching.WriteThruOptions.html) and [ReadThruOptions](http://www.alachisoft.com/Resources/docs/ncache/prog-guide/using-read-through.html).
 
 ### WriteThru sample
 ```csharp
