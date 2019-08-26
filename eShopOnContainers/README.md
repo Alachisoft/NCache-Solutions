@@ -210,7 +210,7 @@ More information about NCache Pub/Sub feature can be found [in NCache Documentat
 
 Being a distributed caching provider, NCache is an ideal candidate for caching solutions for microservices applications where scalability, availability and performance are of utmost importance. 
 
-In this regard, besides using the native NCache APIs for caching data, NCache also provides the EF Core caching provider implementation to allow for seamless integration of caching into the application during EF Core CRUD operations. To demonstrate how easy it is to use EF Core caching, consider the following code snippet taken from the [Catalog.API microservice](.\src\Services\Catalog\Catalog.API\Controllers\CatalogController.cs) in the solution to fetch a collection of items from the database and cache it in the NCache servers:
+In this regard, besides using the native NCache APIs for caching data, NCache also provides the EF Core caching provider implementation to allow for seamless integration of caching into the application during EF Core CRUD operations. To demonstrate how easy it is to use EF Core caching, consider the following code snippet taken from the [Catalog.API microservice](./src/Services/Catalog/Catalog.API/Controllers/CatalogController.cs) in the solution to fetch a collection of items from the database and cache it in the NCache servers:
 
 ```csharp  
 if (!_settings.EFCoreCachingEnabled)
@@ -313,13 +313,13 @@ public static class NCacheDataProtectionBuilderExtensions
 	}
 }
 ```
-> The full working copy of this class can be found [here](.\src\BuildingBlocks\NCacheDataProtectionBuilderExtensions).
+> The full working copy of this class can be found [here](./src/BuildingBlocks/NCacheDataProtectionBuilderExtensions).
 
 - **NCache Health Checks**
 
 [ASP.NET Core health checks API](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-2.2) is a very useful feature that is highly recommended for monitoring the health status of your ASP.NET Core applications together with any dependencies they have to function correctly. These dependencies include primary data stores such as databases and file systems as well as caches in case the cache-aside pattern is in place. Having such health checks in place really cuts down on investigating any issues when running the applications and the logging of the issues can be automated quite easily.
 
-In this regard, the application provides a `IHealthCheck` implementation for NCache that checks on the health of any caches being used, whether they be for pub/sub messaging or object caching. In this regard, following is the NCache `IHealthCheck` [implementation](.\src\BuildingBlocks\NCacheHealthCheck):
+In this regard, the application provides a `IHealthCheck` implementation for NCache that checks on the health of any caches being used, whether they be for pub/sub messaging or object caching. In this regard, following is the NCache `IHealthCheck` [implementation](./src/BuildingBlocks/NCacheHealthCheck):
 
 ```csharp
 public class NCacheHealthCheck : IHealthCheck
