@@ -45,7 +45,7 @@ NCache can easily be configured for use as a messaging broker for asynchronous c
 
 To implement the  NCache event bus for asynchronous communications in eShopOnContainers, the implementation has been done in the same way as was done for the RabbitMQ and NServiceBus messaging brokers.
 
-Therefore, following is a code snippet of the implementation of a persistant connection mechanism to allow for connection to NCache Pub/Sub servers, the details of which can be found [here](.\src\BuildingBlocks\EventBus\EventBusNCache):
+Therefore, following is a code snippet of the implementation of a persistant connection mechanism to allow for connection to NCache Pub/Sub servers, the details of which can be found [here](./src/BuildingBlocks/EventBus/EventBusNCache):
 
 ```csharp
 public class DefaultNCachePersistentConnection : INCachePersistantConnection
