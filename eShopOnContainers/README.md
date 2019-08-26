@@ -22,7 +22,7 @@ We have extended *eShopOnContainers* in this current repository (*eShopOnContain
 
 The following figure shows how the eShopOnContainers architecture has been enhanced by including NCache as a distributed caching layer and pub/sub messaging platform with its features:
 
-![Architectural Digram](eshop-img-new.png)
+![Architectural Diagram](./img/eShopOnContainers_ArchitectureDiagram_ncache.png)
 
 As seen in the figure above, NCache can be used for pub/sub messaging as well as for caching data to boost read operations. Care has been taken to integrate NCache features into the code without compromising the integrity of the original application. Therefore, the eShopOnContainer application can be used in its original form while allowing for NCache features to be demonstrated as well. 
 
