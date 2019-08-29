@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Search Page";
+    var sItem = ViewData["searchItem"];
+
+    <div class="text-center">
+        @if (sItem == null)
+        {
+            <h1 class="display-4">No search term is provided!</h1>
+        }
+        else
+        {
+            <p> @sItem.ToString() </p>
+        }
+    </div>
+}
+
+<div class="w-100">
+    @{
+        var form = sItem as FormModel;
+        var searchEngine = NCommerce.FTSEngine.FTSFactory.GetSearchEngine();
+
+        Tuple<long, List<ProductFTS>> result = null;
+        if (form.Category.Equals("All", StringComparison.OrdinalIgnoreCase))
+        {
+            result = searchEngine.Search(form.SearchText);
+        }
+        else
+        {
+            result = searchEngine.Search(form.SearchText, category: form.Category);
+        }
+
+        var count = 1;
+        <p><b>Total Documents Fount: @result.Item1</b></p>
+
+        <div class="container">
+            @foreach (var product in result.Item2)
+            {
+                <div class="row border-info">
+                    <div class="col-3">
+                        <a href="/Info/@product.ID" target="_blank">
+                            @if (string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="~/image-na.png" alt="Missing image >> @product.ImageUrl" class="w-100" />
+                            }
+                            else
+                            {
+                                <img src="@product.ImageUrl" alt="@product.ImageUrl" class="w-100" />
+                            }
+                        </a>
+                    </div>
+                    <div class="col-9">
+                        <table class="table table-borderless">
+                            <tr class="bg-light">
+                                <th scope="col">Name</th>
+                                <td><a href="/Info/@product.ID">@product.Name</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Category</th>
+                                <td>@product.Category</td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Price</th>
+                                <td><strike class="error">Retail Price @product.RetailPrice</strike>,<b>Discounted Price @product.DiscountedPrice</b></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Description</th>
+                                <td style="overflow : hidden; text-overflow: ellipsis;">@product.Description</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                count++;
+            }
+        </div>
+    }
+</div>
