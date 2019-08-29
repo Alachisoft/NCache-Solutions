@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="NCacheLogic\**" />
+    <Compile Remove="TrainedLogic\**" />
+    <EmbeddedResource Remove="NCacheLogic\**" />
+    <EmbeddedResource Remove="TrainedLogic\**" />
+    <None Remove="NCacheLogic\**" />
+    <None Remove="TrainedLogic\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Messaging\BaseManager.cs" />
+    <Compile Remove="Messaging\BaseMessageHandler.cs" />
+    <Compile Remove="Messaging\FraudDetectionManager.cs" />
+    <Compile Remove="Messaging\FraudDetectionRequests.cs" />
+    <Compile Remove="Messaging\StartTransactionMessage.cs" />
+    <Compile Remove="Messaging\Topics.cs" />
+    <Compile Remove="Messaging\TransactionCompletedMessage.cs" />
+    <Compile Remove="Messaging\TransactionMessage.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\CustomerModel\CustomerSample.csproj" />
+  </ItemGroup>
+
+</Project>
