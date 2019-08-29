@@ -7,3 +7,7 @@ Following is a list of the solutions provided:
 - [eShopOnContainers using NCache](./eShopOnContainers/README.md)
 
   This solution is an extension of the well-known eShopOnContainers GitHub repository that aims to showcase the various enterprise design patterns when architecting a microservices-based multi-container application. While maintaining the original features including code to integrate RabbitMQ and NServiceBus message broker, this solution also showcases how NCache can be used for Pub/Sub messaging as well as object caching.
+  
+ - [Persistent cache with NCache](./PersistentCacheWithNCache/README.md)
+ 
+    Configure the cache to permanently store data with NCache using Readthru provider, WriteThru provider and CacheStartuploader.

@@ -1,0 +1,49 @@
+﻿// Copyright (c) 2019 Alachisoft
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using Alachisoft.NCache.PersistenceProvider;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Alachisoft.NCache.PersistenceStore
+{
+    /// <summary>
+    /// JSon Serializer to serialize user object to store in to database
+    /// </summary>
+    public class JSonSerializer : ISerializer
+    {
+        /// <summary>
+        /// Serialize user object to string in order o save it to database
+        /// </summary>
+        /// <param name="providerItem">user object</param>
+        /// <returns></returns>
+        public string Serialize(object userobject)
+        {
+            return JsonConvert.SerializeObject(userobject);
+        }
+
+        /// <summary>
+        /// Deserialize string into user object
+        /// </summary>
+        /// <param name="item">convert string to object to return to user from database</param>
+        /// <returns></returns>
+        public object Deserialize(string item)
+        {
+            return JsonConvert.DeserializeObject(item);
+        }
+       
+    }
+}
