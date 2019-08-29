@@ -19,3 +19,8 @@ Following is a list of the solutions provided:
 - [Live Scoreboard with NCache](./LiveScoreboard/README.md)
 
   This solution showcases how a live scoreboard application such as a streaming sports scoreboard service can harness the power of NCache to boost its performance in terms of scalability, throughput and availability.
+  
+- [Full Text Search With Distributed Lucene](./FullTextSearchWithDistributedLucene/README.md)
+
+  This solution demonstrates the ease with which the NCache Lucene module can be used to integrate Lucene Full Text Search (FTS) engine into a ASP.NET Core based e-commerce web application.
+  
