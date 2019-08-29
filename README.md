@@ -15,3 +15,7 @@ Following is a list of the solutions provided:
 - [Fraud Detection using NCache](./FraudDetection/README.md)
 
   This solution demonstrates how NCache can be integrated into a fraud-detection system that provides real-time results. The fraud detection system uses the Pub/Sub messaging feature of NCache as well as object caching to greatly boost throughput and availability inherited from the distributed, in-memory architecture of NCache.
+    
+- [Live Scoreboard with NCache](./LiveScoreboard/README.md)
+
+  This solution showcases how a live scoreboard application such as a streaming sports scoreboard service can harness the power of NCache to boost its performance in terms of scalability, throughput and availability.
