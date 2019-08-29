@@ -1,0 +1,375 @@
+﻿<!--
+Copyright [yyyy] [name of copyright owner]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <!-- HTML created in Bootstrap 4 -->
+    <!-- outer container -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="display-4 mt-3 mb-4">Live Score Leaderboard</h1> <!-- page title -->
+            </div>
+        </div>
+        <!-- Match Controls - START -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-sm" id="StartMatchBtn">Start Match</button>
+                    <button type="button" class="btn btn-danger btn-sm" id="StopMatchBtn">Stop Match</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="GenerateRandomUpdatesBtn">Generate Random Updates</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group form-inline">
+                    <label>Action</label>
+                    <select class="form-control form-control-sm ml-2" id="MatchUpdateType">
+                        <option value="">Select Action</option>
+                        <option value="goal">Goal</option>
+                        <option value="yellow_card">Yellow Card</option>
+                        <option value="red_card">Red Card</option>
+                        <option value="substitute">Substitute</option>
+                    </select>
+
+                    <label class="ml-3">Team</label>
+                    <select class="form-control form-control-sm ml-2" id="MatchUpdateEntity">
+                        <option value="TeamA">A</option>
+                        <option value="TeamB">B</option>
+                    </select>
+
+                    <label class="ml-3">Data</label>
+                    <input type="text" class="form-control form-control-sm ml-2" id="MatchUpdateData" />
+                    <button type="button" class="btn btn-success btn-sm ml-3" id="SendUpdateBtn" disabled>Send Update</button>
+                </div>
+            </div>
+        </div>
+        <!-- Match Controls - END -->
+        <div class="row">
+            <div class="col-sm-12">
+                <strong>Match Time</strong>
+                <p class="text-center" id="MatchTime">00:00</p> <!-- Match Time -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Name of the match
+         * This must be same to the publish topic
+         **/
+        var MatchName = "Team A vs Team B";
+
+        var MatchStartDate = new Date();
+
+        var timeHandler;
+        var matchTimeHandler;
+        var MatchEndTimeInMinutes = 1;
+
+        var RandomUpdatesTimeHandler;
+        var RandomUpdatesProbabilityNumber = MatchEndTimeInMinutes * 10;
+        var RandomUpdatesAcceptanceNumber = Math.floor(RandomUpdatesProbabilityNumber / 2);
+        var RandomUpdatesTimeInterval = MatchEndTimeInMinutes * 1000;
+
+        var RandomUpdates = [
+            {
+                datetime: null,
+                updateType: "goal",
+                entity: "TeamA",
+                data: null
+            },
+            {
+                datetime: null,
+                updateType: "goal",
+                entity: "TeamB",
+                data: null
+            },
+            {
+                datetime: null,
+                updateType: "yellow_card",
+                entity: "TeamA",
+                data: "C"
+            },
+            {
+                datetime: null,
+                updateType: "red_card",
+                entity: "TeamA",
+                data: "C"
+            },
+            {
+                datetime: null,
+                updateType: "substitute",
+                entity: "TeamA",
+                data: "Player A substituted for Player B"
+            },
+            {
+                datetime: null,
+                updateType: "yellow_card",
+                entity: "TeamB",
+                data: "D"
+            },
+            {
+                datetime: null,
+                updateType: "red_card",
+                entity: "TeamB",
+                data: "D"
+            },
+            {
+                datetime: null,
+                updateType: "substitute",
+                entity: "TeamB",
+                data: "Player C substituted for Player D"
+            },
+        ];
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            XMLRequest(
+                "api/scoreupdate/matchdetails",
+                "POST",
+                {
+                    "matchName": MatchName,
+                },
+                {},
+                function (result) {
+                    result = JSON.parse(result);
+                    if (result.length < 1) {
+                        document.getElementById("StopMatchBtn").setAttribute("disabled", "disabled");
+                        document.getElementById("StartMatchBtn").removeAttribute("disabled");
+                    }
+                    else {
+                        document.getElementById("StartMatchBtn").setAttribute("disabled", "disabled");
+                        document.getElementById("StopMatchBtn").removeAttribute("disabled");
+                    }
+
+                    result.forEach(function (element) {
+                        HandleMatchEvents(element, true);
+                    });
+                }
+            );
+
+            function HandleMatchEvents(matchUpdate, init) {
+                init = init === null ? false : init;
+                console.log(matchUpdate);
+
+                // reinitialize time if match start
+                if (matchUpdate.updateType === "match_start" && init) {
+                    MatchStartDate = new Date(matchUpdate.datetime);
+                }
+                else if (matchUpdate.updateType === "match_start") {
+                    MatchStartDate = new Date();
+                }
+                // extract current datetime
+                var d;
+                if (init) {
+                    d = new Date(new Date(matchUpdate.datetime) - new Date(MatchStartDate));
+                    matchTimeHandler = new Date(new Date(matchUpdate.datetime) - new Date(MatchStartDate));
+                }
+                else {
+                    d = new Date(new Date() - MatchStartDate);
+                }
+
+                switch (matchUpdate.updateType) {
+                    case "match_start":
+                        document.getElementById("StartMatchBtn").setAttribute("disabled", "disabled");
+                        document.getElementById("StopMatchBtn").removeAttribute("disabled");
+                        startUpdatedTime();
+                        break;
+                    case "match_end":
+                        document.getElementById("StopMatchBtn").setAttribute("disabled", "disabled");
+                        document.getElementById("StartMatchBtn").removeAttribute("disabled");
+                        stopUpdatedTime();
+                        clearInterval(RandomUpdatesTimeHandler);
+                        break;
+                }
+
+                if (init) {
+                    matchTimeHandler = new Date(matchUpdate.datetime);
+                }
+            }
+
+            document.getElementById("StartMatchBtn").addEventListener("click", function () {
+                var currentDatetime = new Date();
+                XMLRequest(
+                    "api/scoreupdate/startmatch",
+                    "POST",
+                    {
+                        "matchName": MatchName,
+                        "datetime": currentDatetime,
+                    },
+                    {},
+                    function (result) {
+                        console.log(result);
+
+                        HandleMatchEvents({
+                            datetime: currentDatetime,
+                            updateType: "match_start",
+                        }, false);
+                    }
+                );
+            });
+
+            document.getElementById("SendUpdateBtn").addEventListener("click", function () {
+                if (document.getElementById("StartMatchBtn").getAttribute("disabled")) {
+                    XMLRequest(
+                        "api/scoreupdate/updatematch",
+                        "POST",
+                        {
+                            "matchName": MatchName,
+                            "datetime": new Date(),
+                            "type": document.getElementById("MatchUpdateType").value,
+                            "entity": document.getElementById("MatchUpdateEntity").value,
+                            "data": document.getElementById("MatchUpdateData").value,
+                        },
+                        {},
+                        function (result) {
+                            console.log(result);
+                        }
+                    );
+                }
+            });
+
+            document.getElementById("StopMatchBtn").addEventListener("click", function () {
+                var currentDatetime = new Date();
+                XMLRequest(
+                    "api/scoreupdate/stopmatch",
+                    "POST",
+                    {
+                        "matchName": MatchName,
+                        "datetime": currentDatetime,
+                    },
+                    {},
+                    function (result) {
+                        console.log(result);
+
+                        HandleMatchEvents({
+                            datetime: currentDatetime,
+                            updateType: "match_end",
+                        }, false);
+                    }
+                );
+            });
+
+            document.getElementById("MatchUpdateType").addEventListener("change", function () {
+                if (this.value === "") {
+                    document.getElementById("SendUpdateBtn").setAttribute("disabled", "disabled");
+                }
+                else if (this.value === "goal") {
+                    document.getElementById("MatchUpdateData").setAttribute("disabled", "disabled");
+                    document.getElementById("SendUpdateBtn").removeAttribute("disabled");
+                }
+                else {
+                    document.getElementById("MatchUpdateData").removeAttribute("disabled");
+                    document.getElementById("SendUpdateBtn").removeAttribute("disabled");
+                }
+            });
+
+            document.getElementById("GenerateRandomUpdatesBtn").addEventListener("click", function () {
+                GenerateRandomUpdates();
+            });
+
+            function startUpdatedTime() {
+                timeHandler = setInterval(function () {
+                    matchTimeHandler = new Date(new Date() - MatchStartDate);
+                    document.getElementById("MatchTime").innerHTML = zeroFill(matchTimeHandler.getMinutes(), 2) + ":" + zeroFill(matchTimeHandler.getSeconds(), 2);
+                    if (new Date(MatchStartDate.getTime() + MatchEndTimeInMinutes * 60000) - new Date() < 0) {
+                        document.getElementById("StopMatchBtn").click();
+                        clearInterval(RandomUpdatesTimeHandler);
+                    }
+
+                }, 1000);
+            }
+
+            function stopUpdatedTime() {
+                clearInterval(timeHandler);
+            }
+
+        });
+
+        function GenerateRandomUpdates() {
+            if (!document.getElementById("StartMatchBtn").getAttribute("disabled")) {
+                return;
+            }
+            RandomUpdatesTimeHandler = setInterval(function () {
+                var rand = Math.floor(Math.random() * RandomUpdatesProbabilityNumber);
+                console.log("Random Number: " + rand);
+                if (rand < RandomUpdatesAcceptanceNumber) {
+                    var matchUpdate = RandomUpdates[Math.floor(Math.random() * RandomUpdates.length)];
+                    matchUpdate.datetime = new Date();
+                    XMLRequest(
+                        "api/scoreupdate/stopmatch",
+                        "POST",
+                        {
+                            "matchName": MatchName,
+                            "datetime": matchUpdate.datetime,
+                            "type": matchUpdate.updateType,
+                            "entity": matchUpdate.entity,
+                            "data": matchUpdate.data,
+                        },
+                        {},
+                        function (result) {
+                            console.log(result);
+                        }
+                    );
+                }
+            }, RandomUpdatesTimeInterval);
+        }
+
+        function XMLRequest(url, method, data, headers, callback) {
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState === XMLHttpRequest.DONE) {
+                    if (xmlhttp.status === 200) {
+                        callback(xmlhttp.responseText);
+                    }
+                    else {
+                        console.log(xmlhttp);
+                    }
+                }
+            };
+
+            var formData = new FormData();
+            for (i in data) {
+                formData.append(i, data[i]);
+            }
+
+            xmlhttp.open(method, url, true);
+
+            for (i in headers) {
+                xmlhttp.setRequestHeader(i, headers[i]);
+            }
+
+            xmlhttp.send(formData);
+        }
+
+        function zeroFill(number, width) {
+            width -= number.toString().length;
+            if (width > 0) {
+                return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
+            }
+            return number + ""; // always return a string
+        }
+    </script>
+</body>
+</html>

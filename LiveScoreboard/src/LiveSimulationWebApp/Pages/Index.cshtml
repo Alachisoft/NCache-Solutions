@@ -1,0 +1,49 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Live Score Leaderboard Client";
+}
+
+<!-- HTML created in Bootstrap 4 -->
+<!-- outer container -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="display-4 mt-3 mb-4">Live Score Leaderboard</h1> <!-- page title -->
+        </div>
+    </div>
+
+    <!-- Alerts - START -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="alert alert-danger" id="alert" style="display:none;"></div>
+        </div>
+    </div>
+    <!-- Alerts - END -->
+
+    <!-- Match Results - START -->
+    <div class="row">
+        <div class="col-sm-6">
+            <table id="ScoreBoard">
+                <tr>
+                    <td>
+                        <p class="score" id="TeamAScore">0</p> <!-- Team A Score -->
+                        <p class="team-name">Team A</p>
+                    </td>
+                    <td>
+                        <p class="score" id="TeamBScore">0</p> <!-- Team B Score -->
+                        <p class="team-name">Team B</p>
+                    </td>
+                </tr>
+            </table>
+            <p class="text-center" id="MatchTime">00:00</p> <!-- Match Time -->
+        </div>
+        <div class="col-sm-6">
+            <h2>Updates</h2>
+            <div id="MatchCommentary"></div> <!-- this div shows match updates -->
+        </div>
+    </div>
+    <!-- Match Results - END-->
+</div>
+
+@Html.AntiForgeryToken()
