@@ -3,7 +3,7 @@
 ## Table of contents
 
 * [Introduction](#introduction)
-* [Prerequisites](#prerequisites)
+* [Prerequisites](#pre-requisites)
 * [NCache Features Highlighted in Application](#ncache-features-highlighted-in-application)
 * [Running the Application](#running-the-application)
 * [Additional Resources](#additional-resources)
