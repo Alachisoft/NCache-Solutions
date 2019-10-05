@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ServiceFabricAppType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="WebStatus_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="WebStatus_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="WebStatus_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-WebStatus" />
+    <Parameter Name="WebStatus_HealthChecks-UI_HealthChecks_EvaluationTimeOnSeconds" DefaultValue="10" />
+    <Parameter Name="WebStatus_HealthChecks-UI_HealthChecks_MinimumSecondsBetweenFailureNotifications" DefaultValue="60" />
+    <Parameter Name="WebMVC_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="WebMVC_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="WebMVC_UseCustomizationData" DefaultValue="False" />
+    <Parameter Name="WebMVC_IsClusterEnv" DefaultValue="True" />
+    <Parameter Name="WebMVC_CacheID" DefaultValue="mvccache" />
+    <Parameter Name="WebMVC_CacheIPAddresses" DefaultValue="20.200.20.103" />
+    <Parameter Name="WebMVC_UseLoadTest" DefaultValue="False" />
+    <Parameter Name="WebMVC_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-WebMVC" />
+    <Parameter Name="WebMVC_EnableClientLogs" DefaultValue="False" />
+    <Parameter Name="Payment.API_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="Payment.API_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Payment.API_PaymentSucceded" DefaultValue="True" />
+    <Parameter Name="Payment.API_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-Payment" />
+    <Parameter Name="Payment.API_EnableNCacheClientLogs" DefaultValue="False" />
+    <Parameter Name="Ordering.SignalrHub_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="Ordering.SignalrHub_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Ordering.SignalrHub_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-OrderingSignalrHub" />
+    <Parameter Name="Ordering.SignalrHub_EnableNCacheClientLogs" DefaultValue="False" />
+    <Parameter Name="Ordering.BackgroundTasks_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="Ordering.BackgroundTasks_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Ordering.BackgroundTasks_CheckUpdateTime" DefaultValue="30000" />
+    <Parameter Name="Ordering.BackgroundTasks_GracePeriodTime" DefaultValue="1" />
+    <Parameter Name="Ordering.BackgroundTasks_UseCustomizationData" DefaultValue="False" />
+    <Parameter Name="Ordering.BackgroundTasks_UseLoadTest" DefaultValue="False" />
+    <Parameter Name="Ordering.BackgroundTasks_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-OrderingBackground" />
+    <Parameter Name="Ordering.BackgroundTasks_EnableNCacheClientLogs" DefaultValue="False" />
+    <Parameter Name="Ordering.API_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="Ordering.API_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Ordering.API_CheckUpdateTime" DefaultValue="30000" />
+    <Parameter Name="Ordering.API_UseCustomizationData" DefaultValue="False" />
+    <Parameter Name="Ordering.API_UseLoadTest" DefaultValue="False" />
+    <Parameter Name="Ordering.API_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-Ordering" />
+    <Parameter Name="Ordering.API_EnableNCacheClientLogs" DefaultValue="False" />
+    <Parameter Name="Marketing.API_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="Marketing.API_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Marketing.API_ConnectionString" DefaultValue="Server=tcp:20.200.20.103,1433\SQLEXPRESS;Database=Microsoft.eShopOnContainers.Services.MarketingDb;User Id=brad_rehman;Password=password" />
+    <Parameter Name="Marketing.API_MongoConnectionString" DefaultValue="mongodb://20.200.20.103:27017" />
+    <Parameter Name="Marketing.API_CosmosDBDeployment" DefaultValue="False" />
+    <Parameter Name="Marketing.API_PicBaseUrl" DefaultValue="http://brad-rehman.diyatech.org.pk:55110/api/v1/campaigns/[0]/pic/" />
+    <Parameter Name="Marketing.API_MongoDatabase" DefaultValue="MarketingDb" />
+    <Parameter Name="Marketing.API_CachingEnabled" DefaultValue="True" />
+    <Parameter Name="Marketing.API_MarketingCacheID" DefaultValue="MarketingCache" />
+    <Parameter Name="Marketing.API_MarketingCacheIPAddresses" DefaultValue="20.200.20.103" />
+    <Parameter Name="Marketing.API_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-Marketing" />
+    <Parameter Name="Marketing.API_UseLoadTest" DefaultValue="False" />
+    <Parameter Name="Marketing.API_EnableEFClientLogs" DefaultValue="False" />
+    <Parameter Name="Marketing.API_EnableNCacheClientLogs" DefaultValue="False" />
+    <Parameter Name="Locations.API_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="Locations.API_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Locations.API_ConnectionString" DefaultValue="mongodb://20.200.20.103:27017" />
+    <Parameter Name="Locations.API_CosmosDBDeployment" DefaultValue="False" />
+    <Parameter Name="Locations.API_Database" DefaultValue="LocationsDb" />
+    <Parameter Name="Locations.API_LocationCachingEnabled" DefaultValue="True" />
+    <Parameter Name="Locations.API_CacheID" DefaultValue="LocationsCache" />
+    <Parameter Name="Locations.API_LocationCacheIPAddresses" DefaultValue="20.200.20.103" />
+    <Parameter Name="Locations.API_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-Locations" />
+    <Parameter Name="Locations.API_UseLoadTest" DefaultValue="False" />
+    <Parameter Name="Locations.API_EnableNCacheClientLogs" DefaultValue="False" />
+    <Parameter Name="Identity.API_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="Identity.API_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Identity.API_ConnectionString" DefaultValue="Server=tcp:20.200.20.103,1433;Database=Microsoft.eShopOnContainers.Service.IdentityDb;User Id=brad_rehman;Password=password" />
+    <Parameter Name="Identity.API_UseCustomizationData" DefaultValue="False" />
+    <Parameter Name="Identity.API_IsClusterEnv" DefaultValue="True" />
+    <Parameter Name="Identity.API_CacheID" DefaultValue="identitycache" />
+    <Parameter Name="Identity.API_IdentityCacheIPAddresses" DefaultValue="20.200.20.103" />
+    <Parameter Name="Identity.API_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-Identity" />
+    <Parameter Name="Identity.API_EnableClientLogs" DefaultValue="False" />
+    <Parameter Name="Catalog.API_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="Catalog.API_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Catalog.API_ConnectionString" DefaultValue="Server=tcp:20.200.20.103,1433\SQLEXPRESS;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=brad_rehman;Password=password" />
+    <Parameter Name="Catalog.API_PicBaseUrl" DefaultValue="http://brad-rehman.diyatech.org.pk:55101/api/v1/catalog/items/[0]/pic/" />
+    <Parameter Name="Catalog.API_UseCustomizationData" DefaultValue="True" />
+    <Parameter Name="Catalog.API_EFCoreCachingEnabled" DefaultValue="True" />
+    <Parameter Name="Catalog.API_EFCacheID" DefaultValue="CatalogEFCache" />
+    <Parameter Name="Catalog.API_CatalogEFCacheIPAddresses" DefaultValue="20.200.20.103" />
+    <Parameter Name="Catalog.API_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-Catalog" />
+    <Parameter Name="Catalog.API_UseLoadTest" DefaultValue="False" />
+    <Parameter Name="Catalog.API_EnableNCacheClientLogs" DefaultValue="False" />
+    <Parameter Name="Catalog.API_EnableEFClientLogs" DefaultValue="False" />
+    <Parameter Name="Basket.API_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="Basket.API_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Basket.API_CacheID" DefaultValue="basketcache" />
+    <Parameter Name="Basket.API_BasketCacheIPAddresses" DefaultValue="20.200.20.103" />
+    <Parameter Name="Basket.API_ApplicationInsights_InstrumentationKey" DefaultValue="microservicesNCache-Basket" />
+    <Parameter Name="Basket.API_UseLoadTest" DefaultValue="False" />
+    <Parameter Name="Basket.API_EnableNCacheClientLogs" DefaultValue="False" />
+    <Parameter Name="ShoppingAggregator_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="ShoppingAggregator_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="CommonGateway.API_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
+    <Parameter Name="CommonGateway.API_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="EventBusNCachID" DefaultValue="pubsubcache" />
+    <Parameter Name="PubSubCacheIPAddresses" DefaultValue="20.200.20.103" />
+    <Parameter Name="OrderingConnectionString" DefaultValue="Server=tcp:20.200.20.103,1433\SQLEXPRESS;Database=Microsoft.eShopOnContainers.Services.OrderingDb;User Id=brad_rehman;Password=password" />
+    <Parameter Name="Ordering_CachingEnabled" DefaultValue="True" />
+    <Parameter Name="Ordering_CacheID" DefaultValue="OrderingCache" />
+    <Parameter Name="Ordering_OrderingCacheIPAddresses" DefaultValue="20.200.20.103" />
+    <Parameter Name="SF_Cluster_Identity_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55105" />
+    <Parameter Name="SF_Cluster_Basket_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55103" />
+    <Parameter Name="SF_Cluster_Catalog_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55101" />
+    <Parameter Name="SF_Cluster_Location_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55109" />
+    <Parameter Name="SF_Cluster_Payment_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55108" />
+    <Parameter Name="SF_Cluster_Marketing_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55110" />
+    <Parameter Name="SF_Cluster_Ordering_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55102" />
+    <Parameter Name="SF_Cluster_OrderingBackgroundTask_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55111" />
+    <Parameter Name="SF_Cluster_OrderingSignalrHub_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55112" />
+    <Parameter Name="SF_Cluster_ShoppingAPI_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55202" />
+    <Parameter Name="SF_Cluster_ShoppingAggregator_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55121" />
+    <Parameter Name="SF_Cluster_MVC_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55100" />
+    <Parameter Name="SF_Cluster_WebStatus_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55107" />
+    <Parameter Name="SF_Cluster_Identity_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55105/hc" />
+    <Parameter Name="SF_Cluster_Basket_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55103/hc" />
+    <Parameter Name="SF_Cluster_Catalog_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55101/hc" />
+    <Parameter Name="SF_Cluster_Location_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55109/hc" />
+    <Parameter Name="SF_Cluster_Payment_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55108/hc" />
+    <Parameter Name="SF_Cluster_Marketing_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55110/hc" />
+    <Parameter Name="SF_Cluster_Ordering_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55102/hc" />
+    <Parameter Name="SF_Cluster_OrderingBackgroundTask_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55111/hc" />
+    <Parameter Name="SF_Cluster_OrderingSignalrHub_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55112/hc" />
+    <Parameter Name="SF_Cluster_ShoppingAPI_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55202/hc" />
+    <Parameter Name="SF_Cluster_ShoppingAggregator_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55121/hc" />
+    <Parameter Name="SF_Cluster_MVC_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55100/hc" />
+    <Parameter Name="SF_Cluster_WebStatus_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55107/hc" />
+  </Parameters>
+  <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
+       should match the Name and Version attributes of the ServiceManifest element defined in the 
+       ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="WebStatusPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[WebStatus_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="IdentityUrl" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:0:Uri" Value="[SF_Cluster_MVC_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:1:Uri" Value="[SF_Cluster_ShoppingAggregator_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:2:Uri" Value="[SF_Cluster_ShoppingAPI_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:3:Uri" Value="[SF_Cluster_Ordering_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:4:Uri" Value="[SF_Cluster_OrderingBackgroundTask_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:5:Uri" Value="[SF_Cluster_Basket_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:6:Uri" Value="[SF_Cluster_Catalog_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:7:Uri" Value="[SF_Cluster_Identity_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:8:Uri" Value="[SF_Cluster_Marketing_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:9:Uri" Value="[SF_Cluster_Location_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:10:Uri" Value="[SF_Cluster_Payment_UrlHC]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:11:Uri" Value="[SF_Cluster_OrderingSignalrHub_UrlHC]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[WebStatus_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:EvaluationTimeOnSeconds" Value="[WebStatus_HealthChecks-UI_HealthChecks_EvaluationTimeOnSeconds]" />
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:MinimumSecondsBetweenFailureNotifications" Value="[WebStatus_HealthChecks-UI_HealthChecks_MinimumSecondsBetweenFailureNotifications]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="WebMVCPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[WebMVC_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="CallBackUrl" Value="[SF_Cluster_MVC_Url]" />
+      <EnvironmentVariable Name="PurchaseUrl" Value="[SF_Cluster_ShoppingAPI_Url]" />
+      <EnvironmentVariable Name="IdentityUrl" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="MarketingUrl" Value="[SF_Cluster_ShoppingAPI_Url]" />
+      <EnvironmentVariable Name="SignalrHubUrl" Value="[SF_Cluster_OrderingSignalrHub_Url]" />
+      <EnvironmentVariable Name="CatalogUrlHC" Value="[SF_Cluster_Catalog_UrlHC]" />
+      <EnvironmentVariable Name="OrderingUrlHC" Value="[SF_Cluster_Ordering_UrlHC]" />
+      <EnvironmentVariable Name="IdentityUrlHC" Value="[SF_Cluster_Identity_UrlHC]" />
+      <EnvironmentVariable Name="BasketUrlHC" Value="[SF_Cluster_Basket_UrlHC]" />
+      <EnvironmentVariable Name="MarketingUrlHC" Value="[SF_Cluster_ShoppingAPI_UrlHC]" />
+      <EnvironmentVariable Name="PurchaseUrlHC" Value="[SF_Cluster_ShoppingAPI_UrlHC]" />
+      <EnvironmentVariable Name="UseCustomizationData" Value="[WebMVC_UseCustomizationData]" />
+      <EnvironmentVariable Name="IsClusterEnv" Value="[WebMVC_IsClusterEnv]" />
+      <EnvironmentVariable Name="CacheID" Value="[WebMVC_CacheID]" />
+      <EnvironmentVariable Name="MVCCacheIPAddresses" Value="[WebMVC_CacheIPAddresses]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[WebMVC_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="UseLoadTest" Value="[WebMVC_UseLoadTest]" />
+      <EnvironmentVariable Name="EnableClientLogs" Value="[WebMVC_EnableClientLogs]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="Payment.APIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Payment.API_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="EventBusNCachID" Value="[EventBusNCachID]" />
+      <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="[PubSubCacheIPAddresses]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[Payment.API_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="PaymentSucceded" Value="[Payment.API_PaymentSucceded]" />
+      <EnvironmentVariable Name="EnableNCacheClientLogs" Value="[Payment.API_EnableNCacheClientLogs]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="Ordering.SignalrHubPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Ordering.SignalrHub_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="identityUrl" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="EventBusNCachID" Value="[EventBusNCachID]" />
+      <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="[PubSubCacheIPAddresses]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[Ordering.SignalrHub_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="EnableNCacheClientLogs" Value="[Ordering.SignalrHub_EnableNCacheClientLogs]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="Ordering.BackgroundTasksPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Ordering.BackgroundTasks_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="ConnectionString" Value="[OrderingConnectionString]" />
+      <EnvironmentVariable Name="identityUrl" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="EventBusNCachID" Value="[EventBusNCachID]" />
+      <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="[PubSubCacheIPAddresses]" />
+      <EnvironmentVariable Name="CheckUpdateTime" Value="[Ordering.BackgroundTasks_CheckUpdateTime]" />
+      <EnvironmentVariable Name="GracePeriodTime" Value="[Ordering.BackgroundTasks_GracePeriodTime]" />
+      <EnvironmentVariable Name="UseCustomizationData" Value="[Ordering.BackgroundTasks_UseCustomizationData]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[Ordering.BackgroundTasks_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="UseLoadTest" Value="[Ordering.BackgroundTasks_UseLoadTest]" />
+      <EnvironmentVariable Name="EnableNCacheClientLogs" Value="[Ordering.BackgroundTasks_EnableNCacheClientLogs]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="Ordering.APIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Ordering.API_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="ConnectionString" Value="[OrderingConnectionString]" />
+      <EnvironmentVariable Name="identityUrl" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="EventBusNCachID" Value="[EventBusNCachID]" />
+      <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="[PubSubCacheIPAddresses]" />
+      <EnvironmentVariable Name="CheckUpdateTime" Value="[Ordering.API_CheckUpdateTime]" />
+      <EnvironmentVariable Name="UseCustomizationData" Value="[Ordering.API_UseCustomizationData]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[Ordering.API_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="UseLoadTest" Value="[Ordering.API_UseLoadTest]" />
+      <EnvironmentVariable Name="EnableNCacheClientLogs" Value="[Ordering.API_EnableNCacheClientLogs]" />
+      <EnvironmentVariable Name="CachingEnabled" Value="[Ordering_CachingEnabled]" />
+      <EnvironmentVariable Name="CacheID" Value="[Ordering_CacheID]" />
+      <EnvironmentVariable Name="OrderingCacheIPAddresses" Value="[Ordering_OrderingCacheIPAddresses]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="Marketing.APIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Marketing.API_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="ConnectionString" Value="[Marketing.API_ConnectionString]" />
+      <EnvironmentVariable Name="MongoConnectionString" Value="[Marketing.API_MongoConnectionString]" />
+      <EnvironmentVariable Name="CosmosDBDeployment" Value="[Marketing.API_CosmosDBDeployment]" />
+      <EnvironmentVariable Name="MongoDatabase" Value="[Marketing.API_MongoDatabase]" />
+      <EnvironmentVariable Name="identityUrl" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="PicBaseUrl" Value="[Marketing.API_PicBaseUrl]" />
+      <EnvironmentVariable Name="EventBusNCachID" Value="[EventBusNCachID]" />
+      <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="[PubSubCacheIPAddresses]" />
+      <EnvironmentVariable Name="CachingEnabled" Value="[Marketing.API_CachingEnabled]" />
+      <EnvironmentVariable Name="MarketingCacheID" Value="[Marketing.API_MarketingCacheID]" />
+      <EnvironmentVariable Name="MarketingCacheIPAddresses" Value="[Marketing.API_MarketingCacheIPAddresses]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[Marketing.API_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="UseLoadTest" Value="[Marketing.API_UseLoadTest]" />
+      <EnvironmentVariable Name="EnableEFClientLogs" Value="[Marketing.API_EnableEFClientLogs]" />
+      <EnvironmentVariable Name="EnableNCacheClientLogs" Value="[Marketing.API_EnableNCacheClientLogs]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="Locations.APIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Locations.API_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="ConnectionString" Value="[Locations.API_ConnectionString]" />
+      <EnvironmentVariable Name="CosmosDBDeployment" Value="[Locations.API_CosmosDBDeployment]" />
+      <EnvironmentVariable Name="Database" Value="[Locations.API_Database]" />
+      <EnvironmentVariable Name="identityUrl" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="EventBusNCachID" Value="[EventBusNCachID]" />
+      <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="[PubSubCacheIPAddresses]" />
+      <EnvironmentVariable Name="LocationCachingEnabled" Value="[Locations.API_LocationCachingEnabled]" />
+      <EnvironmentVariable Name="CacheID" Value="[Locations.API_CacheID]" />
+      <EnvironmentVariable Name="LocationCacheIPAddresses" Value="[Locations.API_LocationCacheIPAddresses]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[Locations.API_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="UseLoadTest" Value="[Locations.API_UseLoadTest]" />
+      <EnvironmentVariable Name="EnableNCacheClientLogs" Value="[Locations.API_EnableNCacheClientLogs]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="Identity.APIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Identity.API_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="ConnectionString" Value="[Identity.API_ConnectionString]" />
+      <EnvironmentVariable Name="MvcClient" Value="[SF_Cluster_MVC_Url]" />
+      <EnvironmentVariable Name="LocationApiClient" Value="[SF_Cluster_Location_Url]" />
+      <EnvironmentVariable Name="MarketingApiClient" Value="[SF_Cluster_Marketing_Url]" />
+      <EnvironmentVariable Name="BasketApiClient" Value="[SF_Cluster_Basket_Url]" />
+      <EnvironmentVariable Name="OrderingApiClient" Value="[SF_Cluster_Ordering_Url]" />
+      <EnvironmentVariable Name="WebShoppingAggClient" Value="[SF_Cluster_ShoppingAggregator_Url]" />
+      <EnvironmentVariable Name="WebStatusClient" Value="[SF_Cluster_WebStatus_Url]" />
+      <EnvironmentVariable Name="UseCustomizationData" Value="[Identity.API_UseCustomizationData]" />
+      <EnvironmentVariable Name="IsClusterEnv" Value="[Identity.API_IsClusterEnv]" />
+      <EnvironmentVariable Name="CacheID" Value="[Identity.API_CacheID]" />
+      <EnvironmentVariable Name="IdentityCacheIPAddresses" Value="[Identity.API_IdentityCacheIPAddresses]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[Identity.API_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="EnableClientLogs" Value="[Identity.API_EnableClientLogs]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="Catalog.APIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Catalog.API_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="ConnectionString" Value="[Catalog.API_ConnectionString]" />
+      <EnvironmentVariable Name="PicBaseUrl" Value="[Catalog.API_PicBaseUrl]" />
+      <EnvironmentVariable Name="UseCustomizationData" Value="[Catalog.API_UseCustomizationData]" />
+      <EnvironmentVariable Name="EFCoreCachingEnabled" Value="[Catalog.API_EFCoreCachingEnabled]" />
+      <EnvironmentVariable Name="EventBusNCachID" Value="[EventBusNCachID]" />
+      <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="[PubSubCacheIPAddresses]" />
+      <EnvironmentVariable Name="EFCacheID" Value="[Catalog.API_EFCacheID]" />
+      <EnvironmentVariable Name="CatalogEFCacheIPAddresses" Value="[Catalog.API_CatalogEFCacheIPAddresses]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[Catalog.API_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="UseLoadTest" Value="[Catalog.API_UseLoadTest]" />
+      <EnvironmentVariable Name="EnableNCacheClientLogs" Value="[Catalog.API_EnableNCacheClientLogs]" />
+      <EnvironmentVariable Name="EnableEFClientLogs" Value="[Catalog.API_EnableEFClientLogs]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="Basket.APIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Basket.API_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="identityUrl" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="CacheID" Value="[Basket.API_CacheID]" />
+      <EnvironmentVariable Name="BasketCacheIPAddresses" Value="[Basket.API_BasketCacheIPAddresses]" />
+      <EnvironmentVariable Name="EventBusNCachID" Value="[EventBusNCachID]" />
+      <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="[PubSubCacheIPAddresses]" />
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="[Basket.API_ApplicationInsights_InstrumentationKey]" />
+      <EnvironmentVariable Name="UseLoadTest" Value="[Basket.API_UseLoadTest]" />
+      <EnvironmentVariable Name="EnableNCacheClientLogs" Value="[Basket.API_EnableNCacheClientLogs]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ShoppingAggregatorPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[ShoppingAggregator_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="urls:basket" Value="[SF_Cluster_Basket_Url]" />
+      <EnvironmentVariable Name="urls:catalog" Value="[SF_Cluster_Catalog_Url]" />
+      <EnvironmentVariable Name="urls:orders" Value="[SF_Cluster_Ordering_Url]" />
+      <EnvironmentVariable Name="urls:identity" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="CatalogUrlHC" Value="[SF_Cluster_Catalog_UrlHC]" />
+      <EnvironmentVariable Name="OrderingUrlHC" Value="[SF_Cluster_Ordering_UrlHC]" />
+      <EnvironmentVariable Name="IdentityUrlHC" Value="[SF_Cluster_Identity_UrlHC]" />
+      <EnvironmentVariable Name="BasketUrlHC" Value="[SF_Cluster_Basket_UrlHC]" />
+      <EnvironmentVariable Name="MarketingUrlHC" Value="[SF_Cluster_Marketing_UrlHC]" />
+      <EnvironmentVariable Name="PaymentUrlHC" Value="[SF_Cluster_payment_UrlHC]" />
+      <EnvironmentVariable Name="LocationUrlHC" Value="[SF_Cluster_Location_UrlHC]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="CommonGateway.APIPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[CommonGateway.API_ASPNETCORE_ENVIRONMENT]" />
+      <EnvironmentVariable Name="IdentityUrl" Value="[SF_Cluster_Identity_Url]" />
+      <EnvironmentVariable Name="CatalogUrlHC" Value="[SF_Cluster_Catalog_UrlHC]" />
+      <EnvironmentVariable Name="OrderingUrlHC" Value="[SF_Cluster_Ordering_UrlHC]" />
+      <EnvironmentVariable Name="IdentityUrlHC" Value="[SF_Cluster_Identity_UrlHC]" />
+      <EnvironmentVariable Name="BasketUrlHC" Value="[SF_Cluster_Basket_UrlHC]" />
+      <EnvironmentVariable Name="MarketingUrlHC" Value="[SF_Cluster_Marketing_UrlHC]" />
+      <EnvironmentVariable Name="PaymentUrlHC" Value="[SF_Cluster_Payment_UrlHC]" />
+      <EnvironmentVariable Name="LocationUrlHC" Value="[SF_Cluster_Location_UrlHC]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <DefaultServices>
+    <!-- The section below creates instances of service types, when an instance of this 
+         application type is created. You can also create one or more instances of service type using the 
+         ServiceFabric PowerShell module.
+         
+         The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
+    <Service Name="WebStatus" ServiceDnsName="WebStatus" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="WebStatusType" InstanceCount="[WebStatus_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="WebMVC" ServiceDnsName="WebMVC" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="WebMVCType" InstanceCount="[WebMVC_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Payment.API" ServiceDnsName="Payment.API" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="Payment.APIType" InstanceCount="[Payment.API_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Ordering.SignalrHub" ServiceDnsName="Ordering.SignalrHub" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="Ordering.SignalrHubType" InstanceCount="[Ordering.SignalrHub_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Ordering.BackgroundTasks" ServiceDnsName="Ordering.BackgroundTasks" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="Ordering.BackgroundTasksType" InstanceCount="[Ordering.BackgroundTasks_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Ordering.API" ServiceDnsName="Ordering.API" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="Ordering.APIType" InstanceCount="[Ordering.API_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Marketing.API" ServiceDnsName="Marketing.API" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="Marketing.APIType" InstanceCount="[Marketing.API_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Locations.API" ServiceDnsName="Locations.API" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="Locations.APIType" InstanceCount="[Locations.API_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Identity.API" ServiceDnsName="Identity.API" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="Identity.APIType" InstanceCount="[Identity.API_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Catalog.API" ServiceDnsName="Catalog.API" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="Catalog.APIType" InstanceCount="[Catalog.API_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Basket.API" ServiceDnsName="Basket.API" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="Basket.APIType" InstanceCount="[Basket.API_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="ShoppingAggregator" ServiceDnsName="ShoppingAggregator" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="ShoppingAggregatorType" InstanceCount="[ShoppingAggregator_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="CommonGateway.API" ServiceDnsName="CommonGateway.API" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="CommonGateway.APIType" InstanceCount="[CommonGateway.API_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+  </DefaultServices>
+</ApplicationManifest>

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "value": "sfclusterncache" // The name of the SF Cluster
+    },
+    "clusterLocation": {
+      "value": "southeastasia" // Set the location of the resource group that will contain the SF cluster resource
+    },
+    "computeLocation": {
+      "value": "southeastasia" // Set location of the reource group compute center. Keep it same as clusterLocation 
+    },
+    "adminUserName": {
+      "value": "brad" // Set the username of the VM scale set nodes here
+    },
+    "adminPassword": {
+      "value": "4AlachisoftDemo" // Set the password corresponding to the SF VM scale set here
+    },
+    "existingVNetRGName": {
+      "value": "MicroservicesWithNCache" // Name of the existing resource group where SF cluster will be deployed
+    },
+    "existingVNetName": {
+      "value": "MicroservicesWithNCache-vnet" // Name of the existing VNET that will be used by the SF cluster
+    },
+    "subnet0Name": {
+      "value": "default" // The name of the subnet in the VNET
+    },
+    "nicName": {
+      "value": "NIC-sfclusterncache" 
+    },
+    "publicIPAddressName": {
+      "value": "sfclusterncache-PubIP"
+    },
+    "dnsName": {
+      "value": "sfclusterncache" // The DNS name of your SF cluster.
+    },
+    "virtualNetworkName": {
+      "value": "VNet-sfclusterncache" // Not used with current template as we are adding SF to existing network
+    },
+    "lbName": {
+      "value": "LB-sfclusterncache"
+    },
+    "lbIPName": {
+      "value": "LBIP-sfclusterncache"
+    },
+    "applicationDiagnosticsStorageAccountName": {
+      "value": "sfdgsfclusterncache8892"
+    },
+    "supportLogStorageAccountName": {
+      "value": "sflogssfclusterncach3722"
+    },
+    "sourceVaultValue": {
+      "value": "" // The source vault and cluster certificate have to be created before cluster deployment. Add the vault id here.
+    },
+    "certificateUrlValue": {
+      "value": "" // The certificate URL must be given
+    },
+    "certificateThumbprint": {
+      "value": "" // Enter the certificate thumbprint here
+    },
+    "vmImageSku": {
+      "value": "2016-Datacenter"
+    },
+    "vmImageOffer": {
+      "value": "WindowsServer"
+    },
+    "nt0ephemeralStartPort": {
+      "value": 49152
+    },
+    "nt0ephemeralEndPort": {
+      "value": 65534
+    },
+    "nt0applicationStartPort": {
+      "value": 20000
+    },
+    "nt0applicationEndPort": {
+      "value": 30000
+    },
+    "nt0fabricTcpGatewayPort": {
+      "value": 19000
+    },
+    "nt0fabricHttpGatewayPort": {
+      "value": 19080
+    },
+    "nt0reverseProxyEndpointPort": {
+      "value": 19081
+    }
+  }
+}

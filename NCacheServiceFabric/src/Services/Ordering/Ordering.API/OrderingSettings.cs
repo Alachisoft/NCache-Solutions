@@ -1,0 +1,9 @@
+﻿namespace Microsoft.eShopOnContainers.Services.Ordering.API
+{
+    public class OrderingSettings
+    {
+        public bool UseCustomizationData { get; set; }
+        public string ConnectionString { get; set; }
+        public int CheckUpdateTime { get; set; }
+    }
+}
