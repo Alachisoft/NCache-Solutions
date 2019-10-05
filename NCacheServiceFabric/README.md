@@ -16,11 +16,11 @@ This project uses the popular [eShopOnContainers](https://github.com/dotnet-arch
 
 ![Architectural Diagram](./resources/Eshop.png)
 
-While a sample of **eShopOnContainers** application using NCache is already available on the Alachisoft [NCache GitHub repository](https://github.com/Alachisoft/NCache-Solutions/tree/master/eShopOnContainers), that sample uses Docker to containerize the micoroservices and utilizes Docker Compose as the orchestrator to set-up the microservices-based application. In this solution, on the other hand, the microservices have been set up as Service Fabric [reliable stateless services](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-introduction). The reasons for introducing the same application implemented for a Service Fabric deployment and using its reliable stateless service architecture are as follows:
+While a sample of **eShopOnContainers** application using NCache is already available on the Alachisoft [NCache GitHub repository](../eShopOnContainers/README.md), that sample uses Docker to containerize the micoroservices and utilizes Docker Compose as the orchestrator to set-up the microservices-based application. In this solution, on the other hand, the microservices have been set up as Service Fabric [reliable stateless services](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-introduction). The reasons for introducing the same application implemented for a Service Fabric deployment and using its reliable stateless service architecture are as follows:
 
 - Even though Docker Compose is a great tool used frequently during development stages, in a production environment, however, especially when the application is to be deployed to the cloud, it is recommended to use an orchestrator such as Azure Service Fabric instead of Docker Compose.
 
-- Re-architecting an existing application as a Service Fabric reliable service is very straightforward and requires minimal changes in the structure. This can be seen by comparing the code in the [previously-implemented solution](https://github.com/Alachisoft/NCache-Solutions/tree/master/eShopOnContainers) with the current one. In return, your application is opened up  to a whole suite of Service Fabric APIs for [system monitoring and diagnostics](https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/service-fabric/service-fabric-tutorial-monitoring-aspnet.md), [health reporting](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-report-health), and [much more](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-introduction).
+- Re-architecting an existing application as a Service Fabric reliable service is very straightforward and requires minimal changes in the structure. This can be seen by comparing the code in the [previously-implemented solution](../eShopOnContainers/README.md) with the current one. In return, your application is opened up  to a whole suite of Service Fabric APIs for [system monitoring and diagnostics](https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/service-fabric/service-fabric-tutorial-monitoring-aspnet.md), [health reporting](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-report-health), and [much more](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-introduction).
 
 In an Azure environment, Service Fabric is a natural choice as Azure has an extensive built-in engine to allow for setting up the resources for a Service Fabric cluster using tools such as [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest) as well as the [Azure Resource Manager (ARM)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview).
 
@@ -47,7 +47,7 @@ NCache can easily be configured for use as a messaging broker for asynchronous c
 
 To implement the  NCache event bus for asynchronous communications in eShopOnContainers, the implementation has been done in the same way as was done for the RabbitMQ and NServiceBus messaging brokers.
 
-Therefore, following is a code snippet of the implementation of a persistant connection mechanism to allow for connection to NCache Pub/Sub servers, the details of which can be found [here](https://github.com/Obaid-Rehman/NCacheServiceFabric/tree/master/src/BuildingBlocks/EventBusNCache):
+Therefore, following is a code snippet of the implementation of a persistant connection mechanism to allow for connection to NCache Pub/Sub servers, the details of which can be found [here](./src/BuildingBlocks/EventBusNCache):
 
 ```csharp
 public class DefaultNCachePersistentConnection : INCachePersistantConnection
@@ -212,7 +212,7 @@ More information about NCache Pub/Sub feature can be found [in NCache Documentat
 
 Being a distributed caching provider, NCache is an ideal candidate for caching solutions for microservices applications where scalability, availability and performance are of utmost importance. 
 
-In this regard, besides using the native NCache APIs for caching data, NCache also provides the EF Core caching provider implementation to allow for seamless integration of caching into the application during EF Core CRUD operations. To demonstrate how easy it is to use EF Core caching, consider the following code snippet taken from the [Catalog.API microservice](https://github.com/Obaid-Rehman/NCacheServiceFabric/blob/master/src/Services/Catalog/Catalog.API/Controllers/CatalogController.cs) in the solution to fetch a collection of items from the database and cache it in the NCache servers:
+In this regard, besides using the native NCache APIs for caching data, NCache also provides the EF Core caching provider implementation to allow for seamless integration of caching into the application during EF Core CRUD operations. To demonstrate how easy it is to use EF Core caching, consider the following code snippet taken from the [Catalog.API microservice](./src/Services/Catalog/Catalog.API/Controllers/CatalogController.cs) in the solution to fetch a collection of items from the database and cache it in the NCache servers:
 
 ```csharp  
 if (!_settings.EFCoreCachingEnabled)
@@ -315,7 +315,7 @@ public static class NCacheDataProtectionBuilderExtensions
 	}
 }
 ```
-The full working copy of this class can be found [here](https://github.com/Obaid-Rehman/NCacheServiceFabric/tree/master/src/BuildingBlocks/NCacheDataProtection).
+The full working copy of this class can be found [here](./src/BuildingBlocks/NCacheDataProtection).
 
 - **NCache Health Checks**
 
@@ -373,7 +373,7 @@ public static class NCacheHealthCheckBuilderExtensions
 
 Following are the steps to set-up the application configuration once all the [requirements](#pre-requisites) have been met:
 
-- In the [CommonGateway.API](https://github.com/Obaid-Rehman/NCacheServiceFabric/tree/master/src/CommonGatewayAPI/CommonGateway.API)  project, within the **configuration** folder, is the routing configuration JSON file, titled **configurationSF.json**, used by the [Ocelot](https://ocelot.readthedocs.io/en/latest/introduction/gettingstarted.html) library to route traffic from the WebMVC microservice to the core microservices (Catalog, Basket, Ordering etc.) for CRUD operations. **Before** [publishing the Service Fabric application](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-tutorial-deploy-app-to-party-cluster) to the local development cluster or to Azure, make sure to change the **Host** property value given within the **DownstreamHostAndPorts** element to the DNS name of your Service Fabric cluster.
+- In the [CommonGateway.API](./src/CommonGatewayAPI/CommonGateway.API)  project, within the **configuration** folder, is the routing configuration JSON file, titled **configurationSF.json**, used by the [Ocelot](https://ocelot.readthedocs.io/en/latest/introduction/gettingstarted.html) library to route traffic from the WebMVC microservice to the core microservices (Catalog, Basket, Ordering etc.) for CRUD operations. **Before** [publishing the Service Fabric application](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-tutorial-deploy-app-to-party-cluster) to the local development cluster or to Azure, make sure to change the **Host** property value given within the **DownstreamHostAndPorts** element to the DNS name of your Service Fabric cluster.
 Following is the JSON file found in the solution for reference:
 
 ```csharp
@@ -541,31 +541,31 @@ Following is the JSON file found in the solution for reference:
 <Parameter Name="Marketing.API_PicBaseUrl" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55110/api/v1/campaigns/[0]/pic/" />
 <Parameter Name="Catalog.API_PicBaseUrl" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55101/api/v1/catalog/items/[0]/pic/" />
 <Parameter Name="SF_Cluster_Identity_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55105" />
-    <Parameter Name="SF_Cluster_Basket_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55103" />
-    <Parameter Name="SF_Cluster_Catalog_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55101" />
-    <Parameter Name="SF_Cluster_Location_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55109" />
-    <Parameter Name="SF_Cluster_Payment_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55108" />
-    <Parameter Name="SF_Cluster_Marketing_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55110" />
-    <Parameter Name="SF_Cluster_Ordering_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55102" />
-    <Parameter Name="SF_Cluster_OrderingBackgroundTask_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55111" />
-    <Parameter Name="SF_Cluster_OrderingSignalrHub_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55112" />
-    <Parameter Name="SF_Cluster_ShoppingAPI_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55202" />
-    <Parameter Name="SF_Cluster_ShoppingAggregator_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55121" />
-    <Parameter Name="SF_Cluster_MVC_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55100" />
-    <Parameter Name="SF_Cluster_WebStatus_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55107" />
-    <Parameter Name="SF_Cluster_Identity_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55105/hc" />
-    <Parameter Name="SF_Cluster_Basket_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55103/hc" />
-    <Parameter Name="SF_Cluster_Catalog_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55101/hc" />
-    <Parameter Name="SF_Cluster_Location_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55109/hc" />
-    <Parameter Name="SF_Cluster_Payment_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55108/hc" />
-    <Parameter Name="SF_Cluster_Marketing_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55110/hc" />
-    <Parameter Name="SF_Cluster_Ordering_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55102/hc" />
-    <Parameter Name="SF_Cluster_OrderingBackgroundTask_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55111/hc" />
-    <Parameter Name="SF_Cluster_OrderingSignalrHub_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55112/hc" />
-    <Parameter Name="SF_Cluster_ShoppingAPI_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55202/hc" />
-    <Parameter Name="SF_Cluster_ShoppingAggregator_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55121/hc" />
-    <Parameter Name="SF_Cluster_MVC_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55100/hc" />
-    <Parameter Name="SF_Cluster_WebStatus_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55107/hc" />
+<Parameter Name="SF_Cluster_Basket_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55103" />
+<Parameter Name="SF_Cluster_Catalog_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55101" />
+<Parameter Name="SF_Cluster_Location_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55109" />
+<Parameter Name="SF_Cluster_Payment_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55108" />
+<Parameter Name="SF_Cluster_Marketing_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55110" />
+<Parameter Name="SF_Cluster_Ordering_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55102" />
+<Parameter Name="SF_Cluster_OrderingBackgroundTask_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55111" />
+<Parameter Name="SF_Cluster_OrderingSignalrHub_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55112" />
+<Parameter Name="SF_Cluster_ShoppingAPI_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55202" />
+<Parameter Name="SF_Cluster_ShoppingAggregator_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55121" />
+<Parameter Name="SF_Cluster_MVC_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55100" />
+<Parameter Name="SF_Cluster_WebStatus_Url" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55107" />
+<Parameter Name="SF_Cluster_Identity_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55105/hc" />
+<Parameter Name="SF_Cluster_Basket_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55103/hc" />
+<Parameter Name="SF_Cluster_Catalog_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55101/hc" />
+<Parameter Name="SF_Cluster_Location_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55109/hc" />
+<Parameter Name="SF_Cluster_Payment_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55108/hc" />
+<Parameter Name="SF_Cluster_Marketing_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55110/hc" />
+<Parameter Name="SF_Cluster_Ordering_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55102/hc" />
+<Parameter Name="SF_Cluster_OrderingBackgroundTask_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55111/hc" />
+<Parameter Name="SF_Cluster_OrderingSignalrHub_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55112/hc" />
+<Parameter Name="SF_Cluster_ShoppingAPI_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55202/hc" />
+<Parameter Name="SF_Cluster_ShoppingAggregator_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55121/hc" />
+<Parameter Name="SF_Cluster_MVC_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55100/hc" />
+<Parameter Name="SF_Cluster_WebStatus_UrlHC" Value="http://ncachesfdemo.southeastasia.cloudapp.azure.com:55107/hc" />
 
 
 ```
@@ -605,7 +605,7 @@ In the parameters shown above, change the URL of the SF cluster, given as **ncac
 
 ```
 
-**IMPORTANT**: The scripts to create AAD support for the cluster need to run **before** creating the Service Fabric cluster in Azure as given [here](https://github.com/Azure-Samples/service-fabric-aad-helpers#create-azure-ad-users). Full template deployment and parameters json files are found [here](https://github.com/Obaid-Rehman/NCacheServiceFabric/tree/master/src/AzureSFDeployment).
+**IMPORTANT**: The scripts to create AAD support for the cluster need to run **before** creating the Service Fabric cluster in Azure as given [here](https://github.com/Azure-Samples/service-fabric-aad-helpers#create-azure-ad-users). Full template deployment and parameters json files are found [here](./src/AzureSFDeployment).
 
 - Make sure add virtual machines that will host the NCache servers and assign them static IP address within the VNET. The steps for that have already been discussed in the pre-requisites section [here](#pre-requisites).
 
