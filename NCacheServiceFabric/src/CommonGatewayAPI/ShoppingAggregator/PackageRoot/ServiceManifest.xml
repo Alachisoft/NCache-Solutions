@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceManifest Name="ShoppingAggregatorPkg"
+                 Version="1.0.0"
+                 xmlns="http://schemas.microsoft.com/2011/01/fabric"
+                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServiceTypes>
+    <!-- This is the name of your ServiceType. 
+         This name must match the string used in RegisterServiceType call in Program.cs. -->
+    <StatelessServiceType ServiceTypeName="ShoppingAggregatorType" />
+  </ServiceTypes>
+
+  <!-- Code package is your service executable. -->
+  <CodePackage Name="Code" Version="1.0.0">
+    <EntryPoint>
+      <ExeHost>
+        <Program>ShoppingAggregator.exe</Program>
+        <WorkingFolder>CodePackage</WorkingFolder>
+        <ConsoleRedirection FileRetentionCount="5" FileMaxSizeInKb="2048"/>
+      </ExeHost>
+    </EntryPoint>
+    <EnvironmentVariables>
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="Development"/>
+      <EnvironmentVariable Name="urls:basket" Value="http://brad-rehman.diyatech.org.pk:55103"/>
+      <EnvironmentVariable Name="urls:catalog" Value="http://brad-rehman.diyatech.org.pk:55101"/>
+      <EnvironmentVariable Name="urls:orders" Value="http://brad-rehman.diyatech.org.pk:55102"/>
+      <EnvironmentVariable Name="urls:identity" Value="http://brad-rehman.diyatech.org.pk:55105"/>
+      <EnvironmentVariable Name="CatalogUrlHC" Value="http://brad-rehman.diyatech.org.pk:55101/hc"/>
+      <EnvironmentVariable Name="OrderingUrlHC" Value="http://brad-rehman.diyatech.org.pk:55102/hc"/>
+      <EnvironmentVariable Name="IdentityUrlHC" Value="http://brad-rehman.diyatech.org.pk:55105/hc"/>
+      <EnvironmentVariable Name="BasketUrlHC" Value="http://brad-rehman.diyatech.org.pk:55103/hc"/>
+      <EnvironmentVariable Name="MarketingUrlHC" Value="http://brad-rehman.diyatech.org.pk:55110/hc"/>
+      <EnvironmentVariable Name="PaymentUrlHC" Value="http://brad-rehman.diyatech.org.pk:55108/hc"/>
+      <EnvironmentVariable Name="LocationUrlHC" Value="http://brad-rehman.diyatech.org.pk:55109/hc"/>
+    </EnvironmentVariables>
+  </CodePackage>
+
+  <!-- Config package is the contents of the Config directoy under PackageRoot that contains an 
+       independently-updateable and versioned set of custom configuration settings for your service. -->
+  <ConfigPackage Name="Config" Version="1.0.0" />
+
+  <Resources>
+    <Endpoints>
+      <!-- This endpoint is used by the communication listener to obtain the port on which to 
+           listen. Please note that if your service is partitioned, this port is shared with 
+           replicas of different partitions that are placed in your code. -->
+      <Endpoint Protocol="http" UriScheme="http" Name="ServiceEndpoint" Type="Input" Port="55121" />
+    </Endpoints>
+  </Resources>
+</ServiceManifest>

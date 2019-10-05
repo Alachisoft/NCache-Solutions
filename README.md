@@ -23,4 +23,8 @@ Following is a list of the solutions provided:
 - [Full Text Search With Distributed Lucene](./FullTextSearchWithDistributedLucene/README.md)
 
   This solution demonstrates the ease with which the NCache Lucene module can be used to integrate Lucene Full Text Search (FTS) engine into a ASP.NET Core based e-commerce web application.
+
+- [Microservices with NCache Using Service Fabric](./NCacheServiceFabric/README.md)
+
+  This solution revisits the [eShopOnContainersSolution](./eShopOnContainers/README.md) solution but uses Azure Service Fabric to port the microservices as Service Fabric Reliable Stateless Services. The solution also contains an Azure Resource Manager (ARM) template to deploy a Service Fabric cluster into an existing VNET in Azure for convenience.
   

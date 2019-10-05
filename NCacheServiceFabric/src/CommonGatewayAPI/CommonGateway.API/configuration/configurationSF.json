@@ -1,0 +1,153 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/{version}/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55110
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/m/{everything}",
+      "UpstreamHttpMethod": []
+    },
+    {
+      "DownstreamPathTemplate": "/api/{version}/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55109
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/l/{everything}",
+      "UpstreamHttpMethod": []
+    },
+    {
+      "DownstreamPathTemplate": "/api/{version}/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55101
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/c/{everything}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{version}/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55103
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/b/{everything}",
+      "UpstreamHttpMethod": [],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/{version}/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55102
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/o/{everything}",
+      "UpstreamHttpMethod": [],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55121
+        }
+      ],
+      "UpstreamPathTemplate": "/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55102
+        }
+      ],
+      "UpstreamPathTemplate": "/orders-api/{everything}",
+      "UpstreamHttpMethod": []
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55112
+        }
+      ],
+      "UpstreamPathTemplate": "/hub/{everything}",
+      "UpstreamHttpMethod": []
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55103
+        }
+      ],
+      "UpstreamPathTemplate": "/basket-api/{everything}",
+      "UpstreamHttpMethod": []
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55101
+        }
+      ],
+      "UpstreamPathTemplate": "/catalog-api/{everything}",
+      "UpstreamHttpMethod": []
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Port": 55108
+        }
+      ],
+      "UpstreamPathTemplate": "/payment-api/{everything}",
+      "UpstreamHttpMethod": []
+    }
+
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/administration"
+  }
+}

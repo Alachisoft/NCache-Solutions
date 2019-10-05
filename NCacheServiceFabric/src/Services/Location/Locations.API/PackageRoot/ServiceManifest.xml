@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceManifest Name="Locations.APIPkg"
+                 Version="1.0.0"
+                 xmlns="http://schemas.microsoft.com/2011/01/fabric"
+                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServiceTypes>
+    <!-- This is the name of your ServiceType. 
+         This name must match the string used in RegisterServiceType call in Program.cs. -->
+    <StatelessServiceType ServiceTypeName="Locations.APIType" />
+  </ServiceTypes>
+
+  <!-- Code package is your service executable. -->
+  <CodePackage Name="Code" Version="1.0.0">
+    <EntryPoint>
+      <ExeHost>
+        <Program>Locations.API.exe</Program>
+        <WorkingFolder>CodePackage</WorkingFolder>
+        <ConsoleRedirection FileRetentionCount="5" FileMaxSizeInKb="2048"/>
+      </ExeHost>
+    </EntryPoint>
+    <EnvironmentVariables>
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="Development"/>
+      <EnvironmentVariable Name="ASPNETCORE_URLS" Value="http://0.0.0.0:80"/>
+      <EnvironmentVariable Name="ConnectionString" Value="mongodb://20.200.20.103:27017"/>
+      <EnvironmentVariable Name="CosmosDBDeployment" Value="False"/>
+      <EnvironmentVariable Name="Database" Value="LocationsDb"/>
+      <EnvironmentVariable Name="identityUrl" Value="http://brad-rehman.diyatech.org.pk:55105"/>
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="http://brad-rehman.diyatech.org.pk:55105"/>
+      <EnvironmentVariable Name="EventBusNCachID" Value="pubsubcache"/>
+      <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="20.200.20.103"/>
+      <EnvironmentVariable Name="EventBusNCachTopicID" Value="IntegrationEvents"/>
+      <EnvironmentVariable Name="EventBusNCacheSubscriptionName" Value="LocationSubscription"/>
+      <EnvironmentVariable Name="LocationCachingEnabled" Value="True"/>
+      <EnvironmentVariable Name="CacheID" Value="LocationsCache"/>
+      <EnvironmentVariable Name="LocationCacheIPAddresses" Value="20.200.20.103"/>
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="microservicesNCache"/>
+      <EnvironmentVariable Name="UseLoadTest" Value="False"/>
+      <EnvironmentVariable Name="EnableNCacheClientLogs" Value="False"/>
+    </EnvironmentVariables>
+  </CodePackage>
+
+  <!-- Config package is the contents of the Config directoy under PackageRoot that contains an 
+       independently-updateable and versioned set of custom configuration settings for your service. -->
+  <ConfigPackage Name="Config" Version="1.0.0" />
+
+  <Resources>
+    <Endpoints>
+      <!-- This endpoint is used by the communication listener to obtain the port on which to 
+           listen. Please note that if your service is partitioned, this port is shared with 
+           replicas of different partitions that are placed in your code. -->
+      <Endpoint Protocol="http" UriScheme="http" Name="ServiceEndpoint" Type="Input" Port="55109" />
+    </Endpoints>
+  </Resources>
+</ServiceManifest>

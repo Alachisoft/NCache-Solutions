@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceManifest Name="WebMVCPkg"
+                 Version="1.0.0"
+                 xmlns="http://schemas.microsoft.com/2011/01/fabric"
+                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServiceTypes>
+    <!-- This is the name of your ServiceType. 
+         This name must match the string used in RegisterServiceType call in Program.cs. -->
+    <StatelessServiceType ServiceTypeName="WebMVCType" />
+  </ServiceTypes>
+
+  <!-- Code package is your service executable. -->
+  <CodePackage Name="Code" Version="1.0.0">
+    <EntryPoint>
+      <ExeHost>
+        <Program>WebMVC.exe</Program>
+        <WorkingFolder>CodePackage</WorkingFolder>
+        <ConsoleRedirection FileRetentionCount="5" FileMaxSizeInKb="2048"/>
+      </ExeHost>
+    </EntryPoint>
+    <EnvironmentVariables>
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="Development"/>
+      <EnvironmentVariable Name="ASPNETCORE_URLS" Value="http://0.0.0.0:80"/>
+      <EnvironmentVariable Name="CallBackUrl" Value="http://brad-rehman.diyatech.org.pk:55100"/>
+      <EnvironmentVariable Name="PurchaseUrl" Value="http://brad-rehman.diyatech.org.pk:55202"/>
+      <EnvironmentVariable Name="IdentityUrl" Value="http://brad-rehman.diyatech.org.pk:55105"/>
+      <EnvironmentVariable Name="MarketingUrl" Value="http://brad-rehman.diyatech.org.pk:55202"/>
+      <EnvironmentVariable Name="SignalrHubUrl" Value="http://brad-rehman.diyatech.org.pk:55112"/>
+      <EnvironmentVariable Name="CatalogUrlHC" Value="http://brad-rehman.diyatech.org.pk:55101/hc"/>
+      <EnvironmentVariable Name="OrderingUrlHC" Value="http://brad-rehman.diyatech.org.pk:55102/hc"/>
+      <EnvironmentVariable Name="IdentityUrlHC" Value="http://brad-rehman.diyatech.org.pk:55105/hc"/>
+      <EnvironmentVariable Name="BasketUrlHC" Value="http://brad-rehman.diyatech.org.pk:55103/hc"/>
+      <EnvironmentVariable Name="MarketingUrlHC" Value="http://brad-rehman.diyatech.org.pk:55202/hc"/>
+      <EnvironmentVariable Name="PurchaseUrlHC" Value="http://brad-rehman.diyatech.org.pk:55202/hc"/>
+      <EnvironmentVariable Name="UseCustomizationData" Value="False"/>
+      <EnvironmentVariable Name="IsClusterEnv" Value="True"/>
+      <EnvironmentVariable Name="CacheID" Value="mvccache"/>
+      <EnvironmentVariable Name="MVCCacheIPAddresses" Value="20.200.20.103"/>
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="microservicesNCache"/>
+      <EnvironmentVariable Name="UseLoadTest" Value="False"/>
+      <EnvironmentVariable Name="EnableClientLogs" Value="False"/>
+    </EnvironmentVariables>
+  </CodePackage>
+
+  <!-- Config package is the contents of the Config directoy under PackageRoot that contains an 
+       independently-updateable and versioned set of custom configuration settings for your service. -->
+  <ConfigPackage Name="Config" Version="1.0.0" />
+
+  <Resources>
+    <Endpoints>
+      <!-- This endpoint is used by the communication listener to obtain the port on which to 
+           listen. Please note that if your service is partitioned, this port is shared with 
+           replicas of different partitions that are placed in your code. -->
+      <Endpoint Protocol="http" UriScheme="http" Name="ServiceEndpoint" Type="Input" Port="55100" />
+    </Endpoints>
+  </Resources>
+</ServiceManifest>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceManifest Name="WebStatusPkg"
+                 Version="1.0.0"
+                 xmlns="http://schemas.microsoft.com/2011/01/fabric"
+                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServiceTypes>
+    <!-- This is the name of your ServiceType. 
+         This name must match the string used in RegisterServiceType call in Program.cs. -->
+    <StatelessServiceType ServiceTypeName="WebStatusType" />
+  </ServiceTypes>
+
+  <!-- Code package is your service executable. -->
+  <CodePackage Name="Code" Version="1.0.0">
+    <EntryPoint>
+      <ExeHost>
+        <Program>WebStatus.exe</Program>
+        <WorkingFolder>CodePackage</WorkingFolder>
+        <ConsoleRedirection FileRetentionCount="5" FileMaxSizeInKb="2048"/>
+      </ExeHost>
+    </EntryPoint>
+    <EnvironmentVariables>
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="Development"/>
+      <EnvironmentVariable Name="ASPNETCORE_URLS" Value="http://0.0.0.0:80"/>
+      <EnvironmentVariable Name="IdentityUrl" Value="http://brad-rehman.diyatech.org.pk:55105"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:0:Name" Value="WebMVC HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:0:Uri" Value="http://brad-rehman.diyatech.org.pk:55100/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:1:Name" Value="Web Shopping Aggregator GW HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:1:Uri" Value="http://brad-rehman.diyatech.org.pk:55121/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:2:Name" Value="Web Shopping API GW HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:2:Uri" Value="http://brad-rehman.diyatech.org.pk:55202/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:3:Name" Value="Ordering HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:3:Uri" Value="http://brad-rehman.diyatech.org.pk:55102/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:4:Name" Value="Ordering HTTP Background Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:4:Uri" Value="http://brad-rehman.diyatech.org.pk:55111/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:5:Name" Value="Basket HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:5:Uri" Value="http://brad-rehman.diyatech.org.pk:55103/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:6:Name" Value="Catalog HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:6:Uri" Value="http://brad-rehman.diyatech.org.pk:55101/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:7:Name" Value="Identity HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:7:Uri" Value="http://brad-rehman.diyatech.org.pk:55105/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:8:Name" Value="Marketing HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:8:Uri" Value="http://brad-rehman.diyatech.org.pk:55110/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:9:Name" Value="Locations HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:9:Uri" Value="http://brad-rehman.diyatech.org.pk:55109/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:10:Name" Value="Payments HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:10:Uri" Value="http://brad-rehman.diyatech.org.pk:55108/hc"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:11:Name" Value="Ordering SignalRHub HTTP Check"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:11:Uri" Value="http://brad-rehman.diyatech.org.pk:55112/hc"/>
+      <EnvironmentVariable Name="ApplicationInsights:InstrumentationKey" Value="microservicesNCache"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:EvaluationTimeOnSeconds" Value="10"/>
+      <EnvironmentVariable Name="HealthChecks-UI:HealthChecks:MinimumSecondsBetweenFailureNotifications" Value="60"/>
+    </EnvironmentVariables>
+  </CodePackage>
+
+  <!-- Config package is the contents of the Config directoy under PackageRoot that contains an 
+       independently-updateable and versioned set of custom configuration settings for your service. -->
+  <ConfigPackage Name="Config" Version="1.0.0" />
+
+  <Resources>
+    <Endpoints>
+      <!-- This endpoint is used by the communication listener to obtain the port on which to 
+           listen. Please note that if your service is partitioned, this port is shared with 
+           replicas of different partitions that are placed in your code. -->
+      <Endpoint Protocol="http" UriScheme="http" Name="ServiceEndpoint" Type="Input" Port="55107" />
+    </Endpoints>
+  </Resources>
+</ServiceManifest>
