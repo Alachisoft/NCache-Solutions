@@ -22,8 +22,8 @@
     <EnvironmentVariables>
       <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="Development"/>
       <EnvironmentVariable Name="ASPNETCORE_URLS" Value="http://0.0.0.0:80"/>
-      <EnvironmentVariable Name="identityUrl" Value= "http://brad-rehman.diyatech.org.pk:55105"/>
-      <EnvironmentVariable Name="IdentityUrlExternal" Value="http://brad-rehman.diyatech.org.pk:55105"/>
+      <EnvironmentVariable Name="identityUrl" Value= "http://localhost:55105"/>
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="http://localhost:55105"/>
       <EnvironmentVariable Name="CacheID" Value="basketcache"/>
       <EnvironmentVariable Name="BasketCacheIPAddresses" Value="20.200.20.103"/>
       <EnvironmentVariable Name="EventBusNCachID" Value="pubsubcache"/>
