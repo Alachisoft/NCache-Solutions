@@ -26,9 +26,9 @@
       <EnvironmentVariable Name="MongoConnectionString" Value="mongodb://20.200.20.103:27017"/>
       <EnvironmentVariable Name="CosmosDBDeployment" Value="False"/>
       <EnvironmentVariable Name="MongoDatabase" Value="MarketingDb"/>
-      <EnvironmentVariable Name="identityUrl" Value="http://brad-rehman.diyatech.org.pk:55105"/>
-      <EnvironmentVariable Name="IdentityUrlExternal" Value="http://brad-rehman.diyatech.org.pk:55105"/>
-      <EnvironmentVariable Name="PicBaseUrl" Value="http://brad-rehman.diyatech.org.pk:55110/api/v1/campaigns/[0]/pic/"/>
+      <EnvironmentVariable Name="identityUrl" Value="http://localhost:55105"/>
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="http://localhost:55105"/>
+      <EnvironmentVariable Name="PicBaseUrl" Value="http://localhost:55110/api/v1/campaigns/[0]/pic/"/>
       <EnvironmentVariable Name="EventBusNCachID" Value="pubsubcache"/>
       <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="20.200.20.103"/>
       <EnvironmentVariable Name="EventBusNCachTopicID" Value="IntegrationEvents"/>
