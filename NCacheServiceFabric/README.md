@@ -385,7 +385,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55110
         }
       ],
@@ -397,7 +397,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55109
         }
       ],
@@ -409,7 +409,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55101
         }
       ],
@@ -421,7 +421,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55103
         }
       ],
@@ -437,7 +437,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55102
         }
       ],
@@ -453,7 +453,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55121
         }
       ],
@@ -469,7 +469,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55102
         }
       ],
@@ -481,7 +481,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55112
         }
       ],
@@ -493,7 +493,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55103
         }
       ],
@@ -505,7 +505,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55101
         }
       ],
@@ -517,7 +517,7 @@ Following is the JSON file found in the solution for reference:
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", 
+          "Host": "localhost", 
           "Port": 55108
         }
       ],
