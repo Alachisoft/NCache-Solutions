@@ -44,7 +44,7 @@
     <Parameter Name="Marketing.API_ConnectionString" DefaultValue="Server=tcp:20.200.20.103,1433\SQLEXPRESS;Database=Microsoft.eShopOnContainers.Services.MarketingDb;User Id=brad_rehman;Password=password" />
     <Parameter Name="Marketing.API_MongoConnectionString" DefaultValue="mongodb://20.200.20.103:27017" />
     <Parameter Name="Marketing.API_CosmosDBDeployment" DefaultValue="False" />
-    <Parameter Name="Marketing.API_PicBaseUrl" DefaultValue="http://brad-rehman.diyatech.org.pk:55110/api/v1/campaigns/[0]/pic/" />
+    <Parameter Name="Marketing.API_PicBaseUrl" DefaultValue="http://localhost:55110/api/v1/campaigns/[0]/pic/" />
     <Parameter Name="Marketing.API_MongoDatabase" DefaultValue="MarketingDb" />
     <Parameter Name="Marketing.API_CachingEnabled" DefaultValue="True" />
     <Parameter Name="Marketing.API_MarketingCacheID" DefaultValue="MarketingCache" />
@@ -76,7 +76,7 @@
     <Parameter Name="Catalog.API_ASPNETCORE_ENVIRONMENT" DefaultValue="Development" />
     <Parameter Name="Catalog.API_InstanceCount" DefaultValue="-1" />
     <Parameter Name="Catalog.API_ConnectionString" DefaultValue="Server=tcp:20.200.20.103,1433\SQLEXPRESS;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=brad_rehman;Password=password" />
-    <Parameter Name="Catalog.API_PicBaseUrl" DefaultValue="http://brad-rehman.diyatech.org.pk:55101/api/v1/catalog/items/[0]/pic/" />
+    <Parameter Name="Catalog.API_PicBaseUrl" DefaultValue="http://localhost:55101/api/v1/catalog/items/[0]/pic/" />
     <Parameter Name="Catalog.API_UseCustomizationData" DefaultValue="True" />
     <Parameter Name="Catalog.API_EFCoreCachingEnabled" DefaultValue="True" />
     <Parameter Name="Catalog.API_EFCacheID" DefaultValue="CatalogEFCache" />
@@ -102,32 +102,32 @@
     <Parameter Name="Ordering_CachingEnabled" DefaultValue="True" />
     <Parameter Name="Ordering_CacheID" DefaultValue="OrderingCache" />
     <Parameter Name="Ordering_OrderingCacheIPAddresses" DefaultValue="20.200.20.103" />
-    <Parameter Name="SF_Cluster_Identity_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55105" />
-    <Parameter Name="SF_Cluster_Basket_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55103" />
-    <Parameter Name="SF_Cluster_Catalog_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55101" />
-    <Parameter Name="SF_Cluster_Location_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55109" />
-    <Parameter Name="SF_Cluster_Payment_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55108" />
-    <Parameter Name="SF_Cluster_Marketing_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55110" />
-    <Parameter Name="SF_Cluster_Ordering_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55102" />
-    <Parameter Name="SF_Cluster_OrderingBackgroundTask_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55111" />
-    <Parameter Name="SF_Cluster_OrderingSignalrHub_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55112" />
-    <Parameter Name="SF_Cluster_ShoppingAPI_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55202" />
-    <Parameter Name="SF_Cluster_ShoppingAggregator_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55121" />
-    <Parameter Name="SF_Cluster_MVC_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55100" />
-    <Parameter Name="SF_Cluster_WebStatus_Url" DefaultValue="http://brad-rehman.diyatech.org.pk:55107" />
-    <Parameter Name="SF_Cluster_Identity_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55105/hc" />
-    <Parameter Name="SF_Cluster_Basket_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55103/hc" />
-    <Parameter Name="SF_Cluster_Catalog_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55101/hc" />
-    <Parameter Name="SF_Cluster_Location_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55109/hc" />
-    <Parameter Name="SF_Cluster_Payment_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55108/hc" />
-    <Parameter Name="SF_Cluster_Marketing_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55110/hc" />
-    <Parameter Name="SF_Cluster_Ordering_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55102/hc" />
-    <Parameter Name="SF_Cluster_OrderingBackgroundTask_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55111/hc" />
-    <Parameter Name="SF_Cluster_OrderingSignalrHub_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55112/hc" />
-    <Parameter Name="SF_Cluster_ShoppingAPI_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55202/hc" />
-    <Parameter Name="SF_Cluster_ShoppingAggregator_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55121/hc" />
-    <Parameter Name="SF_Cluster_MVC_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55100/hc" />
-    <Parameter Name="SF_Cluster_WebStatus_UrlHC" DefaultValue="http://brad-rehman.diyatech.org.pk:55107/hc" />
+    <Parameter Name="SF_Cluster_Identity_Url" DefaultValue="http://localhost:55105" />
+    <Parameter Name="SF_Cluster_Basket_Url" DefaultValue="http://localhost:55103" />
+    <Parameter Name="SF_Cluster_Catalog_Url" DefaultValue="http://localhost:55101" />
+    <Parameter Name="SF_Cluster_Location_Url" DefaultValue="http://localhost:55109" />
+    <Parameter Name="SF_Cluster_Payment_Url" DefaultValue="http://localhost:55108" />
+    <Parameter Name="SF_Cluster_Marketing_Url" DefaultValue="http://localhost:55110" />
+    <Parameter Name="SF_Cluster_Ordering_Url" DefaultValue="http://localhost:55102" />
+    <Parameter Name="SF_Cluster_OrderingBackgroundTask_Url" DefaultValue="http://localhost:55111" />
+    <Parameter Name="SF_Cluster_OrderingSignalrHub_Url" DefaultValue="http://localhost:55112" />
+    <Parameter Name="SF_Cluster_ShoppingAPI_Url" DefaultValue="http://localhost:55202" />
+    <Parameter Name="SF_Cluster_ShoppingAggregator_Url" DefaultValue="http://localhost:55121" />
+    <Parameter Name="SF_Cluster_MVC_Url" DefaultValue="http://localhost:55100" />
+    <Parameter Name="SF_Cluster_WebStatus_Url" DefaultValue="http://localhost:55107" />
+    <Parameter Name="SF_Cluster_Identity_UrlHC" DefaultValue="http://localhost:55105/hc" />
+    <Parameter Name="SF_Cluster_Basket_UrlHC" DefaultValue="http://localhost:55103/hc" />
+    <Parameter Name="SF_Cluster_Catalog_UrlHC" DefaultValue="http://localhost:55101/hc" />
+    <Parameter Name="SF_Cluster_Location_UrlHC" DefaultValue="http://localhost:55109/hc" />
+    <Parameter Name="SF_Cluster_Payment_UrlHC" DefaultValue="http://localhost:55108/hc" />
+    <Parameter Name="SF_Cluster_Marketing_UrlHC" DefaultValue="http://localhost:55110/hc" />
+    <Parameter Name="SF_Cluster_Ordering_UrlHC" DefaultValue="http://localhost:55102/hc" />
+    <Parameter Name="SF_Cluster_OrderingBackgroundTask_UrlHC" DefaultValue="http://localhost:55111/hc" />
+    <Parameter Name="SF_Cluster_OrderingSignalrHub_UrlHC" DefaultValue="http://localhost:55112/hc" />
+    <Parameter Name="SF_Cluster_ShoppingAPI_UrlHC" DefaultValue="http://localhost:55202/hc" />
+    <Parameter Name="SF_Cluster_ShoppingAggregator_UrlHC" DefaultValue="http://localhost:55121/hc" />
+    <Parameter Name="SF_Cluster_MVC_UrlHC" DefaultValue="http://localhost:55100/hc" />
+    <Parameter Name="SF_Cluster_WebStatus_UrlHC" DefaultValue="http://localhost:55107/hc" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
