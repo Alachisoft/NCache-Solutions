@@ -22,17 +22,17 @@
     <EnvironmentVariables>
       <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="Development"/>
       <EnvironmentVariable Name="ASPNETCORE_URLS" Value="http://0.0.0.0:80"/>
-      <EnvironmentVariable Name="CallBackUrl" Value="http://brad-rehman.diyatech.org.pk:55100"/>
-      <EnvironmentVariable Name="PurchaseUrl" Value="http://brad-rehman.diyatech.org.pk:55202"/>
-      <EnvironmentVariable Name="IdentityUrl" Value="http://brad-rehman.diyatech.org.pk:55105"/>
-      <EnvironmentVariable Name="MarketingUrl" Value="http://brad-rehman.diyatech.org.pk:55202"/>
-      <EnvironmentVariable Name="SignalrHubUrl" Value="http://brad-rehman.diyatech.org.pk:55112"/>
-      <EnvironmentVariable Name="CatalogUrlHC" Value="http://brad-rehman.diyatech.org.pk:55101/hc"/>
-      <EnvironmentVariable Name="OrderingUrlHC" Value="http://brad-rehman.diyatech.org.pk:55102/hc"/>
-      <EnvironmentVariable Name="IdentityUrlHC" Value="http://brad-rehman.diyatech.org.pk:55105/hc"/>
-      <EnvironmentVariable Name="BasketUrlHC" Value="http://brad-rehman.diyatech.org.pk:55103/hc"/>
-      <EnvironmentVariable Name="MarketingUrlHC" Value="http://brad-rehman.diyatech.org.pk:55202/hc"/>
-      <EnvironmentVariable Name="PurchaseUrlHC" Value="http://brad-rehman.diyatech.org.pk:55202/hc"/>
+      <EnvironmentVariable Name="CallBackUrl" Value="http://localhost:55100"/>
+      <EnvironmentVariable Name="PurchaseUrl" Value="http://localhost:55202"/>
+      <EnvironmentVariable Name="IdentityUrl" Value="http://localhost:55105"/>
+      <EnvironmentVariable Name="MarketingUrl" Value="http://localhost:55202"/>
+      <EnvironmentVariable Name="SignalrHubUrl" Value="http://localhost:55112"/>
+      <EnvironmentVariable Name="CatalogUrlHC" Value="http://localhost:55101/hc"/>
+      <EnvironmentVariable Name="OrderingUrlHC" Value="http://localhost:55102/hc"/>
+      <EnvironmentVariable Name="IdentityUrlHC" Value="http://localhost:55105/hc"/>
+      <EnvironmentVariable Name="BasketUrlHC" Value="http://localhost:55103/hc"/>
+      <EnvironmentVariable Name="MarketingUrlHC" Value="http://localhost:55202/hc"/>
+      <EnvironmentVariable Name="PurchaseUrlHC" Value="http://localhost:55202/hc"/>
       <EnvironmentVariable Name="UseCustomizationData" Value="False"/>
       <EnvironmentVariable Name="IsClusterEnv" Value="True"/>
       <EnvironmentVariable Name="CacheID" Value="mvccache"/>
