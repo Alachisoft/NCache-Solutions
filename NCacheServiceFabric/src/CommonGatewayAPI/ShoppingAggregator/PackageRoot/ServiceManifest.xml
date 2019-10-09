@@ -21,17 +21,17 @@
     </EntryPoint>
     <EnvironmentVariables>
       <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="Development"/>
-      <EnvironmentVariable Name="urls:basket" Value="http://brad-rehman.diyatech.org.pk:55103"/>
-      <EnvironmentVariable Name="urls:catalog" Value="http://brad-rehman.diyatech.org.pk:55101"/>
-      <EnvironmentVariable Name="urls:orders" Value="http://brad-rehman.diyatech.org.pk:55102"/>
-      <EnvironmentVariable Name="urls:identity" Value="http://brad-rehman.diyatech.org.pk:55105"/>
-      <EnvironmentVariable Name="CatalogUrlHC" Value="http://brad-rehman.diyatech.org.pk:55101/hc"/>
-      <EnvironmentVariable Name="OrderingUrlHC" Value="http://brad-rehman.diyatech.org.pk:55102/hc"/>
-      <EnvironmentVariable Name="IdentityUrlHC" Value="http://brad-rehman.diyatech.org.pk:55105/hc"/>
-      <EnvironmentVariable Name="BasketUrlHC" Value="http://brad-rehman.diyatech.org.pk:55103/hc"/>
-      <EnvironmentVariable Name="MarketingUrlHC" Value="http://brad-rehman.diyatech.org.pk:55110/hc"/>
-      <EnvironmentVariable Name="PaymentUrlHC" Value="http://brad-rehman.diyatech.org.pk:55108/hc"/>
-      <EnvironmentVariable Name="LocationUrlHC" Value="http://brad-rehman.diyatech.org.pk:55109/hc"/>
+      <EnvironmentVariable Name="urls:basket" Value="http://localhost:55103"/>
+      <EnvironmentVariable Name="urls:catalog" Value="http://localhost:55101"/>
+      <EnvironmentVariable Name="urls:orders" Value="http://localhost:55102"/>
+      <EnvironmentVariable Name="urls:identity" Value="http://localhost:55105"/>
+      <EnvironmentVariable Name="CatalogUrlHC" Value="http://localhost:55101/hc"/>
+      <EnvironmentVariable Name="OrderingUrlHC" Value="http://localhost:55102/hc"/>
+      <EnvironmentVariable Name="IdentityUrlHC" Value="http://localhost:55105/hc"/>
+      <EnvironmentVariable Name="BasketUrlHC" Value="http://localhost:55103/hc"/>
+      <EnvironmentVariable Name="MarketingUrlHC" Value="http://localhost:55110/hc"/>
+      <EnvironmentVariable Name="PaymentUrlHC" Value="http://localhost:55108/hc"/>
+      <EnvironmentVariable Name="LocationUrlHC" Value="http://localhost:55109/hc"/>
     </EnvironmentVariables>
   </CodePackage>
 
