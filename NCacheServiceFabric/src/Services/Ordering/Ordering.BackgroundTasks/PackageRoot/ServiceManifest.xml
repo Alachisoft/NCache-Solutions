@@ -23,8 +23,8 @@
       <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="Development"/>
       <EnvironmentVariable Name="ASPNETCORE_URLS" Value="http://0.0.0.0:80"/>
       <EnvironmentVariable Name="ConnectionString" Value="Server=tcp:20.200.20.103,1433\SQLEXPRESS;Database=Microsoft.eShopOnContainers.Services.OrderingDb;User Id=brad_rehman;Password=password"/>
-      <EnvironmentVariable Name="identityUrl" Value="http://brad-rehman.diyatech.org.pk:55105"/>
-      <EnvironmentVariable Name="IdentityUrlExternal" Value="http://brad-rehman.diyatech.org.pk:55105"/>
+      <EnvironmentVariable Name="identityUrl" Value="http://localhost:55105"/>
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="http://localhost:55105"/>
       <!--"http://#{your_sf_dns}#:5105"/>-->
       <EnvironmentVariable Name="EventBusNCachID" Value="pubsubcache"/>
       <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="20.200.20.103"/>
