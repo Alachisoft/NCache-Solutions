@@ -5,7 +5,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55110
         }
       ],
@@ -17,7 +17,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55109
         }
       ],
@@ -29,7 +29,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55101
         }
       ],
@@ -41,7 +41,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55103
         }
       ],
@@ -57,7 +57,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55102
         }
       ],
@@ -73,7 +73,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55121
         }
       ],
@@ -89,7 +89,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55102
         }
       ],
@@ -101,7 +101,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55112
         }
       ],
@@ -113,7 +113,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55103
         }
       ],
@@ -125,7 +125,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55101
         }
       ],
@@ -137,7 +137,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "brad-rehman.diyatech.org.pk", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
+          "Host": "localhost", // Change this to your azure sf dns name e.g. eshopncache.southeastasia.cloudapp.azure.com
           "Port": 55108
         }
       ],
