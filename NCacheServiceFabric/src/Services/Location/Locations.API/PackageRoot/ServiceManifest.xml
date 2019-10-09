@@ -25,8 +25,8 @@
       <EnvironmentVariable Name="ConnectionString" Value="mongodb://20.200.20.103:27017"/>
       <EnvironmentVariable Name="CosmosDBDeployment" Value="False"/>
       <EnvironmentVariable Name="Database" Value="LocationsDb"/>
-      <EnvironmentVariable Name="identityUrl" Value="http://brad-rehman.diyatech.org.pk:55105"/>
-      <EnvironmentVariable Name="IdentityUrlExternal" Value="http://brad-rehman.diyatech.org.pk:55105"/>
+      <EnvironmentVariable Name="identityUrl" Value="http://localhost:55105"/>
+      <EnvironmentVariable Name="IdentityUrlExternal" Value="http://localhost:55105"/>
       <EnvironmentVariable Name="EventBusNCachID" Value="pubsubcache"/>
       <EnvironmentVariable Name="PubSubCacheIPAddresses" Value="20.200.20.103"/>
       <EnvironmentVariable Name="EventBusNCachTopicID" Value="IntegrationEvents"/>
