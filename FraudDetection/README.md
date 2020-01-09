@@ -19,7 +19,7 @@ This system can take up to minutes to hours for processing the input and adjusti
 * **Offline-Processing System**
 This system can take from hours to months, to respond. Main purpose of this system is to improve the model, train the data, and feed this upgraded data back to near-real time processing system for better result. 
 
-##Near Real Time System Implementation using NCache Pub/Sub
+## Near Real Time System Implementation using NCache Pub/Sub
 A near real time system for fraud detection must give valid results within millisecond. It should also feed its result to database, so further processing can be done on it. This processed result than can be returned back to Near Real System, for more effective results. 
 The key to real-time processing system using NCache is pub sub system. Multiple pub sub topics can be registered with cache system. These topics will have their respective publishers and subscribers. 
 
