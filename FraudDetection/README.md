@@ -23,7 +23,7 @@ This system can take from hours to months, to respond. Main purpose of this syst
 A near real time system for fraud detection must give valid results within millisecond. It should also feed its result to database, so further processing can be done on it. This processed result than can be returned back to Near Real System, for more effective results. 
 The key to real-time processing system using NCache is pub sub system. Multiple pub sub topics can be registered with cache system. These topics will have their respective publishers and subscribers. 
 
- ![inflow](resources/NCache messaging logic.png "NCache Messaging Logic")
+ ![inflow](resources/NCache%20messaging%20logic.png "NCache Messaging Logic")
 
 Above mentioned diagram gives a look into architecture of NCache pub sub model as real-time system. Two different topics are registered with cache, one is for Transaction and other is for Replies. Each topic has its own publisher and subscriber.Every publisher, publishes a message on its topic, this message is than received by subscriber for further processing.
 
