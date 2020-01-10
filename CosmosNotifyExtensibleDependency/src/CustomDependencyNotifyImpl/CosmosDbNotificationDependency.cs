@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2020 Alachisoft
+// Copyright (c) 2020 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -132,7 +132,7 @@ namespace Alachisoft.NCache.Samples
 
         // Overall unique identifier used to track dependency against change feed 
         // processor instances on which the dependency is reliant
-        public string DependencyId
+        internal string DependencyId
         {
             get
             {
