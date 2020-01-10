@@ -20,6 +20,7 @@ This project highlights the NCache **NotifyExtensibleDependency** feature and ho
   
 - **Stale Data Problem Mitigation**
 
+  Although using NCache with Cosmos DB boosts application performance, thee is one issue that needs to be kept in mind. When you start     caching with a primary data store such as Cosmos DB, two copies of the same data will be created, one in the primary data store and     the other in the cache. Any direct update to the database data could render the cache data stale. With **NotifyExtensibleDependency**,   not only are we taking advantage of the increased read performance provided by NCache, but we also can be sure that stale data does     not persist in the cache.
   
 
   
