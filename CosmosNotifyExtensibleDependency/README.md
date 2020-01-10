@@ -37,13 +37,13 @@ More information regarding **NotifyExtensibleDependency** can be found [here](ht
 
   - Windows 10 64-bit development machines with [.NET Framework 4.7.2 runtime](https://dotnet.microsoft.com/download/dotnet-framework/net472) for hosting the NCache servers.
   - The latest [Cosmos DB Emulator](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator) and allow for [remote network access](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator#running-on-a-local-network).
-  - Make sure to [export the SSL certificate](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator#export-the-ssl-certificate) of the Cosmos DB emulator on each of the NCache server nodes to allow for change feed processing to work on the server side implemented logic.
+  - Make sure to export the SSL certificate of the Cosmos DB emulator on each of the NCache server nodes to allow for change feed processing to work on the server side implemented logic.
   - An IDE to run the code such as [Visual Studio 2019](https://visualstudio.microsoft.com/).
   - The .NET Framework 4.7.2 SDK and Runtime environments have been installed to compile and package the application. Those can be installed from [here](https://dotnet.microsoft.com/download/dotnet-framework/net472).
   - **NCache 5.0 SP2 Enterprise edition** is installed on the cache servers. The installation files can be found [here](https://www.alachisoft.com/download-ncache.html).
   - Make sure to update the NCache server information in the [**client.ncconf**](https://www.alachisoft.com/resources/docs/ncache/admin-guide/client-config.html) files included in the [console application project](./src/NotifyExtensibleDependencyTesterUI).This server information includes the cache ID of the created cache and the IP address of atleast one of the servers.
-- Once the application has been packaged, stop the demo cache if it is running and deploy the [NotifyExtensibleDependency](./src/CustomDependencyNotifyImpl) assemblies on the cache servers. The steps for doing this are shown [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html). 
-- Before running the application, make sure all the required caches are running and the Cosmos DB emulator can be accessed from the NCache server machines.
+- Once the application has been packaged, stop the demo cache if it is running and deploy the built [NotifyExtensibleDependency](./src/CustomDependencyNotifyImpl) assemblies on the cache servers. The steps for doing this are shown [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html). Once the logic is deployed, re-start the cache to get the integration assemblies included in the cache host process.
+- Before running the application, make sure all the clustered cache is running and the Cosmos DB emulator can be accessed from the NCache server machines.
 
 ## NCache Features Highlighted in Application
 
