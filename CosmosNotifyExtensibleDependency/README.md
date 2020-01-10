@@ -16,7 +16,7 @@ This project highlights the NCache **NotifyExtensibleDependency** feature and ho
 
 - **Faster Read Operations**
 
-Using NCache as your distributed caching solution, application performance is improved since it is an in-memory key-value store which greatly improves data read performance. Furthermore, with more data operations being serviced by the cache instead of the underlying Cosmos DB database, the transaction costs incurred in terms of RU/s are greatly reduced as well. 
+  Using NCache as your distributed caching solution, application performance is improved since it is an in-memory key-value store which   greatly improves data read performance. Furthermore, with more data operations being serviced by the cache instead of the underlying     Cosmos DB database, the transaction costs incurred in terms of RU/s are greatly reduced as well. 
 
 ## Pre-requisites
 
