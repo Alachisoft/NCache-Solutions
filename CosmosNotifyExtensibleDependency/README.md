@@ -40,8 +40,7 @@ More information regarding **NotifyExtensibleDependency** can be found [here](ht
   - Make sure to export the SSL certificate of the Cosmos DB emulator on each of the NCache server nodes to allow for change feed processing to work on the server side implemented logic.
   - An IDE to run the code such as [Visual Studio 2019](https://visualstudio.microsoft.com/).
   - The .NET Framework 4.7.2 SDK and Runtime environments have been installed to compile and package the application. Those can be installed from [here](https://dotnet.microsoft.com/download/dotnet-framework/net472).
-  - **NCache 5.0 SP2 Enterprise edition** is installed on the cache servers. The installation files can be found [here](https://www.alachisoft.com/download-ncache.html).
-- Before running the application, make sure all the clustered cache is running and the Cosmos DB emulator can be accessed from the NCache server machines.
+  - **NCache 5.0 SP2 Enterprise edition** is installed on the cache server machines. The installation files can be found [here](https://www.alachisoft.com/download-ncache.html).
 
 ## NCache Features Highlighted in Application
 
