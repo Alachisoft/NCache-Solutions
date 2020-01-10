@@ -2,6 +2,6 @@
   <configuration>
     <ncache-server connection-retries="5" retry-connection-delay="0" retry-interval="1" command-retries="3" command-retry-interval="0.1" client-request-timeout="90" connection-timeout="5" port="9800"/>
     <cache id="pora" client-cache-id="" client-cache-syncmode="optimistic" default-readthru-provider="" default-writethru-provider="" load-balance="True" enable-client-logs="False" log-level="error">
-      <server name="20.200.20.57"/>
+      <server name="xxx.xxx.xxx.xxx"/>
     </cache>
   </configuration>
