@@ -52,7 +52,8 @@ More information regarding **NotifyExtensibleDependency** can be found [here](ht
   
   - Make sure to update the NCache server information in the [**client.ncconf**](https://www.alachisoft.com/resources/docs/ncache/admin-guide/client-config.html) files included in the [console application project](./src/NotifyExtensibleDependencyTesterUI).This server information includes the cache ID of the created cache and the IP address of atleast one of the servers.
   - Build and package the application and make sure the assemblies have been successfully generated.
-  - Using the NCache Web Manager GUI, create a clustered cache with two nodes using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-new-cache-cluster.html?tabs=windows#using-ncache-web-manager). Make sure the cache ID and IP address of the nodes agree with the values given in the [**client.ncconf**](./src/NotifyExtensibleDependencyTesterUI/client.ncconf) and cache ID given in [**app.config**](./src/NotifyExtensibleDependencyTesterUI/App.config)
+  - Using the NCache Web Manager GUI, create a clustered cache with two nodes using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-new-cache-cluster.html?tabs=windows#using-ncache-web-manager). Make sure the cache ID and IP address of the nodes agree with the values given in the [**client.ncconf**](./src/NotifyExtensibleDependencyTesterUI/client.ncconf) and cache ID given in [**app.config**](./src/NotifyExtensibleDependencyTesterUI/App.config) is the same as the entry in the **client.ncconf** file.
+  - Update the connection URI and auth key values for the Cosmos DB emulator in the [**app.config**](./src/NotifyExtensibleDependencyTesterUI/App.config) file and confirm that those are URI and auth key acquired when configuring local network access as detailed in the [pre-requisites](#pre-requisites) section. 
   
   
 
