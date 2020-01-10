@@ -28,3 +28,7 @@ Following is a list of the solutions provided:
 
   This solution revisits the [eShopOnContainersSolution](./eShopOnContainers/README.md) solution but uses Azure Service Fabric to port the microservices as Service Fabric Reliable Stateless Services. The solution also contains an Azure Resource Manager (ARM) template to deploy a Service Fabric cluster into an existing VNET in Azure for convenience.
   
+- [Sync Cosmos DB with NCache Using NotifyExtensibleDependency](./CosmosNotifyExtensibleDependency/README.md)
+
+  This solution demonstrates the use of NotifyExtensibleDependency to allow for cache synchronization mechanisms to be deployed to the servers and uses a case study the change feed feature of Cosmos DB.
+  
