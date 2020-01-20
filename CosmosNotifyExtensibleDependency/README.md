@@ -3,7 +3,6 @@
 ## Table of contents
 
 * [Introduction](#introduction)
-* [NotifyExtensibleDependency Overview](#notifyextensibledependency-overview)
 * [Prerequisites](#pre-requisites)
 * [NCache Features Highlighted in Application](#ncache-features-highlighted-in-application)
 * [Running the Application](#running-the-application)
@@ -38,7 +37,7 @@ The following are the advantages of NCache together with this feature when used 
   
 - **Improved Scalability**
 
-  Using **NotifyExtensibleDependency**, all the cache synchronization operations are handed over to the clustered cache itself, allowing   the clients to focus on the core business logic. Not only does this create a clean logical separation of concerns among the NCache       client and servers but it also provides improved scalability of the overall system architecture since any increase in change feed       load can easily be handled by scaling out the NCache cluster instead of having to perform scale-up on the client-side hardware, an       important implication for today's cloud-based microservices applications. 
+  Using **NotifyExtensibleDependency**, all the cache synchronization operations are handed over to the clustered cache itself, allowing   the clients to focus on the core business logic. Not only does this create a clean logical separation of concerns among the NCache       client and servers but it also provides improved scalability of the overall system architecture since any increase in change feed       load can easily be handled by scaling out the NCache cluster independently of the client-side infrastructure, an important implication for today's cloud-based microservices applications. 
  
 ## Pre-requisites
 
