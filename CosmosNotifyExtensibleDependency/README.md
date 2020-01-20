@@ -13,7 +13,11 @@
 
 ## Introduction
 
-This project highlights the NCache **NotifyExtensibleDependency** feature and how it can be used to synchronize NCache with Cosmos DB SQL API collections. [**NotifyExtensibleDependency**](https://www.alachisoft.com/resources/docs/ncache/prog-guide/notification-extensible-dependency.html) is a cache synchronization strategy for tackling the stale data problem. Its primary purpose is to the solution architect the flexibility to integrate a **real-time customized** logic that monitors and processes datastore change notifications **directly** into the cache hosting processes running on the cache servers. The advantages of adopting this approach are as follows:
+This project highlights the NCache **NotifyExtensibleDependency** feature and how it can be used to synchronize NCache with Cosmos DB SQL API collections. [**NotifyExtensibleDependency**](https://www.alachisoft.com/resources/docs/ncache/prog-guide/notification-extensible-dependency.html) is a cache synchronization strategy for tackling the stale data problem. Its primary purpose is to give the solution architect the flexibility to integrate a **real-time customized** logic that monitors and processes datastore change notifications **directly** into the cache hosting processes running on the cache servers. 
+
+In this scheme, the developer deploys a provider containing the datastore state-change monitoring and processing logic behind the depedency along with the lifecycle hooks into the NCache servers. The servers then invoke the dependency-related methods which encapsulate the custom logic and determine whether or not to remove the cached item.
+
+The advantages of adopting this approach are as follows:
 
 - **Stale Data Problem Mitigation**
 
@@ -21,7 +25,11 @@ This project highlights the NCache **NotifyExtensibleDependency** feature and ho
 
 - **Native NCache API Support**
 
-  With support built into the NCache core logic, NotifyExtensibleDependency extends the power NCache provides when it comes to high availability, reliability and scalability and adds the mechanisms which ensure that cached-data fully agrees with the data-store state at all times.
+  With support built into the NCache core logic, NotifyExtensibleDependency extends the power NCache provides when it comes to **high availability**, **reliability** and **scalability** and adds the mechanisms which ensure that cached-data fully agrees with the data-store state at all times.
+  
+With cache synchronization logic deployed to the cache servers using **NotifyExtensibleDependency**, the overall architecture including NCache and the [Cosmos DB Change Feed][https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed] can be visualized as in the figure given below. This diagram also highlights the use of a [read-through provider](https://www.alachisoft.com/resources/docs/ncache/prog-guide/read-through-caching.html) to allow for **auto-reloading** updated data into the cache:
+
+![Architectural Diagram](./resources/architectural_diagram.png)
 
   
 
