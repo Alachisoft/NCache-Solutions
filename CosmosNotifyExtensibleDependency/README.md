@@ -3,6 +3,7 @@
 ## Table of contents
 
 * [Introduction](#introduction)
+* [NotifyExtensibleDependency Overview](#notifyextensibledependency-overview]
 * [Prerequisites](#pre-requisites)
 * [NCache Features Highlighted in Application](#ncache-features-highlighted-in-application)
 * [Running the Application](#running-the-application)
@@ -25,7 +26,11 @@ This project highlights the NCache **NotifyExtensibleDependency** feature and ho
 - **Improved Scalability**
 
   Using **NotifyExtensibleDependency**, all the cache synchronization operations are handed over to the clustered cache itself, allowing   the clients to focus on the core business logic. Not only does this create a clean logical separation of concerns among the NCache       client and servers but it also provides improved scalability of the overall system architecture since any increase in change feed       load can easily be handled by scaling out the NCache cluster instead of having to perform scale-up on the client-side hardware, an       important implication for today's cloud-based microservices applications.
-  
+ 
+## **NotifyExtensibleDependency Overview**
+
+   [**NotifyExtensibleDependency**](https://www.alachisoft.com/resources/docs/ncache/prog-guide/notification-extensible-dependency.html) is designed to give the solution architect the ability to integrate their datastore state-change monitoring and processing logic directly into the cache hosting processes running on the cache servers, relieving the architect of having to plan the CPU and memory utilization resources needed for synchronizing cache data with the associated information stored in the primary datastore.
+   
 More information regarding **NotifyExtensibleDependency** can be found [here](https://www.alachisoft.com/resources/docs/ncache/prog-guide/notification-extensible-dependency.html). With cache synchronization logic deployed to the cache servers using **NotifyExtensibleDependency**, the overall architecture including NCache and the [Cosmos DB Change Feed][https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed] can visualized as in the figure given below. This diagram also highlights the use of a [read-through provider](https://www.alachisoft.com/resources/docs/ncache/prog-guide/read-through-caching.html) to allow for **auto-reloading** updated data into the cache:
 
 ![Architectural Diagram](./resources/architectural_diagram.png)
