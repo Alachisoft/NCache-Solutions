@@ -57,7 +57,8 @@ The following are the advantages of NCache together with this feature when used 
 ![ApplicationArchitecture](./resources/ApplicationArchitecture.png)
 
 The following is our implementation of the NotifyExtensibleDependency class:
- CosmoDbNotificationDependency.cs
+
+[CosmoDbNotificationDependency.cs](./src/CustomDependencyNotifyImpl/CosmosDbNotificationDependency.cs)
 ```csharp
 [Serializable]
 public class CosmosDbNotificationDependency :
@@ -209,7 +210,9 @@ public class CosmosDbNotificationDependency :
   }
 }
 ```
-The following shows the implementation of the CosmosDbChangeFeedObserverFactory class used to create the change feed observers by the change feed processors:
+The following shows the implementation of the IChangeFeedObserverFactory interface used to create the change feed observers by the change feed processors:
+
+[CosmosDbChangeFeedObserverFactory.cs](./src/CustomDependencyNotifyImpl/CosmosDbChangFeedObserverFactory.cs)
 ```csharp
 [Serializable]
 internal class CosmosDbChangFeedObserverFactory : IChangeFeedObserverFactory
@@ -227,7 +230,8 @@ internal class CosmosDbChangFeedObserverFactory : IChangeFeedObserverFactory
 }
 ```
 The following shows the implementation of the IChangeFeedObserver class whose instances will process the change feed results for our custom CosmosDbNotificationDependency instances:
-NCacheChangeFeedObserver.cs
+
+[NCacheChangeFeedObserver.cs](./src/CustomDependencyNotifyImpl/NCacheChangeFeedObserver.cs)
 ```csharp
 [Serializable]
 internal class NCacheChangeFeedObserver : IChangeFeedObserver
