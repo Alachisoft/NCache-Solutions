@@ -210,7 +210,7 @@ public class CosmosDbNotificationDependency :
   }
 }
 ```
-The following shows the implementation of the IChangeFeedObserverFactory interface used to create the change feed observers by the change feed processors:
+The following shows the implementation of the [IChangeFeedObserverFactory](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.documents.changefeedprocessor.feedprocessing.ichangefeedobserverfactory?view=azure-dotnet) interface used to create the change feed observers by the change feed processors:
 
 [CosmosDbChangeFeedObserverFactory.cs](./src/CustomDependencyNotifyImpl/CosmosDbChangFeedObserverFactory.cs)
 ```csharp
@@ -229,7 +229,7 @@ internal class CosmosDbChangFeedObserverFactory : IChangeFeedObserverFactory
         }
 }
 ```
-The following shows the implementation of the IChangeFeedObserver class whose instances will process the change feed results for our custom CosmosDbNotificationDependency instances:
+The following shows the implementation of the [IChangeFeedObserver](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.documents.changefeedprocessor.feedprocessing.ichangefeedobserver?view=azure-dotnet) interface whose instances will process the change feed results for our custom CosmosDbNotificationDependency instances:
 
 [NCacheChangeFeedObserver.cs](./src/CustomDependencyNotifyImpl/NCacheChangeFeedObserver.cs)
 ```csharp
