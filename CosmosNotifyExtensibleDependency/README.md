@@ -13,7 +13,19 @@
 
 ## Introduction
 
-This project highlights the NCache **NotifyExtensibleDependency** feature and how it can be used to synchronize NCache with Cosmos DB SQL API collections. The following are the advantages of NCache together with this feature when used with Azure Cosmos DB:
+This project highlights the NCache **NotifyExtensibleDependency** feature and how it can be used to synchronize NCache with Cosmos DB SQL API collections. [**NotifyExtensibleDependency**](https://www.alachisoft.com/resources/docs/ncache/prog-guide/notification-extensible-dependency.html) is a cache synchronization strategy for tackling the stale data problem. Its primary purpose is to the solution architect the flexibility to integrate a **real-time customized** logic that monitors and processes datastore change notifications **directly** into the cache hosting processes running on the cache servers. The advantages of adopting this approach are as follows:
+
+- **Stale Data Problem Mitigation**
+
+  Although using NCache with Cosmos DB boosts application performance, there is one issue that needs to be kept in mind. When you start   caching with a primary data store such as Cosmos DB, two copies of the same data will be created, one in the primary data store and     the other in the cache. Any direct update to the database data could render the cache data stale. With **NotifyExtensibleDependency**,   not only are we taking advantage of the increased read performance provided by NCache, but we can also make sure that stale data does   not persist in the cache.
+
+- **Native NCache API Support**
+
+  With support built into the NCache core logic, NotifyExtensibleDependency extends the power NCache provides when it comes to high availability, reliability and scalability and adds the mechanisms which ensure that cached-data fully agrees with the data-store state at all times.
+
+  
+
+The following are the advantages of NCache together with this feature when used with Azure Cosmos DB:
 
 - **Faster Read Operations**
 
