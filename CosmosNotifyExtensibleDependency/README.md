@@ -52,7 +52,11 @@ The following are the advantages of NCache together with this feature when used 
   - **NCache 5.0 SP2 Enterprise edition** is installed on the cache server machines. The installation files can be found [here](https://www.alachisoft.com/download-ncache.html).
   
 ## Implementation
- We can finally get to writing our code. The following is our implementation of the NotifyExtensibleDependency class:
+ We can finally get to writing our code. The overall UML diagram of our implementation is shown below:
+
+![ApplicationArchitecture](./resources/ApplicationArchitecture.png)
+
+The following is our implementation of the NotifyExtensibleDependency class:
  CosmoDbNotificationDependency.cs
 ```csharp
 [Serializable]
@@ -289,10 +293,6 @@ item.Dependency = new CosmosDbNotificationDependency("ALFKI",
 _cache.Insert("Customer:CustomerID:ALFKI", item);
 ```
 Now that the item is in the cache along with the dependency metadata encapsulating the parameters of the database state it is concerned with, any update on the item with the specified key on the database side will be observed by a change feed processor instance running on the servers and the dependency will be invoked, triggering the removal of the stale cache data. 
-
-The overall UML diagram of our implementation is shown below:
-
-![ApplicationArchitecture](./resources/ApplicationArchitecture.png)
 
 ## NCache Features Highlighted in Application
 
