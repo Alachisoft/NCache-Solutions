@@ -94,7 +94,7 @@ public class CosmosDbNotificationDependency :
   }
   // Overall unique identifier used to track dependency against change feed 
   // processor instances on which the dependency is reliant
-  public string DependencyId
+  internal string DependencyId
   {
       get
       {
