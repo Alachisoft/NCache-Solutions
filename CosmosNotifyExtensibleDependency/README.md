@@ -4,6 +4,7 @@
 
 * [Introduction](#introduction)
 * [Prerequisites](#pre-requisites)
+* [Implementation](#implementation)
 * [NCache Features Highlighted in Application](#ncache-features-highlighted-in-application)
 * [Running the Application](#running-the-application)
 * [Additional Resources](#additional-resources)
@@ -288,6 +289,10 @@ item.Dependency = new CosmosDbNotificationDependency("ALFKI",
 _cache.Insert("Customer:CustomerID:ALFKI", item);
 ```
 Now that the item is in the cache along with the dependency metadata encapsulating the parameters of the database state it is concerned with, any update on the item with the specified key on the database side will be observed by a change feed processor instance running on the servers and the dependency will be invoked, triggering the removal of the stale cache data. 
+
+The overall UML diagram of our implementation is shown below:
+
+![ApplicationArchitecture](./resources/ApplicationArchitecture.png)
 
 ## NCache Features Highlighted in Application
 
