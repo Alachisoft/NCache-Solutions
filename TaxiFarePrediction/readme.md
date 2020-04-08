@@ -35,8 +35,9 @@ If the default cache is not available, Create a new cache.
 #### Link Cache with App
 
 Mention this cache name in "CacheId" attribute of following files:
-1.`\TaxiFarePrediction\TaxiFarePredictionConsoleApp\App.config
-2.`\AddTripDataInCache\AddTripDataInCache\App.config
+
+1. `\TaxiFarePrediction\TaxiFarePredictionConsoleApp\App.config 
+2. `\AddTripDataInCache\AddTripDataInCache\App.config
 
 ### Starting the App
 
