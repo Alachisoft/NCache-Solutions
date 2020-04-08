@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddTripDataInCache", "src\AddTripDataInCache\AddTripDataInCache\AddTripDataInCache.csproj", "{C137DEDB-E5E6-4812-A221-0DB010A24E2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructures", "src\AddTripDataInCache\DataStructures\DataStructures.csproj", "{57B50B7B-8E6A-4393-83DA-5AB3A61F93DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxiFarePrediction", "src\Regression_TaxiFarePrediction\TaxiFarePrediction\TaxiFarePredictionConsoleApp\TaxiFarePrediction.csproj", "{7144CB4E-9D91-402C-8AE3-01F63E7BA5A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C137DEDB-E5E6-4812-A221-0DB010A24E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C137DEDB-E5E6-4812-A221-0DB010A24E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C137DEDB-E5E6-4812-A221-0DB010A24E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C137DEDB-E5E6-4812-A221-0DB010A24E2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57B50B7B-8E6A-4393-83DA-5AB3A61F93DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B50B7B-8E6A-4393-83DA-5AB3A61F93DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B50B7B-8E6A-4393-83DA-5AB3A61F93DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B50B7B-8E6A-4393-83DA-5AB3A61F93DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7144CB4E-9D91-402C-8AE3-01F63E7BA5A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7144CB4E-9D91-402C-8AE3-01F63E7BA5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7144CB4E-9D91-402C-8AE3-01F63E7BA5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7144CB4E-9D91-402C-8AE3-01F63E7BA5A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03B2ECD4-DB23-45C5-B653-8143F58FACB2}
+	EndGlobalSection
+EndGlobal
