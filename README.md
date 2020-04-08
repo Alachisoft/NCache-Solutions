@@ -32,6 +32,6 @@ Following is a list of the solutions provided:
 
   This solution demonstrates the use of NotifyExtensibleDependency to allow for cache synchronization mechanisms to be deployed to the servers and uses a case study the change feed feature of Cosmos DB.
   
-- [Taxi Fare Prediction using ML.NET and NCache](./TaxiFarePrediction.readme.md)
+- [Taxi Fare Prediction using ML.NET and NCache](./TaxiFarePrediction/readme.md)
 
   This solution demonstrates how taxi fares can be predicted using a retrainable ML.NET model. It also demonstrates how NCache can be incorporated with real-time machine learning scenarios for boosting performance of the overall system.
