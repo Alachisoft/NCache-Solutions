@@ -1,4 +1,4 @@
-# Stream Processing Using NCache Continuous Query
+# NCache Manged ARM Template
 
 ## Introduction
 
