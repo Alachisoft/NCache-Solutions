@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "clusterName": {
-      "value": "cache1,cache2"
+      "value": "dataCache,sessionCache"
     },
     "cacheTopology": {
       "value": "Partitioned,PartitionedOfReplica"

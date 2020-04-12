@@ -148,6 +148,7 @@ function HandleClusterAndCache
 			}
 			else 
 			{
+				Start-Sleep -s 10
 				$Expression = "Add-Node -CacheName " + $clusterArray[$i] + " -ExistingServer " + $serverIP + " -NewServer " + $currentIP + " -NoLogo"
 			}
 		

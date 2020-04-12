@@ -164,6 +164,7 @@
       "location": "[parameters('location')]",
       "copy": {
         "name": "vmLoop",
+        "mode": "serial",
         "count": "[parameters('numberOfVMs')]"
       },
       "dependsOn": [
@@ -235,6 +236,7 @@
       "location": "[parameters('location')]",
       "copy": {
         "name": "networkInterfaceLoop",
+        "mode": "serial",
         "count": "[parameters('numberOfVMs')]"
       },
       "dependsOn": [
@@ -272,6 +274,7 @@
       },
       "copy": {
         "name": "ipLoop",
+        "mode": "serial",
         "count": "[parameters('numberOfVMs')]"
       },
       "tags": {
