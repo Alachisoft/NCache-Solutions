@@ -9,7 +9,7 @@
 * [Additional Resources](#additional-resources)
 
 ## Introduction
-This project is a high level demonstration of how a live score leaderboard app (or a sports website featuring live updates) must be created. It explains the features required and how NCache can help in attaining the required performance.
+This project demonstrates how stream can be processed in NCache server nodes using continuous query which not only provides super fast results but also allows you to monitor and do actions on that data.
 
 ## Getting Started
 
@@ -68,7 +68,7 @@ As the customers data is being tagged according to their importance we can easil
 
 ### Architecture
 All parts of the app are connected to an NCache feature. Following is a detail on each feature's implementation and use:
-![NCache Live Score Leaderboard Demo Architecture](./Diagram/StreamProcessingInNCache.png)
+![NCache Stream Processing Demo Architecture](./Diagram/StreamProcessingInNCache.png)
 
 ### Technology Used
 
