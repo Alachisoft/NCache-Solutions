@@ -7,3 +7,6 @@
 /NCacheMangedArmTemplate/.vs/NCacheManagedTemplate/DesignTimeBuild
 /NCacheMangedArmTemplate/.vs/NCacheManagedTemplate/v16
 /NCacheMangedArmTemplate/.vs/NCacheManagedTemplate/config/applicationhost.config
+/StreamProcessing/src/StreamToNCache/obj
+/StreamProcessing/src/StreamProcessingUI/obj
+/StreamProcessing/src/Models/obj
