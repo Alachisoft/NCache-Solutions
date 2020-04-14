@@ -134,16 +134,41 @@ function RestartNCacheService
 function HandleClusterAndCache
 {
 		"Handling Cluster Creation">>C:\NCache-Init-Status.txt
+		$clusterName>>C:\NCache-Init-Status.txt
+		$topology>>C:\NCache-Init-Status.txt
+		$maxSize>>C:\NCache-Init-Status.txt
         # to support parameter differences in powershell and CLI
 
         Import-Module 'C:\Program Files\NCache\bin\tools\ncacheps\ncacheps.dll'
 		$clusterArray = $clusterName.Split(",")
 		$topologyArray = $topology.Split(",")
+		$defaultTopologies = "PartitionedOfReplica"
+		if($topologyArray.Length -lt $clusterArray.Length)
+		{
+			For ($k=1; $k -lt ($clusterArray.Length - $topologyArray.Length); $k++)
+			{
+				$defaultTopologies += (",PartitionedOfReplica")
+			}
+			$topologyArray += $defaultTopologies.Split(",")
+		}
+
 		$maxSizeArray = $maxSize.Split(",")
+		if($topologyArray.Length -lt $clusterArray.Length)
+		{
+			For ($k=1; $k -lt ($clusterArray.Length - $maxSizeArray.Length); $k++)
+			{
+				$maxSizeArray += 1024
+			}
+				
+		}
+		
 		For ($i=0; $i -lt $clusterArray.Length; $i++)
 		{
-			if ($serverIP -eq $currentIP) 
+			if ($serverIP -eq $currentIP)  
 			{	
+			$clusterArray[$i] >> C:\NCache-Init-Status.txt
+			$topologyArray[$i] >> C:\NCache-Init-Status.txt
+			$maxSizeArray[$i] >> C:\NCache-Init-Status.txt
 				$Expression = "New-Cache -Name " + $clusterArray[$i] + " -Server " + $currentIP + " -Topology " + $topologyArray[$i] + " -Size " + $maxSizeArray[$i] + " -ReplicationStrategy " + $replicationStrategy + " -EvictionPolicy " + $evictionPolicy + " -EvictionRatio " + $evictionPercentage + " -NoLogo"
 			}
 			else 
