@@ -13,7 +13,7 @@ This project demonstrates how stream can be processed in NCache server nodes usi
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -33,7 +33,7 @@ Note that the app has been tested with the mentioned versions.
 
 A cache needs to be linked with the app. 
 On installing NCache, two caches are created by the name of `mypartitionedcache` and `myreplicatedcache`.
-If the default cache is not available, Create a new cache.
+If the default cache is not available, Create a new cache. [Docs](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-new-cache-cluster.html?tabs=windows)
 
 #### Link Cache with App
 
