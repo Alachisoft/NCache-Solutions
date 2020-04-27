@@ -60,9 +60,9 @@ Following is an explanation to the working of different parts of stream processi
 2.	StreamToNCache will push customers data into cache.
 Customers data that is being streamed in NCache has expiration if 15 secs and it consist of 4 categories.
 •	Customer with orders less than 4 which are less valuable customers (no need to retain those customers data in Cache).
-•	Customer with orders greater than 4 and less than 7 which are valuable customers and tagged with “Gold Customers” (Data retained by removing expiration).
-•	Customer with orders greater than 6 and less than 10 which are more valuable customers and tagged with “Diamond Customers” (Data retained by removing expiration).
-•	Customer with orders greater than 9 which are most valuable customers and tagged with “Platinum Customers” (Data retained by removing expiration).
+•	Customer with orders greater than 4 and less than 7 which are valuable customers and tagged with “Bronze Customers” (Data retained by removing expiration).
+•	Customer with orders greater than 6 and less than 10 which are more valuable customers and tagged with “Silver Customers” (Data retained by removing expiration).
+•	Customer with orders greater than 9 which are most valuable customers and tagged with “Gold Customers” (Data retained by removing expiration).
 As the customers data is being tagged according to their importance we can easily do the analysis and change strategy by providing coupons to and discounts to increase business.
 
 
