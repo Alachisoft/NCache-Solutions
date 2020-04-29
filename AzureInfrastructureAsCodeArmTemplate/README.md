@@ -1,4 +1,4 @@
-# NCache Manged ARM Template
+# Azure Infrastructure as Code Through ARM Template
 
 ## Introduction
 
@@ -8,7 +8,7 @@ This ARM template deloys N number of NCache VMs and creates a cluster of N nodes
 "NCacheConfiguration.ps1" file to be uploaded as blob. Following is the link to upload files on azure storage account as blob.
 https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal
 
-## ARm Template Parameters 
+## ARM Template Parameters 
 
 ### ClusterName
 Name(s) of the Cache.
