@@ -10,7 +10,7 @@ https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-po
 
 ## ARM Template Parameters 
 
-### ClusterName
+### CacheName
 Name(s) of the Cache.
 example of single cache
 Cache1
@@ -34,7 +34,7 @@ example of single cache size
 example of multiple caches size
 512,1024
 
-### NumberOfVMs
+### NCacheVmCount
 Number of instances of NCache market place image you want to deploy on azure.
 
 ### FirstName
