@@ -3,16 +3,22 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "clusterName": {
-      "value": "dataCache,sessionCache"
+      "value": "AppCache,SessionCache,DataCache"
     },
     "cacheTopology": {
-      "value": "Partitioned,PartitionedOfReplica"
+      "value": "PartitionedOfReplica,PartitionedOfReplica,PartitionedOfReplica"
     },
     "cacheSize": {
-      "value": "256,512"
+      "value": "1024,1024,1024"
     },
     "numberOfVMs": {
       "value": 2
+    },
+    "adminUsername": {
+      "value": "ncadmin"
+    },
+    "adminPassword": {
+      "value": "12345Alachisoft"
     },
     "firstName": {
       "value": "John"
@@ -41,12 +47,6 @@
     "virtualMachineSize": {
       "value": "Standard_DS2_v2"
     },
-    "adminUsername": {
-      "value": "ncadmin"
-    },
-    "adminPassword": {
-      "value": "12345Alachisoft"
-    },
     "addressPrefix": {
       "value": "10.0.0.0/16"
     },
@@ -60,7 +60,7 @@
       "value": "MyVNET1"
     },
     "NCacheClusterCreationScriptFileUri": {
-      "value": "https://yourstorageaccount.blob.core.windows.net/tourcontainer/NCacheConfiguration.ps1"
+      "value": "https://ncachestorage.blob.core.windows.net/scripts/NCacheConfiguration.ps1"
     }
 
   }
