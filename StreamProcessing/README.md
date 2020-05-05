@@ -58,8 +58,8 @@ Build the project in windows environment and run StreamProcessingUI and StreamTo
 Following is an explanation to the working of different parts of stream processing solution.
 1.	Stream Processing UI will register continuous query for each category of customer and print all the results of each category and decide what to offer to each category by retaining those customers data in cache.
 2.	StreamToNCache will push customers data into cache.
-Customers data that is being streamed in NCache has expiration if 15 secs and it consist of 4 categories.
-•	Customer with orders less than 4 which are less valuable customers (no need to retain those customers data in Cache).
+Customers data that is being streamed in NCache and it consist of 4 categories.
+•	Customer with orders less than 4 which are less valuable customers (no need to retain those customers data in Cache so these customers are expired using data expiration).
 •	Customer with orders greater than 4 and less than 7 which are valuable customers and tagged with “Bronze Customers” (Data retained by removing expiration).
 •	Customer with orders greater than 6 and less than 10 which are more valuable customers and tagged with “Silver Customers” (Data retained by removing expiration).
 •	Customer with orders greater than 9 which are most valuable customers and tagged with “Gold Customers” (Data retained by removing expiration).
