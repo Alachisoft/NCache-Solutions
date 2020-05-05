@@ -196,6 +196,56 @@ namespace Alachisoft.StreamProcessingUI
             ICollection<string> retrievedKeys = _cache.SearchService.GetKeysByTag(tags[0]);
         }
 
+        private void RegisterContinousQueryForInvaluableCustomers()
+        {
+            try
+            {
+                // Precondition: Cache is already connected
+
+                // Query for required operation
+                string query = "SELECT $VALUE$ FROM Models.Customer WHERE OrdersCount < 4";
+
+                var queryCommand = new QueryCommand(query);
+
+                // Create Continuous Query
+                var cQuery = new ContinuousQuery(queryCommand);
+
+                // Item add notification 
+                // EventDataFilter.None returns the cache keys added
+                cQuery.RegisterNotification(new QueryDataNotificationCallback(QueryItemCallBackForInvaluableCustomers), EventType.ItemAdded, EventDataFilter.None);
+
+                // Register continuousQuery on server 
+                _cache.MessagingService.RegisterCQ(cQuery);
+                Console.WriteLine("Continous query registered");
+            }
+            catch (OperationFailedException ex)
+            {
+                if (ex.ErrorCode == NCacheErrorCodes.INCORRECT_FORMAT)
+                {
+                    // Make sure that the query format is correct
+                }
+                else
+                {
+                    // Exception can occur due to:
+                    // Connection Failures
+                    // Operation Timeout
+                    // Operation performed during state transfer
+                }
+            }
+            catch (Exception ex)
+            {
+                // Any generic exception like ArgumentException, ArgumentNullException
+            }
+
+        }
+
+        private void QueryItemCallBackForInvaluableCustomers(string key, CQEventArg arg)
+        {
+            var cacheItem = _cache.GetCacheItem(key);
+            cacheItem.Expiration = new Expiration(ExpirationType.Sliding, new TimeSpan(0, 0, 5));
+            _cache.Insert(key, cacheItem);
+        }
+
         private void PrintValuableCustomersCount()
         {
             while (true)
@@ -215,6 +265,7 @@ namespace Alachisoft.StreamProcessingUI
         public void Run()
         {
             InitializeParameters();
+            RegisterContinousQueryForInvaluableCustomers();
             RegisterContinousQueryForGoldCustomers();
             RegisterContinousQueryForSilverCustomers();
             RegisterContinousQueryForBronzeCustomers();

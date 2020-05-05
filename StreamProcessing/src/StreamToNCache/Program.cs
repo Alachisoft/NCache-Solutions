@@ -61,7 +61,6 @@ namespace StreamToNCache
                     .Generate(1);
 
                 var cacheItem = new CacheItem(customers[0]);
-                cacheItem.Expiration = new Expiration(ExpirationType.Sliding, new TimeSpan(0, 0, 15));
                 _cache.Insert("CustomerID:" + customers[0].Id, cacheItem);
 
 

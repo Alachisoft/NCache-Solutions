@@ -12,3 +12,6 @@
 /StreamProcessing/src/Models/obj
 /AzureInfrastructureAsCodeArmTemplate/NCacheArmTemplate/bin/Debug/staging/NCacheArmTemplate
 /AzureInfrastructureAsCodeArmTemplate/.vs/NCacheManagedTemplate
+/StreamProcessing/src/Models/bin/Debug/netstandard2.0
+/StreamProcessing/src/StreamProcessingUI/bin/Debug/netcoreapp3.0
+/StreamProcessing/src/StreamToNCache/bin/Debug/netcoreapp3.0
