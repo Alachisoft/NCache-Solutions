@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "clusterName": {
+    "cacheName": {
       "value": "AppCache,SessionCache,DataCache"
     },
     "cacheTopology": {
@@ -11,7 +11,7 @@
     "cacheSize": {
       "value": "1024,1024,1024"
     },
-    "numberOfVMs": {
+    "NCacheVmCount": {
       "value": 2
     },
     "adminUsername": {
