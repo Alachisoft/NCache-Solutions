@@ -60,7 +60,7 @@
       "value": "MyVNET1"
     },
     "NCacheClusterCreationScriptFileUri": {
-      "value": "https://ncachestorage.blob.core.windows.net/scripts/NCacheConfiguration.ps1"
+      "value": "https://yourstorageaccount.blob.core.windows.net/yourcontainer/NCacheConfiguration.ps1"
     }
 
   }
