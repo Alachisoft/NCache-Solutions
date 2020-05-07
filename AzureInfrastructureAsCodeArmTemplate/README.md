@@ -1,115 +1,183 @@
 # Azure Infrastructure as Code Through ARM Template
 
+
+## Table of Contents
+
+-   [Introduction](#introduction)
+-   [Prerequisites](#prerequisites)
+-   [Deploy NCache in Azure](#deploy-ncache-in-azure)
+-   [ARM Template Parameters](#arm-template-parameters)
+-   [Additional Resources](#additional-resources)
+
 ## Introduction
 
-This ARM template deloys N number of NCache VMs and creates a cluster of N nodes of the provided cache name. Latest NCache market place image is picked from market place for deployment.
 
-## PreRequisits
-"NCacheConfiguration.ps1" file to be uploaded as blob. Following is the link to upload files on azure storage account as blob.
-https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal
+NCache managed ARM template allows you to automatically provision resources on
+Azure in a single click by providing your customized parameters or using the
+default configurations. This deploys “N” number of NCache VMs in Azure and
+creates a running cluster of “N” nodes of the provided cache name. This ARM
+template picks the latest NCache image from Azure Marketplace for deployment.
 
-## ARM Template Parameters 
+## Prerequisites
+
+The "NCacheConfiguration.ps1" file in this project must be uploaded as Blob. You
+can follow this link to upload files on Azure Storage account as
+Blob: <https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal>.
+
+## Deploy NCache in Azure
+
+
+Once you have provided the parameters to the NCache managed ARM template, you
+simply need to execute the following script in Azure PowerShell and it will
+create the caches, cache cluster and start it for you:
+
+```powershell
+New-AzResourceGroupDeployment -ResourceGroupName <resource-group-name>
+-TemplateFile https://raw.githubusercontent.com/Alachisoft/NCache-Solutions/master/AzureInfrastructureAsCodeArmTemplate/NCacheArmTemplate/azuredeploy.json
+-TemplateParameterFile
+https://raw.githubusercontent.com/Alachisoft/NCache-Solutions/master/AzureInfrastructureAsCodeArmTemplate/NCacheArmTemplate/azuredeploy.parameters.json
+
+```
+
+## ARM Template Parameters
+
 
 ### CacheName
-Name(s) of the Cache.
-example of single cache
-Cache1
 
-example of multiple caches
-cache1,cache2
+
+Name(s) of the cache(s) to be created.
+
+-   Example of single cache: `cache1`
+
+-   Example of multiple caches: `cache1,cache2`
 
 ### CacheTopology
-Defines the caching topolgy of the cache which will be created.
-example of single cache topolgy
-PartitionedOfReplica
 
-example of multiple caches topolgy
-Partitioned,PartitionedOfReplica
+
+Defines the caching topology of the cache which will be created.
+
+-   Example of single cache topology: `PartitionedOfReplica`
+
+-   Example of multiple caches topology: `Partitioned, PartitionedOfReplica`
 
 ### CacheSize
-Size of the cache in MBs
-example of single cache size
-1024
 
-example of multiple caches size
-512,1024
+Size of the cache in MBs.
+
+-   Example of single cache size: `1024`
+
+-   Example of multiple caches size: `512,1024`
 
 ### NCacheVmCount
-Number of instances of NCache market place image you want to deploy on azure.
+
+The number of instances of the NCache image on Azure Marketplace that you want
+to deploy on Azure.
 
 ### FirstName
-FirstName of User
+
+First name of the user.
 
 ### LastName
-Last Name of User
+
+Last name of the user.
 
 ### Company
-Company name of User.
+
+Company name of the user.
 
 ### EmailAddress
-Email Address of User.
+
+The email address of the user.
 
 ### Environment Name
-Environment Name of user which will be used in licensing.
+
+Name of the user’s environment for NCache. This is used in license activation
+processes.
 
 ### NumberOfClients
-Maximum Number of clients which will allowed to connected with each node. Used in license activation.
+
+
+The maximum number of clients allowed to connect with each node. This is used in
+license activation processes.
 
 ### LicenseKey
-NCache license key
+
+NCache license key obtained from NCache Support.
 
 ### ReplicationStrategy
-Cache replication strategy whether asynchronous or synchronous 
+
+Cache replication strategy. This is either `asynchronous` or `synchronous`.
 
 ### EvictionPolicy
-Eviction policy of cache. Least recently used, Least Frequenctly used, Priority.
+
+Eviction policy of cache items. This can be Least Recently Used (`LRU`), Least Frequently Used (`LFU`), `Priority`.
 
 ### EvictionPercentage
-Percentage of eviction
+
+Percentage of eviction from the cache.
 
 ### VirtualMachineNamePrefix
-Prefix of NCache VM
+
+The prefix of NCache VM.
 
 ### VirtualMachineSize
-Name of the Cache 
+
+The size of NCache VM.
 
 ### AdminUserName
-Adminitrator Username of NCacheVM 
+
+Administrator Username of NCache VM.
 
 ### AdminPassword
-Adminitrator Password of NCacheVM 
+
+Administrator Password of NCache VM.
 
 ### AddressPrefix
-Address prefix of VNET
+
+Address prefix of VNET.
 
 ### SubnetName
-Subnet name in VNET
+
+Subnet name in VNET.
 
 ### SubnetPrefix
-Subet address prefix in VNET
+
+Subnet address prefix in VNET.
 
 ### VirtualNetworkName
-VNET Name
+
+Name of the virtual network.
 
 ### NCacheClusterCreationScriptFileUri
-URI of Blob storage of "NCacheConfiguration.ps1" file. Which will be uploaded by the user before deploying the template. This Script will create a NCache Cluster and is mandatory to upload.
 
+URI of blob storage of "NCacheConfiguration.ps1" file as mentioned in
+[pre-requisites](#prerequisites). This must be uploaded by the user before
+deploying the template. This script performs the task of creating the NCache
+cluster and activating licenses and is mandatory to upload.
 
+## Additional Resources
 
+### Documentation
 
- 
+The complete online documentation for NCache is available
+at: <http://www.alachisoft.com/resources/docs/#ncache>.
 
+### Programmers' Guide
 
+The complete Programmer's Guide of NCache is available
+at: <http://www.alachisoft.com/resources/docs/ncache/prog-guide/>.
 
+### Technical Support
 
+Alachisoft [C] provides various sources of technical support.
 
+-   Please refer to <http://www.alachisoft.com/support.html> to select a support
+    resource you find suitable for your issue.
 
+-   To request additional features in the future, or if you notice any
+    discrepancy regarding this document, please drop an email
+    to <support@alachisoft.com>.
 
- 
+## Copyrights
 
-
-
- 
-
-
-
+[C] Copyright 2020 Alachisoft
