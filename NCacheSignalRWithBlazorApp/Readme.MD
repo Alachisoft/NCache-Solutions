@@ -31,7 +31,7 @@ Prerequisites
 ## Installing and configuring NCache
 1. Download and install NCache from [here](https://www.alachisoft.com/download-ncache.html)
 2. After installation create cache named "blazor". Learn how to create cache [here](https://www.alachisoft.com/resources/docs/ncache/getting-started-guide-windows/create-cache.html).
-3. Start the cache named "blazor".
+3. Start the cache named "blazor". FOr start cache documentation see [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/start-cache.html#:~:text=Starting%20Cache%20on%20All%20Server%20Nodes&text=Launch%20NCache%20Web%20Manager%20by,against%20the%20cache%20to%20start.) 
 
 ## Add NCache SignalR in Blazor server startup serrvices 
 
