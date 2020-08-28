@@ -1,42 +1,40 @@
 # Using NCache ASP.NET Core SignalR with Blazor WebAssembly
 
 ## Introduction to ASP.NET Core Blazor
-Blazor is a framework for building interactive client-side web UI with .NET:
+Blazor is a framework used to build interactive client-side web UI with .NET and has the following properties:
 
-* Create rich interactive UIs using C# instead of JavaScript.
-* Share server-side and client-side app logic written in .NET.
-* Render the UI as HTML and CSS for wide browser support, including mobile browsers.
-* Integrate with modern hosting platforms, such as Docker.
-* Using .NET for client-side web development offers the following advantages:
+* Creates rich interactive UIs using C# instead of JavaScript.
+* Shares server-side and client-side application logic written in .NET.
+* Renders the UI as HTML and CSS supporting a wide range of browsers, including mobile browsers.
+* Integrates with modern hosting platforms, such as Docker.
 
-Write code in C# instead of JavaScript.
+Using .NET for client-side web development over JavaScript offers the following advantages:
 * Leverage the existing .NET ecosystem of .NET libraries.
-* Share app logic across server and client.
+* Share application's logic across the server and the client.
 * Benefit from .NET's performance, reliability, and security.
-* Stay productive with Visual Studio on Windows, Linux, and macOS.
-* Build on a common set of languages, frameworks, and tools that are stable, feature-rich, and easy to use.
+* Is compatible with Visual Studio on Windows, Linux, and macOS.
+* Can be built on a common set of languages, frameworks, and tools that are stable, feature-rich, and easy to use.
 
-To learn more about ASP.NET Core Blazor see [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-3.1)
+Learn more about ASP.NET Core Blazor [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-3.1)
 
 ## Introduction 
 
-This solutions contains the information that how you can integrate NCache SignalR in Blazor App. Following sample was taken from microsoft to incorporate NCache signalR
+This solution contains information on how to integrate NCache SignalR with the Blazor application. The following sample is taken from Microsoft to incorporate NCache SignalR with it:
 
-View sample implementation of Blazor by microsoft here(how to download)
+View sample implementation of Blazor by Microsoft [here](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/tutorials/signalr-blazor-webassembly/samples/3.x/BlazorSignalRApp).
 
-Prerequisites
-* Visual Studio 2019 16.6 or later with the ASP.NET and web development workload
+## Pre-requisites
+* Visual Studio 2019 16.6 or later with the ASP.NET and Web development workload
 * .NET Core 3.1 SDK or later
 
 ## Installing and configuring NCache
-1. Download and install NCache from [here](https://www.alachisoft.com/download-ncache.html)
-2. After installation create cache named "blazor". Learn how to create cache [here](https://www.alachisoft.com/resources/docs/ncache/getting-started-guide-windows/create-cache.html).
-3. Start the cache named "blazor". FOr start cache documentation see [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/start-cache.html#:~:text=Starting%20Cache%20on%20All%20Server%20Nodes&text=Launch%20NCache%20Web%20Manager%20by,against%20the%20cache%20to%20start.) 
+1. Download and install NCache [here](https://www.alachisoft.com/download-ncache.html)
+2. After installation, create a cache named "blazor". Learn how to create a cache [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-cache.html).
+3. Start the cache named "blazor". See how to start the cache by following NCache documentation [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/start-cache.html) 
 
-## Add NCache SignalR in Blazor server startup serrvices 
+## Add NCache SignalR in Blazor Server Startup Services 
 
-Following code snippet will configure NCache SignalR in blazor Server. 
-1. Download and install NCache ASP.NET Core SignalR [Nuget](https://www.nuget.org/packages/AspNetCore.SignalR.NCache/) in "BlazorSignalRApp.Server" project.
+Following code snippet configures NCache SignalR in Blazor Server. Download and install NCache ASP.NET Core SignalR [NuGet](https://www.nuget.org/packages/AspNetCore.SignalR.NCache/) in "BlazorSignalRApp.Server" project.
 
 
 ```csharp
@@ -51,7 +49,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-## Run the app
+## Run the Application
 1. Open the "BlazorSignalRApp.sln" solution. 
 2. Set the "BlazorSignalRApp.Server" as startup project.
 3. Press F5 to run the solution.
@@ -62,7 +60,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ### Development Tools
 
-* [Visual Studio 2019](https://visualstudio.microsoft.com/)- For creation of project and code
+* [Visual Studio 2019](https://visualstudio.microsoft.com/) - For creation of project and code.
 
 ## Additional Resources
 
@@ -71,7 +69,7 @@ The complete online documentation for NCache is available at:
 http://www.alachisoft.com/resources/docs/#ncache
 
 #### Programmers' Guide
-The complete programmers guide of NCache is available at:
+The complete programmer's guide of NCache is available at:
 http://www.alachisoft.com/resources/docs/ncache/prog-guide/
 
 ## Technical Support
@@ -79,7 +77,7 @@ http://www.alachisoft.com/resources/docs/ncache/prog-guide/
 Alachisoft [C] provides various sources of technical support. 
 
 - Please refer to http://www.alachisoft.com/support.html to select a support resource you find suitable for your issue.
-- To request additional features in the future, or if you notice any discrepancy regarding this document, please drop an email to [support@alachisoft.com](mailto:support@alachisoft.com).
+- To request additional features in the future, or if you notice any discrepancy regarding this document, please drop an email at [support@alachisoft.com](mailto:support@alachisoft.com).
 
 ## Copyrights
 
