@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Alachisoft.NCache.Samples.Dapper.Models</AssemblyName>
+    <RootNamespace>Alachisoft.NCache.Samples.Dapper.Models</RootNamespace>
+  </PropertyGroup>
+
+</Project>
