@@ -35,3 +35,7 @@ Following is a list of the solutions provided:
 - [Taxi Fare Prediction using ML.NET and NCache](./TaxiFarePrediction/readme.md)
 
   This solution demonstrates how taxi fares can be predicted using a retrainable ML.NET model. It also demonstrates how NCache can be incorporated with real-time machine learning scenarios for boosting performance of the overall system.
+
+- [BackingSourceWithDapperUsingNCache](./BackingSourceWithDapperUsingNCache/README.md)
+
+  This solution shows how Dapper can be utilized together with NCache backing source providers and database dependency features to provide lighting-fast access to up-to-date database content directly from NCache.
