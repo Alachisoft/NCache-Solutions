@@ -49,12 +49,27 @@ namespace NCache.StackExchange.Redis
             return new ConnectionMultiplexer(cacheName);
         }
 
+        public static ConnectionMultiplexer Connect(string cacheName, CacheConnectionOptions connectionOptions)
+        {
+            return new ConnectionMultiplexer(cacheName, connectionOptions);
+        }
+
         private ICache _cache;
         public ConnectionMultiplexer(string cacheName)
         {
             if (!CacheConnections.ContainsKey(cacheName.ToLower()))
             {
                 var cache = CacheManager.GetCache(cacheName);
+                CacheConnections.Add(cacheName.ToLower(), cache);
+            }
+            _cache = CacheConnections[cacheName];
+        }
+
+        public ConnectionMultiplexer(string cacheName, CacheConnectionOptions connectionOptions)
+        {
+            if (!CacheConnections.ContainsKey(cacheName.ToLower()))
+            {
+                var cache = CacheManager.GetCache(cacheName, connectionOptions);
                 CacheConnections.Add(cacheName.ToLower(), cache);
             }
             _cache = CacheConnections[cacheName];

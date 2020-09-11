@@ -15,3 +15,10 @@
 /StreamProcessing/src/Models/bin/Debug/netstandard2.0
 /StreamProcessing/src/StreamProcessingUI/bin/Debug/netcoreapp3.0
 /StreamProcessing/src/StreamToNCache/bin/Debug/netcoreapp3.0
+/NCache.StackExchange.Redis/NCache.StackExchange.Redis/obj
+/NCache.StackExchange.Redis/NCache.StackExchange.Redis.Sample/obj/Debug/netcoreapp3.1
+/NCache.StackExchange.Redis/NCache.StackExchange.Redis.Sample/obj/project.nuget.cache
+/NCache.StackExchange.Redis/NCache.StackExchange.Redis.Sample/obj/project.assets.json
+/NCache.StackExchange.Redis/NCache.StackExchange.Redis.Sample/obj/NCache.StackExchange.Redis.Sample.csproj.nuget.g.targets
+/NCache.StackExchange.Redis/NCache.StackExchange.Redis.Sample/obj/NCache.StackExchange.Redis.Sample.csproj.nuget.g.props
+/NCache.StackExchange.Redis/NCache.StackExchange.Redis.Sample/obj/NCache.StackExchange.Redis.Sample.csproj.nuget.dgspec.json
