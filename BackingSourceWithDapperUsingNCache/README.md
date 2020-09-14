@@ -39,7 +39,7 @@
 Before the sample application is executed make sure that:
 
 - app.config have been changed according to the configurations. 
-	- Set the number of rows to be added to the test table by setting the *noOfInstances* key in the [App.Config](./ConsoleUI/App.Config) *appSettings* section. 
+	- Set the number of rows to be added to the test table by setting the *noOfInstances* key in the [App.Config](./ConsoleUI/App.config) *appSettings* section. 
     - You can set the *UseCache* in the [App.Config](./ConsoleUI/App.config) *appSettings* section to *true* to see NCache backing source feature in action or you can get the data directly from the database using *Dapper* by setting this key to *false*. This will help in showing the performance upgrade offered by NCache in terms of read-performance. 
     - Create a database in Sql Server and provide the connection string in the [App.Config](./ConsoleUI/App.config) for connection name *sql*.
     - Set the *cacheId* to the Id of your cache in the [App.Config](./ConsoleUI/App.config) *appSettings* section.
