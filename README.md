@@ -39,3 +39,7 @@ Following is a list of the solutions provided:
 - [Backing Source With Dapper Using NCache](./BackingSourceWithDapperUsingNCache/README.md)
 
   This solution shows how Dapper can be utilized together with NCache backing source providers and database dependency features to provide lighting-fast access to up-to-date database content directly from NCache.
+  
+- [IdentityServer4 with NCache](./NCacheIdentityServer4/README.md)
+
+  This solution shows how NCache can be used as both a caching layer on top of IdentityServer4 configuration and operational stores as well as a standalone in-memory storage of configuration and operational data such as information about clients, identity resources, api resources, persisted grants etc.
