@@ -40,9 +40,9 @@ Before the sample application is executed make sure that:
 
 - app.config have been changed according to the configurations. 
 	- Set the number of rows to be added to the test table by setting the *noOfInstances* key in the [App.Config](./ConsoleUI/App.Config) *appSettings* section. 
-    - You can set the *UseCache* in the [App.Config](./ConsoleUI/App.Config) *appSettings* section to *true* to see NCache backing source feature in action or you can get the data directly from the database using *Dapper* by setting this key to *false*. This will help in showing the performance upgrade offered by NCache in terms of read-performance. 
-    - Create a database in Sql Server and provide the connection string in the [App.Config](./ConsoleUI/App.Config) for connection name *sql*.
-    - Set the *cacheId* to the Id of your cache in the [App.Config](./ConsoleUI/App.Config) *appSettings* section.
+    - You can set the *UseCache* in the [App.Config](./ConsoleUI/App.config) *appSettings* section to *true* to see NCache backing source feature in action or you can get the data directly from the database using *Dapper* by setting this key to *false*. This will help in showing the performance upgrade offered by NCache in terms of read-performance. 
+    - Create a database in Sql Server and provide the connection string in the [App.Config](./ConsoleUI/App.config) for connection name *sql*.
+    - Set the *cacheId* to the Id of your cache in the [App.Config](./ConsoleUI/App.config) *appSettings* section.
 
 - Before running this sample make sure backing source is enabled and following providers are registered.
 	- For Read Thru
@@ -58,7 +58,7 @@ Before the sample application is executed make sure that:
 		- Provide a unique provider name ("SqlReadThruProvider", for example).
 		- Click on "Browse" button for library field and select the *bin* sub-folder within the [DapperBackingSource](./DapperBackingSource/) folder. Select library *Alachisoft.NCache.Samples.Dapper.BackingSources.dll*.
 		- Select class *Alachisoft.NCache.Samples.Dapper.BackingSources.ReadThruProvider* from the now populated drop down list.
-		- Specify connection string as *connectionString* parameter for database that is specified in [App.Config](./ConsoleUI/App.Config) *connectionStrings* section. 
+		- Specify connection string as *connectionString* parameter for database that is specified in [App.Config](./ConsoleUI/App.config) *connectionStrings* section. 
 	- Similarly, to enable Write Thru backing source, follow the same steps as above. Choose "Alachisoft.NCache.Samples.Dapper.BackingSources.WriteThruProvider" from the class drop down list.
 	- Backing source provider files need to be deployed.
 		- Click 'Deploy Backing Source Provider' to deploy backing source. 
