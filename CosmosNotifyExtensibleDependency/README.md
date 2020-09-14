@@ -4,6 +4,7 @@
 
 * [Introduction](#introduction)
 * [Prerequisites](#pre-requisites)
+* [Implementation](#implementation)
 * [NCache Features Highlighted in Application](#ncache-features-highlighted-in-application)
 * [Running the Application](#running-the-application)
 * [Additional Resources](#additional-resources)
@@ -12,25 +13,33 @@
 
 ## Introduction
 
-This project highlights the NCache **NotifyExtensibleDependency** feature and how it can be used to synchronize NCache with Cosmos DB SQL API collections. The following are the advantages of NCache together with this feature when used with Azure Cosmos DB:
+This project highlights the NCache **NotifyExtensibleDependency** feature and how it can be used to synchronize NCache with Cosmos DB SQL API collections. [**NotifyExtensibleDependency**](https://www.alachisoft.com/resources/docs/ncache/prog-guide/notification-extensible-dependency.html) is a cache synchronization strategy for tackling the stale data problem, to be discussed shortly. Its primary purpose is to give the solution architect the flexibility to integrate a **real-time customized** logic that monitors and processes datastore change notifications **directly** into the cache hosting processes running on the cache servers. 
+
+In this scheme, the developer deploys a provider containing the datastore state-change monitoring and processing logic behind the depedency along with the lifecycle hooks into the NCache servers. The servers then invoke the dependency-related methods which encapsulate the custom logic and determine whether or not to remove the associated cached item. The main strengths of this feature are as follows:
+
+- **Stale Data Problem Mitigation**
+
+  Although using NCache with Cosmos DB boosts application performance, there is one issue that needs to be kept in mind. When you start   caching with a primary data store such as Cosmos DB, two copies of the same data will be created, one in the primary data store and     the other in the cache. Any direct update to the database data could render the cache data stale. With **NotifyExtensibleDependency**,   not only are we taking advantage of the increased read performance provided by NCache, but we can also make sure that stale data does   not persist in the cache.
+
+- **Native NCache API Support**
+
+  With support built into the NCache core logic, **NotifyExtensibleDependency** extends the power NCache provides when it comes to **high availability**, **reliability** and **scalability** and adds the mechanisms which ensure that cached-data fully agrees with the primary datastore state at all times.
+  
+With cache synchronization logic deployed to the cache servers using **NotifyExtensibleDependency**, the overall architecture including NCache and the [Cosmos DB Change Feed](https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed) can be visualized as in the figure given below. This diagram also highlights the use of a [read-through provider](https://www.alachisoft.com/resources/docs/ncache/prog-guide/read-through-caching.html) to allow for **auto-reloading** updated data into the cache:
+
+![Architectural Diagram](./resources/architectural_diagram.png)
+
+
+The following are the advantages of NCache together with this feature when used with Azure Cosmos DB:
 
 - **Faster Read Operations**
 
   Using NCache as your distributed caching solution, application performance is improved since it is an in-memory key-value store which   greatly improves data read performance. Furthermore, with more data operations being serviced by the cache instead of the underlying     Cosmos DB database, the transaction costs incurred in terms of RU/s are greatly reduced as well. More information about using caching   with Cosmos DB can be found [here](https://www.alachisoft.com/blogs/how-to-use-caching-with-azure-cosmos-db/). 
   
-- **Stale Data Problem Mitigation**
-
-  Although using NCache with Cosmos DB boosts application performance, thee is one issue that needs to be kept in mind. When you start     caching with a primary data store such as Cosmos DB, two copies of the same data will be created, one in the primary data store and     the other in the cache. Any direct update to the database data could render the cache data stale. With **NotifyExtensibleDependency**,   not only are we taking advantage of the increased read performance provided by NCache, but we can also make sure that stale data does   not persist in the cache.
-  
 - **Improved Scalability**
 
-  Using **NotifyExtensibleDependency**, all the cache synchronization operations are handed over to the clustered cache itself, allowing   the clients to focus on the core business logic. Not only does this create a clean logical separation of concerns among the NCache       client and servers but it also provides improved scalability of the overall system architecture since any increase in change feed       load can easily be handled by scaling out the NCache cluster instead of having to perform scale-up on the client-side hardware, an       important implication for today's cloud-based microservices applications.
-  
-More information regarding **NotifyExtensibleDependency** can be found [here](https://www.alachisoft.com/resources/docs/ncache/prog-guide/notification-extensible-dependency.html). With cache synchronization logic deployed to the cache servers using **NotifyExtensibleDependency**, the overall architecture including NCache and the [Cosmos DB Change Feed][https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed] can visualized as in the figure given below. This diagram also highlights the use of a [read-through provider](https://www.alachisoft.com/resources/docs/ncache/prog-guide/read-through-caching.html) to allow for **auto-reloading** updated data into the cache:
-
-![Architectural Diagram](./resources/architectural_diagram.png)
-  
-
+  Using **NotifyExtensibleDependency**, all the cache synchronization operations are handed over to the clustered cache itself, allowing   the clients to focus on the core business logic. Not only does this create a clean logical separation of concerns among the NCache       client and servers but it also provides improved scalability of the overall system architecture since any increase in change feed       load can easily be handled by scaling out the NCache cluster independently of the client-side infrastructure, an important implication for today's cloud-based microservices applications. 
+ 
 ## Pre-requisites
 
   Before running the application, make sure the following requirements have been met:
@@ -41,9 +50,15 @@ More information regarding **NotifyExtensibleDependency** can be found [here](ht
   - An IDE to run the code such as [Visual Studio 2019](https://visualstudio.microsoft.com/).
   - The .NET Framework 4.7.2 SDK and Runtime environments have been installed to compile and package the application. Those can be installed from [here](https://dotnet.microsoft.com/download/dotnet-framework/net472).
   - **NCache 5.0 SP2 Enterprise edition** is installed on the cache server machines. The installation files can be found [here](https://www.alachisoft.com/download-ncache.html).
+  
 ## Implementation
- We can finally get to writing our code. The following is our implementation of the NotifyExtensibleDependency class:
- CosmoDbNotificationDependency.cs
+ We can finally get to writing our code. The overall UML diagram of our implementation is shown below:
+
+![ApplicationArchitecture](./resources/ApplicationArchitecture.png)
+
+The following is our implementation of the NotifyExtensibleDependency class:
+
+[CosmoDbNotificationDependency.cs](./src/CustomDependencyNotifyImpl/CosmosDbNotificationDependency.cs)
 ```csharp
 [Serializable]
 public class CosmosDbNotificationDependency :
@@ -85,7 +100,7 @@ public class CosmosDbNotificationDependency :
   }
   // Overall unique identifier used to track dependency against change feed 
   // processor instances on which the dependency is reliant
-  public string DependencyId
+  internal string DependencyId
   {
       get
       {
@@ -195,7 +210,9 @@ public class CosmosDbNotificationDependency :
   }
 }
 ```
-The following shows the implementation of the CosmosDbChangeFeedObserverFactory class used to create the change feed observers by the change feed processors:
+The following shows the implementation of the [IChangeFeedObserverFactory](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.documents.changefeedprocessor.feedprocessing.ichangefeedobserverfactory?view=azure-dotnet) interface used to create the change feed observers by the change feed processors:
+
+[CosmosDbChangeFeedObserverFactory.cs](./src/CustomDependencyNotifyImpl/CosmosDbChangFeedObserverFactory.cs)
 ```csharp
 [Serializable]
 internal class CosmosDbChangFeedObserverFactory : IChangeFeedObserverFactory
@@ -212,8 +229,9 @@ internal class CosmosDbChangFeedObserverFactory : IChangeFeedObserverFactory
         }
 }
 ```
-The following shows the implementation of the IChangeFeedObserver class whose instances will process the change feed results for our custom CosmosDbNotificationDependency instances:
-NCacheChangeFeedObserver.cs
+The following shows the implementation of the [IChangeFeedObserver](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.documents.changefeedprocessor.feedprocessing.ichangefeedobserver?view=azure-dotnet) interface whose instances will process the change feed results for our custom CosmosDbNotificationDependency instances:
+
+[NCacheChangeFeedObserver.cs](./src/CustomDependencyNotifyImpl/NCacheChangeFeedObserver.cs)
 ```csharp
 [Serializable]
 internal class NCacheChangeFeedObserver : IChangeFeedObserver
@@ -318,11 +336,11 @@ The complete programmers guide of NCache is available at:
 
 ## Technical Support
 
-Alachisoft [C] provides various sources of technical support. 
+Alachisoft &copy; provides various sources of technical support. 
 
 - Please refer to [Alachisoft Support](http://www.alachisoft.com/support.html) to select a support resource you find suitable for your issue.
 - To request additional features in the future, or if you notice any discrepancy regarding this document, please drop an email to [support@alachisoft.com](mailto:support@alachisoft.com).
 
 ### Copyrights
 
-[C] Copyright 2020 Alachisoft 
+&copy; Copyright 2020 Alachisoft 
