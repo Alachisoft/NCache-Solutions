@@ -20,15 +20,9 @@
 
 	- 	NCache is a distributed caching solution that can be *scaled out* to manage the request hits reaching the database. Thus, as the request load increases, you can simply add more servers to the cache to furnish this high load without having to *scale-up* your database.
 
-	- 	An important factor in the high speed of Dapper is the fact that it has a built-in query cache implemented using a concurrent dictionary with which it can cache information about every query that it runs.
-
-		A drawback of this is that this query cache is residing within the client process and, if not careful, this can lead to memory bloat issues especially if the query statements are hard-coded without query parameters passed in to supply placeholder values.
-
-		Although it is possible to disable caching on a query, this hits performance especially if the query is frequently run. In this regard, NCache backing source providers allow you to offload *Dapper* operations over to the server side, thus relieving memory pressure on the client processes.
-
 	- 	Being a distributed cache, NCache also improves performance in cases where multiple instances of an application are running behind a load balancer e.g. server farms, containerized environments etc. which can share the contents of the cache. 
 	
-		In this case, if any of the client instances queries for results the first time, any subsequest requests using the other instances will get the results directly from the cache without having to spend time gathering up the information about the query and feeding it into the query cache.
+		In this case, if any of the client instances queries for results the first time, any subsequest requests using the other instances will get the results directly from the cache.
 
 	- 	A main issue regarding caching that people have reservations with is the case of stale data residing in the cache. To mitigate this issue, the NCache backing source providers together with database dependency features ensure that the data in the cache will remain in sync with the database using the NCache resync feature. This can be demonstrated by running the given sample and performing the following steps:
 
