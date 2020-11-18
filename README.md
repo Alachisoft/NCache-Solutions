@@ -43,3 +43,8 @@ Following is a list of the solutions provided:
 - [IdentityServer4 with NCache](./NCacheIdentityServer4/README.md)
 
   This solution shows how NCache can be used as both a caching layer on top of IdentityServer4 configuration and operational stores as well as a standalone in-memory storage of configuration and operational data such as information about clients, identity resources, api resources, persisted grants etc.
+  
+- [Sync NCache with PostgreSQL using NotifyExtensibleDependency](./PostGreSQLNotifyExtensibleDependency/README.md)
+
+   This solution demonstrates the use of NotifyExtensibleDependency to allow for real-time cache synchronization with PostgreSQL database.
+
