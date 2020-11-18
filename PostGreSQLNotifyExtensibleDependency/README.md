@@ -121,7 +121,7 @@ Before the sample application is executed make sure that:
 
   Since we are assuming an NCache Enterprise .NET Framework server installation, we will deploying the .NET Framework assemblies. For that, use the assemblies given in the /bin/release folder for the [*NETConsoleUI*](./src/NETConsoleUI/) application.
 
-  Once the assemblies are deployed using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.htm), start the cache.
+  Once the assemblies are deployed using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html), start the cache.
 		
 - On the database side, run an ***INSERT*** script on the *customers* table to insert a row with *customerid* field set to *a*. We will applying ***UPDATE*** and ***DELETE*** calls on this field to demonstrate real-time cache-invalidation on the NCache side using the ***NotifyExtensibleDependency*** implementation deployed with the assemblies during the previous step.
 
