@@ -64,6 +64,9 @@ Before the sample application is executed make sure that:
 - The latest version of NCache Enterprise is installed. The latest version can be gotten from [here](https://www.alachisoft.com/download-ncache.html). If you are using a Linux cache server, download the Enterprise .NET Core installation. For a Windows cache server, you can install either the .NET Framework or the .NET Core installation.
 
   **NOTE**: The rest of this article assumes you have installed the .NET Framework installation although the steps for the .NET Core application are exactly the same.
+  
+- Make sure the relevant ports are open to allow for full communication between NCache and the PostgreSQL Database.
+This sample was tested with PostgreSQL version "10.15"
 
 - In your PostgreSQL database, run the SQL ***CREATE*** scripts given in the [Resources](./Resources/) folder to create the *customers* table, the *customers* table trigger that will be invoking the Notifications trigger function, and the trigger function itself.
 
