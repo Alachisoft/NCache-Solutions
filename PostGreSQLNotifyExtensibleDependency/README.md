@@ -126,7 +126,7 @@ This sample was tested with PostgreSQL version "10.15"
 
   Once the assemblies are deployed using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html), start the cache.
 		
-- On the database side, run an ***INSERT*** script on the *customers* table to insert a row with *customerid* field set to *ALFKI*. We will applying ***UPDATE*** and ***DELETE*** calls on this field to demonstrate real-time cache-invalidation on the NCache side using the ***NotifyExtensibleDependency*** implementation deployed with the assemblies during the previous step.
+- On the database side, run an ***INSERT*** script on the *customers* table to insert a row with *customerid* field set to *a*. We will applying ***UPDATE*** and ***DELETE*** calls on this field to demonstrate real-time cache-invalidation on the NCache side using the ***NotifyExtensibleDependency*** implementation deployed with the assemblies during the previous step.
 
 ### Build and Run the Sample
     
@@ -134,7 +134,7 @@ This sample was tested with PostgreSQL version "10.15"
 
 - In the [*Statistics*](https://www.alachisoft.com/resources/docs/ncache/admin-guide/browse-cache-statistics.html?tabs=windows) page of the NCache Web Manager for *democache*, the *Count* field should now be *1*, signifying that the item was successfully added along with the dependency on the PostgreSQL database.
 
-- On the database side, run either an ***UPDATE*** or a ***DELETE*** command script on the *customers* table for row with *customerid* field set to *ALFKI*. Once the transaction is complete, NCache will receive a notification from PostgreSQL using ***NOTIFY*** command within the trigger function that we created.
+- On the database side, run either an ***UPDATE*** or a ***DELETE*** command script on the *customers* table for row with *customerid* field set to *a*. Once the transaction is complete, NCache will receive a notification from PostgreSQL using ***NOTIFY*** command within the trigger function that we created.
 
   In turn, the cached item will be invalidated and removed from cache, as demonstrated by the *Count* field in the *NCache Web Manager* *Statistics* page for *democache* going back to *0*.
 

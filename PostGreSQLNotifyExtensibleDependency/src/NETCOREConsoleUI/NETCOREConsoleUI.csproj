@@ -6,11 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Entities\Entities.csproj" />
+    <ProjectReference Include="..\PostGreSQLNotificationDependency\PostGreSQLNotificationDependency.csproj" />
   </ItemGroup>
 
   <ItemGroup>
