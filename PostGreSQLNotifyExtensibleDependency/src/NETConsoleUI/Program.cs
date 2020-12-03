@@ -1,5 +1,5 @@
 ﻿using Alachisoft.NCache.Client;
-using Npgsql;
+using Entities;
 using System;
 
 namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleUI
@@ -8,24 +8,18 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
     {
         static void Main(string[] args)
         {
-            NpgsqlConnection connection = null;
             try
             {
-                // Change the connection string to your PostGreSQL Database
-                const string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=password;Database=database";
-
-                var cacheItem = new CacheItem("dummy")
-                {
-                    Dependency = new PostGreSQLDependency(connectionString, "a", "public", "customers", "customer_channel")
-                };
-
-                var key = "dummy";
-
                 var cache = CacheManager.GetCache("democache");
-
-                cache.Insert(key, cacheItem);
+                //Key with which customer will be fected from database on the basis of CustomerID
+                var customerId = "ALFKI";
+                var customer = cache.Get<Customer>(customerId, new Runtime.Caching.ReadThruOptions(Runtime.Caching.ReadMode.ReadThru, "PostGreSqlReadThruProvider"));
+                Console.WriteLine($"Customer details are \n{customer.customerid}\n{customer.address}\n{customer.city}\n{customer.country}");
 
                 Console.ReadLine();
+
+                customer = cache.Get<Customer>(customerId, new Runtime.Caching.ReadThruOptions(Runtime.Caching.ReadMode.ReadThru, "PostGreSqlReadThruProvider"));
+                Console.WriteLine($"Customer details are \n{customer.customerid}\n{customer.address}\n{customer.city}\n{customer.country}");
 
 
             }
@@ -33,15 +27,8 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
             {
                 Console.WriteLine(e);
             }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.Close();
-                }
-            }
+
+
         }
-
-
     }
 }
