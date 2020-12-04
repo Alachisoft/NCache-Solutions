@@ -1,4 +1,4 @@
-# Sync NCache with PostgreSQL thru Notifications
+# Sync NCache with PostgreSQL through Notifications
 Using NotifyExtensibleDependency and Read-Through
 
 ### Table of contents
