@@ -1,4 +1,4 @@
-# Sync NCache with PostgreSQL using NotifyExtensibleDependency
+# Sync NCache with PostgreSQL using NotifyExtensibleDependency and ReadThruProvider Resync
 
 ### Table of contents
 
@@ -13,13 +13,17 @@
 
 ### Introduction
 
-This project highlights the NCache **NotifyExtensibleDependency** feature and how it can be used to synchronize NCache with a PostgreSQL database. [**NotifyExtensibleDependency**](https://www.alachisoft.com/resources/docs/ncache/prog-guide/notification-extensible-dependency.html) is a cache synchronization strategy for tackling the stale data problem, to be discussed shortly. Its primary purpose is to give the solution architect the flexibility to integrate a **real-time customized** logic that monitors and processes datastore change notifications **directly** into the cache hosting processes running on the cache servers. 
+This project highlights the NCache **NotifyExtensibleDependency**, **ReadThruProvider**, **Resync** feature and how it can be used to synchronize NCache with a PostgreSQL database. [**NotifyExtensibleDependency**](https://www.alachisoft.com/resources/docs/ncache/prog-guide/notification-extensible-dependency.html) is a cache synchronization strategy for tackling the stale data problem, to be discussed shortly. Its primary purpose is to give the solution architect the flexibility to integrate a **real-time customized** logic that monitors and processes datastore change notifications **directly** into the cache hosting processes running on the cache servers.
 
-In this scheme, the developer deploys a provider containing the datastore state-change monitoring and processing logic behind the depedency along with the lifecycle hooks into the NCache servers. The servers then invoke the dependency-related methods which encapsulate the custom logic and determine whether or not to remove the associated cached item. The main strengths of this feature are as follows:	
+[**ReadThruProvider**](https://www.alachisoft.com/resources/docs/ncache/prog-guide/configure-read-through-provider.html) will use your custom read-through provider to communicate with the back-end data source. Using this you can incorporate your custom logic to load data from the configured data source. In Read-Through Caching, NCache will call your provider to load data from the data source behind the get call, in case of a cache miss.
+
+In this scheme, the developer deploys a provider(NotifiyExtensibleDependencyProvider and ReadThruprovider) containing the datastore state-change monitoring and processing logic behind the depedency along with the lifecycle hooks into the NCache servers. The servers then invoke the dependency-related methods which encapsulate the custom logic and determine whether or not to remove the associated cached item. The main strengths of this feature are as follows:	
 
 - **Stale Data Problem Mitigation**
 
   Although using NCache with PostgreSQL boosts application performance, there is one issue that needs to be kept in mind. When you start caching with a primary data store such as PostgreSQL, two copies of the same data will be created, one in the primary data store and the other in the cache. Any direct update to the database data could render the cache data stale. With **NotifyExtensibleDependency**, not only are we taking advantage of the increased read performance provided by NCache, but we can also make sure that stale data does not persist in the cache.
+
+  If you have configured the read thru provider you can choose to check the rsync options to true with the NotifyExtensibleDependency so when the object get invalidated or expired NCache automatically loads the data from the database using the configured ReadThruProvider.
 
 - **Native NCache API Support**
 
@@ -51,11 +55,15 @@ Any clients LISTENING on the channel using the previous LISTEN command get the p
 
 A sample ***NotifyExtensibleDependency*** implementation given in the sample follows the approach given in the previous section and you can view the source code [here](./src/PostGreSQLNotificationDependency/PostGreSQLDependency.cs).
 
+A sample ***ReadThruProvider*** implementation given in the sample follows the approach given in the previous section and you can view the source code [here](./src/PostGreSQLBackingSourceProvider/PostGreSQLReadThruProvider.cs).
+
 Also given in this project are the scripts for creating the [demo customers table](./Resources/CustomerTable.sql), the [trigger](./Resources/CustomerTableTrigger.sql) to invoke the trigger function for notification and the [trigger function](./Resources/CustomerTriggerFunction.sql) itself. 
 
-Besides these, there are two console applications that reference the [***NotifyExtensibleDependency***](./src/PostGreSQLNotificationDependency/) .NET Standard 2.0 library. One is [NETConsoleUI](./src/NETConsoleUI/) which is a .NET Framework 4.7.2 application and the other is [NETCOREConsoleUI](./src/NETCOREConsoleUI/) which is a .NET Core 3.1 application.
+Besides these, there are two console applications that reference the [***NotifyExtensibleDependency***](./src/PostGreSQLNotificationDependency/) .NET Standard 2.0 library. One is [PostGresDependencyNETConsoleUI](./src/PostGresDependencyNETConsoleUI/) which is a .NET Framework 4.7.2 application and the other is [PostGresDependencyNETCOREConsoleUI](./src/PostGresDependencyNETCOREConsoleUI/) which is a .NET Core 3.1 application.
 
 These two console applications are identical in their source code and are meant to show that both a .NET Core client and a .NET framework client can make use of the same ***NotifyExtensibleDependency*** feature.
+
+These two console applications are identical in their source code and are meant to show that both a .NET Core client and a .NET framework client can get the value from datasource automatically and then from cache using ***ReadThruProvider*** feature.
 
 ### Prerequisites
 
@@ -72,7 +80,7 @@ This sample was tested with PostgreSQL version "10.15"
 
   **IMPORTANT**:Confirm that the trigger is enabled.
 
-- In both the [*NETConsoleUI*](./src/NETConsoleUI) and [*NETCOREConsoleUI*](./src/NETCOREConsoleUI) applications, change the *Program.cs* source code by adding the connection string to the PostgreSQL database that contains the *customers* table and the associate trigger and trigger function as shown below:
+- In both the [*PostGresDependencyNETConsoleUI*](./src/PostGresDependencyNETConsoleUI) and [*PostGresDependencyNETCOREConsoleUI*](./src/PostGresDependencyNETCOREConsoleUI) applications, change the *Program.cs* source code by adding the connection string to the PostgreSQL database that contains the *customers* table and the associate trigger and trigger function as shown below:
 
   ```csharp
 
@@ -120,25 +128,27 @@ This sample was tested with PostgreSQL version "10.15"
 
   **IMPORTANT**: Do not start the cache after creating it as we will be deploying the ***NotificyExtensibleDependency*** implementation dependencies as shown in the next step.
 
-- Once *democache* is created, we need to deploy the assemblies needed to allow for the PostgreSQL notification logic to run on the server side onto *democache*.
+- Once *democache* is created configure the ReadThruProvider using the tutorial mentioned [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/read-through-provider.html). Name the ReadThruProvider with Name "PostGreSqlReadThruProvider" and add **connectionSting** as parameter with "Host=localhost;Port=5432;Username=postgres;Password=password;Database=database". 
 
-  Since we are assuming an NCache Enterprise .NET Framework server installation, we will deploying the .NET Framework assemblies. For that, use the assemblies given in the /bin/release folder for the [*NETConsoleUI*](./src/NETConsoleUI/) application.
+- Once *democache* is created, we need to deploy the assemblies related to PostGreSQLNotificationDependency and PostGreSQLBackingSourceProvider to allow for the PostgreSQL notification logic and ReadThruProvider with PostGreSQL to run on the server side onto *democache*.
+
+  Since we are assuming an NCache Enterprise .NET Framework server installation, we will deploying the .NET Framework assemblies. For that, use the assemblies given in the /bin/release folder for the [*PostGresDependencyNETConsoleUI*](./src/PostGresDependencyNETConsoleUI/) application.
 
   Once the assemblies are deployed using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html), start the cache.
 		
-- On the database side, run an ***INSERT*** script on the *customers* table to insert a row with *customerid* field set to *a*. We will applying ***UPDATE*** and ***DELETE*** calls on this field to demonstrate real-time cache-invalidation on the NCache side using the ***NotifyExtensibleDependency*** implementation deployed with the assemblies during the previous step.
+- On the database side, run an ***INSERT*** script on the *customers* table to insert a row with *customerid* field set to *ALFKI*. We will applying ***UPDATE*** and ***DELETE*** calls on this field to demonstrate real-time cache-invalidation on the NCache side using the ***NotifyExtensibleDependency*** implementation deployed with the assemblies during the previous step.
 
 ### Build and Run the Sample
     
-- Run the *NETConsoleUI* application. This is will insert a dummy cache item in the cache with dependency set on it. This dependency is an instance of the ***NotifyExtensibleDependency*** implementation as shown [here](./src/PostGreSQLNotificationDependency/PostGreSQLDependency.cs).
+- Run the *PostGresDependencyNETConsoleUI* application. This is will insert a dummy cache item in the cache with dependency set on it. This dependency is an instance of the ***NotifyExtensibleDependency*** implementation as shown [here](./src/PostGreSQLNotificationDependency/PostGreSQLDependency.cs).
 
 - In the [*Statistics*](https://www.alachisoft.com/resources/docs/ncache/admin-guide/browse-cache-statistics.html?tabs=windows) page of the NCache Web Manager for *democache*, the *Count* field should now be *1*, signifying that the item was successfully added along with the dependency on the PostgreSQL database.
 
-- On the database side, run either an ***UPDATE*** or a ***DELETE*** command script on the *customers* table for row with *customerid* field set to *a*. Once the transaction is complete, NCache will receive a notification from PostgreSQL using ***NOTIFY*** command within the trigger function that we created.
+- On the database side, run either an ***UPDATE*** or a ***DELETE*** command script on the *customers* table for row with *customerid* field set to *ALFKI*. Once the transaction is complete, NCache will receive a notification from PostgreSQL using ***NOTIFY*** command within the trigger function that we created.
 
   In turn, the cached item will be invalidated and removed from cache, as demonstrated by the *Count* field in the *NCache Web Manager* *Statistics* page for *democache* going back to *0*.
 
-- Repeat the steps for the *NETCoreConsoleUI* application to confirm that the same behavior is observed when data is added from a .NET Core Client application onto an NCache Enterprise .NET Framework application.
+- Repeat the steps for the *PostGresDependencyNETCoreConsoleUI* application to confirm that the same behavior is observed when data is added from a .NET Core Client application onto an NCache Enterprise .NET Framework application.
 
 ### Additional Resources
 

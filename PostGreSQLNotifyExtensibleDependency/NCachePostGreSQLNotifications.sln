@@ -7,7 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostGreSQLNotificationDepen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETConsoleUI", "src\NETConsoleUI\NETConsoleUI.csproj", "{C76CB8BC-5B6F-4C73-BC67-0A95B78D46D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETCOREConsoleUI", "src\NETCOREConsoleUI\NETCOREConsoleUI.csproj", "{7BF02D89-97D5-4CDE-9197-C77D32C8D7F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostGresDependencyNETConsoleUI", "src\PostGresDependencyNETConsoleUI\PostGresDependencyNETConsoleUI.csproj", "{A429726E-F414-4A2B-8003-76DE3A380631}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostGresDependencyNETCOREConsoleUI", "src\PostGresDependencyNETCOREConsoleUI\PostGresDependencyNETCOREConsoleUI.csproj", "{67E33E40-B0E8-4DE2-A4EB-4C7BB9C71686}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "src\Entities\Entities.csproj", "{1BD260D0-B5D4-4D29-931D-AC19F9512C89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETCOREConsoleUI", "src\NETCOREConsoleUI\NETCOREConsoleUI.csproj", "{898C8A40-F37E-4758-9990-2C12AAC053AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostGreSQLBackingSourceProvider", "src\PostGreSQLBackingSourceProvider\PostGreSQLBackingSourceProvider.csproj", "{D7A76E9F-C4CB-4B62-AF8B-FE67A4C21920}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +31,26 @@ Global
 		{C76CB8BC-5B6F-4C73-BC67-0A95B78D46D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C76CB8BC-5B6F-4C73-BC67-0A95B78D46D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C76CB8BC-5B6F-4C73-BC67-0A95B78D46D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7BF02D89-97D5-4CDE-9197-C77D32C8D7F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BF02D89-97D5-4CDE-9197-C77D32C8D7F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BF02D89-97D5-4CDE-9197-C77D32C8D7F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BF02D89-97D5-4CDE-9197-C77D32C8D7F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A429726E-F414-4A2B-8003-76DE3A380631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A429726E-F414-4A2B-8003-76DE3A380631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A429726E-F414-4A2B-8003-76DE3A380631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A429726E-F414-4A2B-8003-76DE3A380631}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67E33E40-B0E8-4DE2-A4EB-4C7BB9C71686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67E33E40-B0E8-4DE2-A4EB-4C7BB9C71686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67E33E40-B0E8-4DE2-A4EB-4C7BB9C71686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67E33E40-B0E8-4DE2-A4EB-4C7BB9C71686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BD260D0-B5D4-4D29-931D-AC19F9512C89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BD260D0-B5D4-4D29-931D-AC19F9512C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BD260D0-B5D4-4D29-931D-AC19F9512C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BD260D0-B5D4-4D29-931D-AC19F9512C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{898C8A40-F37E-4758-9990-2C12AAC053AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{898C8A40-F37E-4758-9990-2C12AAC053AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{898C8A40-F37E-4758-9990-2C12AAC053AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{898C8A40-F37E-4758-9990-2C12AAC053AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A76E9F-C4CB-4B62-AF8B-FE67A4C21920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A76E9F-C4CB-4B62-AF8B-FE67A4C21920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A76E9F-C4CB-4B62-AF8B-FE67A4C21920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A76E9F-C4CB-4B62-AF8B-FE67A4C21920}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
