@@ -1,4 +1,5 @@
-# Sync NCache with PostgreSQL using NotifyExtensibleDependency and ReadThruProvider Resync
+# Sync NCache with PostgreSQL thru Notifications
+Using NotifyExtensibleDependency and Read-Through
 
 ### Table of contents
 
@@ -63,7 +64,7 @@ Besides these, there are two console applications that reference the [***NotifyE
 
 These two console applications are identical in their source code and are meant to show that both a .NET Core client and a .NET framework client can make use of the same ***NotifyExtensibleDependency*** feature.
 
-These two console applications are identical in their source code and are meant to show that both a .NET Core client and a .NET framework client can get the value from datasource automatically and then from cache using ***ReadThruProvider*** feature.
+Besides these, there are two console applications that reference the [***ReadThruProvider***](./src/PostGreSQLBackingSourceProvider/) .NET Standard 2.0 library. One is [NETConsoleUI](./src/NETConsoleUI/) which is a .NET Framework 4.7.2 application and the other is [NETCOREConsoleUI](./src/NETCOREConsoleUI/) which is a .NET Core 3.1 application. These two console applications are identical in their source code and are meant to show that both a .NET Core client and a .NET framework client can get the value from datasource automatically and then from cache using ***ReadThruProvider*** feature.
 
 ### Prerequisites
 
