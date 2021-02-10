@@ -49,12 +49,48 @@ The following are the advantages of NCache together with this feature when used 
   - Make sure to export the SSL certificate of the Cosmos DB emulator on each of the NCache server nodes to allow for change feed processing to work on the server side implemented logic.
   - An IDE to run the code such as [Visual Studio 2019](https://visualstudio.microsoft.com/).
   - The .NET Framework 4.7.2 SDK and Runtime environments have been installed to compile and package the application. Those can be installed from [here](https://dotnet.microsoft.com/download/dotnet-framework/net472).
-  - **NCache 5.0 SP2 Enterprise edition** is installed on the cache server machines. The installation files can be found [here](https://www.alachisoft.com/download-ncache.html).
+  - **NCache 5.2 Enterprise edition** is installed on the cache server machines. The installation files can be found [here](https://www.alachisoft.com/download-ncache.html).
   
 ## Implementation
  We can finally get to writing our code. The overall UML diagram of our implementation is shown below:
 
 ![ApplicationArchitecture](./resources/ApplicationArchitecture.png)
+
+The following is our implementation of the ICustomDependencyProvider interface:
+
+[NotifyCustomDependencyProvider.cs](./src/CustomDependencyNotifyImpl/NotifyCustomDependencyProvider.cs)
+```csharp 
+[Serializable]
+    public class NotifyCustomDependencyProvider : ICustomDependencyProvider
+    {
+        public ExtensibleDependency CreateDependency(string key, IDictionary<string, string> parameters)
+        {
+            //Validate all arguments passed in 'parameters' dictionary
+            
+            return new CosmosDbNotificationDependency(
+                parameters["Key"],
+                parameters["CacheId"],
+                parameters["EndPoint"],
+                parameters["AuthKey"],
+                parameters["DatabaseName"],
+                parameters["MonitoredCollection"],
+                parameters["LeaseEndPoint"],
+                parameters["LeaseAuthKey"],
+                parameters["LeaseDatabaseName"],
+                parameters["LeaseCollection"]);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Init(IDictionary<string, string> parameters, string cacheName)
+        {
+
+        }
+    }
+```
 
 The following is our implementation of the NotifyExtensibleDependency class:
 
@@ -280,19 +316,24 @@ internal class NCacheChangeFeedObserver : IChangeFeedObserver
 }
 ```
 Once the project is built and assemblies created, deploy the assemblies to a cache using the method shown in the previous section. After this is done, you can start the cache.
-Once the cache is started, we can test that the dependency is working. Below is a code snippet showing how an instance of the NotifyExtensibleDependency implementation we have created and deployed can be used at the client side:
+Once the cache is started, we can test that the dependency is working. Below is a code snippet showing how an instance of the ICustomDependencyProvider implementation we have created and deployed can be used at the client side:
 ```csharp
+string providerNName = "CosmosDbNotificationDependency"; //This is the name of your provider deployed on cache server
+
+IDictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters.Add("Key", "Customer:CustomerID:ALFKI");
+                parameters.Add("CacheId", "myCache");
+                parameters.Add("EndPoint", "<AccountEndpoint>");
+                parameters.Add("AuthKey", "<AccountKey>");
+                parameters.Add("DatabaseName", "demoDatabase");
+                parameters.Add("MonitoredCollection", "Customers");
+                parameters.Add("LeaseEndPoint", "<AccountEndpoint>");
+                parameters.Add("LeaseAuthKey", "<AccountKey>");
+                parameters.Add("LeaseDatabaseName", "demoDatabase");
+                parameters.Add("LeaseCollection", "leases");
+
 CacheItem item = new CacheItem(customer);
-item.Dependency = new CosmosDbNotificationDependency("ALFKI",
-                    		"myCache",
-                    		"<AccountEndpoint>",
-                    		"<AccountKey>",
-                    		"demoDatabase",
-                    		"Customers",
-                    		"<AccountEndpoint>",
-                    		"<AccountKey>",
-                    		"demoDatabase",
-                    		"leases");
+item.Dependency = new CustomDependency(providerName, parameters);
 
 _cache.Insert("Customer:CustomerID:ALFKI", item);
 ```
@@ -318,8 +359,8 @@ Here are the main features of the application demonstrating **NotifyExtensibleDe
   - Make sure to update the NCache server information in the [**client.ncconf**](https://www.alachisoft.com/resources/docs/ncache/admin-guide/client-config.html) files included in the [console application project](./src/NotifyExtensibleDependencyTesterUI). This server information includes the cache ID of the cache to be created and the IP address of atleast one of the servers that will be used.
   - Build and package the application and make sure the assemblies have been successfully generated.
   - Using the [NCache Web Manager GUI](https://www.alachisoft.com/resources/docs/ncache/admin-guide/ncache-web-manager.html?tabs=windows%2Cwindows-start-manager), create a [**partitioned-of-replica**(POR)](https://www.alachisoft.com/ncache/caching-topology.html#partitionedreplica) clustered cache with two nodes using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-new-cache-cluster.html?tabs=windows#using-ncache-web-manager). Make sure the cache ID and IP address of the nodes agree with the values given in the [**client.ncconf**](./src/NotifyExtensibleDependencyTesterUI/client.ncconf) and cache ID given in [**app.config**](./src/NotifyExtensibleDependencyTesterUI/App.config) is the same as the entry in the **client.ncconf** file. **Note:Although you can use any cache topology with the application without changing the source code, the POR topology adds reliability with data-paritioning and best demonstrates the capabilities of NCache when a balance between reliability and performance is required.** 
-  - Stop the demo cache if it is running and deploy the built [NotifyExtensibleDependency](./src/CustomDependencyNotifyImpl) project assemblies on the cache servers. The steps for doing this are shown [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html). Once the logic is deployed, re-start the cache to get the integration assemblies included in the cache host process.
-  - Update the connection URI and auth key values for the Cosmos DB emulator in the [**app.config**](./src/NotifyExtensibleDependencyTesterUI/App.config) file and confirm that those are the URI and auth key acquired when configuring local network access as detailed in the [pre-requisites](#pre-requisites) section. 
+  - Stop the demo cache if it is running and deploy the built [NotifyExtensibleDependency](./src/CustomDependencyNotifyImpl) project assemblies on the cache servers and provide a unique provider name . The steps for doing this are shown [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html). Once the logic is deployed, re-start the cache to get the integration assemblies included in the cache host process.
+  - Update the provider name, connection URI, and auth key values for the Cosmos DB emulator in the [**app.config**](./src/NotifyExtensibleDependencyTesterUI/App.config) file and confirm that those are the URI and auth key acquired when configuring local network access as detailed in the [pre-requisites](#pre-requisites) section. 
   - Before starting the application, confirm again that the cache and the Cosmos DB emulator are running and that the machines hosting the NCache servers can access the Cosmos DB emulator.
   - [Open the statistics window of the running cache](https://www.alachisoft.com/resources/docs/ncache/admin-guide/browse-cache-statistics.html?tabs=windows#ncache-web-manager) to view data as it is added to the cache in real time. Start the application and watch as the items are first added and then removed when the documents are updated in the database due to the dependencies on the cached items being invoked.  
   
