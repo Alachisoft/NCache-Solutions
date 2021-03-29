@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Alachisoft.NCache.Client;
+using Alachisoft.NCache.Runtime.Dependencies;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using System;
@@ -82,7 +83,7 @@ namespace Alachisoft.NCache.Samples
         {
             int j = 0;
             _customers = new Bogus.Faker<Customer>()
-                .RuleFor(i => i.Id, (fake) =>  $"{j++}")
+                .RuleFor(i => i.Id, (fake) => $"{j++}")
                 .RuleFor(i => i.ContactName, (fake) => fake.Person.FullName)
                 .RuleFor(i => i.Address, (fake) => fake.Address.StreetAddress())
                 .RuleFor(i => i.City, (fake) => fake.Address.City())
@@ -150,18 +151,20 @@ namespace Alachisoft.NCache.Samples
             Dictionary<string, CacheItem> insertItems = new Dictionary<string, CacheItem>();
             foreach (var customer in _customers)
             {
+                IDictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters.Add("Key", customer.Id);
+                parameters.Add("CacheId", _cacheId);
+                parameters.Add("EndPoint", _endPoint);
+                parameters.Add("AuthKey", _authKey);
+                parameters.Add("DatabaseName", _databaseName);
+                parameters.Add("MonitoredCollection", _monitoredCollection);
+                parameters.Add("LeaseEndPoint", _endPoint);
+                parameters.Add("LeaseAuthKey", _authKey);
+                parameters.Add("LeaseDatabaseName", _databaseName);
+                parameters.Add("LeaseCollection", _leaseCollection);
+
                 CacheItem item = new CacheItem(customer);
-                item.Dependency = new CosmosDbNotificationDependency(
-                    customer.Id,
-                    _cacheId,
-                    _endPoint,
-                    _authKey,
-                    _databaseName,
-                    _monitoredCollection,
-                    _endPoint,
-                    _authKey,
-                    _databaseName,
-                    _leaseCollection);
+                item.Dependency = new CustomDependency(_providerName, parameters);
 
                 insertItems.Add(customer.Id, item);
             };
@@ -214,6 +217,8 @@ namespace Alachisoft.NCache.Samples
         // client.ncconf value given in the project folder. The default given is 'pora'
         private static string _cacheId = ConfigurationManager.AppSettings["CacheID"];
 
+        //The name of the provider deployed on cache server. The default value is 'CosmosDbNotificationDependency'
+        private static string _providerName = ConfigurationManager.AppSettings["ProviderName"];
         // The list of custom instances to add to the database and cache
         private static List<Customer> _customers;
 

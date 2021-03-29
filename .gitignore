@@ -220,3 +220,4 @@ FakesAssemblies/
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
+/CosmosNotifyExtensibleDependency/src/CustomDependencyNotifyImpl/CosmosDBNotifyExtensibleDependencyClassDiagram.cd

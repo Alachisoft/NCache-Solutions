@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props" Condition="Exists('..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" />
   <Import Project="..\..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('..\..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" />
@@ -41,8 +41,8 @@
     <Reference Include="Alachisoft.NCache.Cache, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cff5926ed6a53769, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Alachisoft.NCache.SDK.5.0.2\lib\net40\Alachisoft.NCache.Cache.dll</HintPath>
     </Reference>
-    <Reference Include="Alachisoft.NCache.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cff5926ed6a53769, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Alachisoft.NCache.SDK.5.0.2\lib\net40\Alachisoft.NCache.Client.dll</HintPath>
+    <Reference Include="Alachisoft.NCache.Client">
+      <HintPath>C:\Program Files\NCache\bin\assembly\4.0\Alachisoft.NCache.Client.dll</HintPath>
     </Reference>
     <Reference Include="Alachisoft.NCache.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cff5926ed6a53769, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Alachisoft.NCache.SDK.5.0.2\lib\net40\Alachisoft.NCache.Common.dll</HintPath>
@@ -56,8 +56,8 @@
     <Reference Include="Alachisoft.NCache.Parser, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cff5926ed6a53769, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Alachisoft.NCache.SDK.5.0.2\lib\net40\Alachisoft.NCache.Parser.dll</HintPath>
     </Reference>
-    <Reference Include="Alachisoft.NCache.Runtime, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cff5926ed6a53769, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Alachisoft.NCache.SDK.5.0.2\lib\net40\Alachisoft.NCache.Runtime.dll</HintPath>
+    <Reference Include="Alachisoft.NCache.Runtime">
+      <HintPath>C:\Program Files\NCache\bin\assembly\4.0\Alachisoft.NCache.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Alachisoft.NCache.Security, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cff5926ed6a53769, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Alachisoft.NCache.SDK.5.0.2\lib\net40\Alachisoft.NCache.Security.dll</HintPath>
@@ -160,6 +160,7 @@
     <Compile Include="CosmosDbChangFeedObserverFactory.cs" />
     <Compile Include="CosmosDbNotificationDependency.cs" />
     <Compile Include="CosmosDbNotificationDependencyEqualityComparer.cs" />
+    <Compile Include="NotifyCustomDependencyProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
