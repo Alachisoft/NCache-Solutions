@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NCache.StackExchange.Redis\NCache.StackExchange.Redis.csproj" />
+    <PackageReference Include="StackExchange.Redis.Wrapper.NCache" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>

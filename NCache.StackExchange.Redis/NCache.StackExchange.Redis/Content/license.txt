@@ -1,0 +1,104 @@
+Software Evaluation Agreement
+	This Software Evaluation Agreement ("Agreement") is a legal contract between you (“Client”) and Diyatech Corp. DBA 
+	Alachisoft (“Licensor”), a Delaware corporation based in Tampa, Florida. The term "Software" means the original 
+	program	NCache and all whole or partial copies of it, including portions merged into other programs.
+	
+	Following are the terms and conditions to use the Software. By clicking on the “Agree” or “Accept” or similar button
+	at the end of this Agreement, or downloading and installing the Software on your computer you agree to the terms and
+	conditions set forth in this agreement.
+	
+1. Evaluation Period
+	The Client is authorized to install and evaluate the Software for a 60-day evaluation period ("Evaluation Period") 
+	commencing upon installation of the Software by the Client, at no charge. Client may obtain an extension key from the 
+	Licensor to extend the Evaluation Period from 30 days to 120 days beyond the original 60 days, at no charge.
+
+	During the Evaluation Period, the Client may only use the Software for evaluation purpose and not in a live situation 
+	except when a written permission is obtained from the Licensor for any other use.
+	
+2. Software Limitations
+	During the Evaluation Period, the Software has all the features and functions enabled to allow Client full access to 
+	the Software. During the Evaluation Period, Software has some performance and throughput limitations built in. The 
+	Client may obtain a Trial License Key from the Licensor to activate the Trial copy of the Software that removes all 
+	performance and throughput limitations, at no cost.
+
+	At the end of the Evaluation Period and any extensions to it, the Software shall stop working. The Client may purchase
+	the Software from the Licensor, obtain a Purchased Licensed Key, and activate the Software with this key to enable it 
+	to work indefinitely.
+	
+3. Technical Support
+	During the Evaluation Period, the Software is provided on an “as is” basis. The Licensor is under no obligation to 
+	provide any support services for it. Support services are available after the Software is purchased and a Software 
+	License Agreement is signed.
+
+	During the Evaluation Period, the Licensor provides technical support as a courtesy through email and phone during 
+	regular office hours of 7am-5pm US Eastern Time. The Client must first send an email to the Licensor support team 
+	with questions or full problem description and then somebody will likely respond via email or phone within 1-3 
+	business days.
+	
+4. End of Evaluation Period
+	Licensor agrees at the conclusion of the Evaluation Period that Client is under no obligation to purchase the Software
+	and enter into a License Agreement for the Software. If a License Agreement for the Software in not entered into, Client
+	agrees that all originals and copies of the Software will be removed from any machine where they have been installed,
+	and no copies or backups will have been made.
+	
+5. Confidentiality
+	The Client understands and agrees that the Software constitutes confidential and proprietary information of Licensor and 
+	agrees to maintain said Software in confidence to the same extent that Client maintains such confidentiality to protect 
+	its own proprietary information. Licensor protects its rights to the Software under the United States copyright laws and 
+	applicable trade secret laws. Accordingly, Client is not authorized to duplicate the Software (other than as necessary to 
+	install and operate them), to disclose the Software to persons outside of Client’s company and Affiliates, or to use the 
+	Software for any purpose other than evaluation.
+	
+6. Ownership
+	Title, ownership rights, and all intellectual property rights in and to the Software and Documentation shall remain the 
+	sole and exclusive property of Alachisoft and/or its licensors. Client agrees to abide by the copyright law and all other
+	applicable laws of the United States. Client acknowledges that the Software contains valuable confidential information and
+	trade secrets of Alachisoft and/or its licensors; therefore, Client agrees not to modify the Software, create derivative
+	works of, or attempt to decipher, decompile, disassemble or reverse engineer the Software or assist or encourage any third
+	party in doing so.
+	
+7. Warranty and Limitation of Liability
+	This Software is supplied "AS IS", WITHOUT ANY WARRANTY, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+	WARRANTIES OR CONDITIONS OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL 
+	Alachisoft. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+	BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+	HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
+	OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+8. Indemnity
+	Licensor agrees to indemnify the Client from and against any and all claims, actions or proceedings, arising out of any
+	claim that the Software infringes or violates any U.S. patent, copyright or trade secret right of any third party.
+	
+	Licensor shall have no indemnity obligation for claims of infringement to the extent resulting or alleged to result from:
+	(i) any combination, operation, or use of any Software with any programs or equipment not supplied by Licensor;
+	(ii) any modification of the Software by a party other than Licensor; and
+	(iii) Client’s failure, within a reasonable time frame, to implement any replacement or modification of Software provided 
+	by Licensor.
+	
+9. Legal Compliance
+	Client may not download or otherwise export or re-export the Software or any underlying information or technology except 
+	in full compliance with all United States and other applicable laws and regulations. In particular, but without limitation,
+	none of the Software or underlying information or technology may be downloaded or otherwise exported or re-exported to 
+	anyone on the US Treasury Department's list of Specially Designated Nationals or the US Commerce Department's Table of 
+	Deny Orders. By licensing the Software, Client is agreeing to the foregoing and Client is representing and warranting that
+	Client is not located in, under control of, or a national or resident of any such country or on any such list.
+	
+10. Assignment
+	Neither this Agreement nor any rights under this Agreement may be assigned or otherwise transferred by Client, in whole or
+	in part, whether voluntary or by operation of law without the prior written consent of Licensor. Subject to the foregoing,
+	this Agreement will be binding upon and will inure to the benefit of the parties and their respective successors and 
+	assigns.
+
+	Licensor may assign this Licence and Agreement to a third-party successor, without Client’s prior written consent.
+
+11. Miscellaneous
+
+	11.1 If any term, condition, or provision in this Agreement is found to be invalid, unlawful or unenforceable to any extent, the remaining terms, conditions and provisions will continue to be valid and enforceable to the fullest extent permitted by law.
+
+	11.2 This Agreement represents the entire agreement of the parties with respect to the subject matter of this Agreement and supersedes all previous communications, representations, understandings and agreements, either oral or written, between the parties with respect to said subject matter.
+
+	11.3 This Agreement may not be amended, except in writing, signed by both parties. [No terms, provisions or conditions of any purchase order, acknowledgment or other business form that you may use in connection with the acquisition or licensing of the Software will have any effect on the rights, duties or obligations of the parties under, or otherwise modify, this Agreement, regardless of any failure of Alachisoft to object to such terms, provisions or conditions.]
+
+	11.4 This License shall be governed by and construed in accordance with the laws of the State of Florida as applied to agreements made, entered into and performed entirely in Florida by Florida residents. Client agrees that any dispute regarding this License will be heard in the state or federal courts having jurisdiction in Hillsboro County, Florida, and Client agrees that Client shall be subject to the personal jurisdiction of such courts.
+
+Copyrights 2021: Alachisoft, all rights reserved.

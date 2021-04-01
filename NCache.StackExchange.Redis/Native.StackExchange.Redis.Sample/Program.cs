@@ -1,56 +1,47 @@
 ﻿using System;
 using System.Configuration;
-using Alachisoft.NCache.Client;
-using NCache.StackExchange.Redis;
-using NCache.StackExchange.Redis.Sample;
-using NCache.StackExchange.Redis.Sample.BasicCacheOperations;
-using NCache.StackExchange.Redis.Sample.BulkCacheOperations;
-using NCache.StackExchange.Redis.Sample.CacheConnectionOperations;
-using NCache.StackExchange.Redis.Sample.CacheContainsOperations;
-using NCache.StackExchange.Redis.Sample.DatastructuresOperations.ListOperations;
-using NCache.StackExchange.Redis.Sample.DatastructuresOperations.SetsOperations;
-using NCache.StackExchange.Redis.Sample.DatastructuresultOperations.SetsOperations;
-using NCache.StackExchange.Redis.Sample.ExpirationOperations;
-using NCache.StackExchange.Redis.Sample.KeyOperations;
-using NCache.StackExchange.Redis.Sample.ObjectToOrFroByteArrayOperations;
-using NCache.StackExchange.Redis.Sample.PubSubOperations;
+using Native.StackExchange.Redis.Sample.BasicCacheOperations;
+using Native.StackExchange.Redis.Sample.BulkCacheOperations;
+using Native.StackExchange.Redis.Sample.CacheConnectionOperations;
+using Native.StackExchange.Redis.Sample.CacheContainsOperations;
+using Native.StackExchange.Redis.Sample.DatastructuresOperations.ListOperations;
+using Native.StackExchange.Redis.Sample.DatastructuresOperations.SetsOperations;
+using Native.StackExchange.Redis.Sample.DatastructuresultOperations.SetsOperations;
+using Native.StackExchange.Redis.Sample.ExpirationOperations;
+using Native.StackExchange.Redis.Sample.KeyOperations;
+using Native.StackExchange.Redis.Sample.ObjectToOrFroByteArrayOperations;
+using StackExchange.Redis;
 
-namespace BasicUsageStackExchangeRedis
+
+namespace Native.StackExchange.Redis.Sample
 {
     class Program
     {
         public static int successfulTests = 0;
         public static int failedTests = 0;
-        public static INCacheDatabase db;
+        public static IDatabase db;
+        public static ConnectionMultiplexer redis;
         public static string myObjectForCaching = "This is my Object";
-        public static ICache cache;
 
         static void Main(string[] args)
         {
-            try
-            {
-                InitializeClient();
-                RunAllTests();
+            InitializeClient();
+            RunAllTests();
 
-                Console.WriteLine($"Test completed successfully.\nSuccessful Tests: {successfulTests}\nFailed Tests: {failedTests}\nPress any key to exit...");
-                Console.ReadKey();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message);
-            }
+            Console.WriteLine($"Test completed successfully.\nSuccessful Tests: {successfulTests}\nFailed Tests: {failedTests}\nPress any key to exit...");
+            Console.ReadKey();
         }
 
         private static void InitializeClient()
         {
-            string cacheName = ConfigurationManager.AppSettings["CacheId"];
+            string serverIP = ConfigurationManager.AppSettings["ServerIP"];
 
-            ConnectionMultiplexer ncache = ConnectionMultiplexer.Connect(cacheName);
+            var options = ConfigurationOptions.Parse(serverIP);
+            options.ConnectRetry = 5;
+            options.AllowAdmin = true;
 
-            cache = ncache.GetNCacheInterface(cacheName);
-            cache.Clear();
-
-            db = ncache.GetDatabase();
+            redis = ConnectionMultiplexer.Connect(options);
+            db = redis.GetDatabase();
         }
 
         private static void RunAllTests()
@@ -61,7 +52,6 @@ namespace BasicUsageStackExchangeRedis
             RunCacheContainsOperations();
             RunCacheConnectionOperations();
             RunBulkCacheOperationsTests();
-            RunPubSubOperationsTests();
             RunBasicCacheOperationsTests();
             RunDatastructuresTests();
         }
@@ -201,15 +191,6 @@ namespace BasicUsageStackExchangeRedis
             BulkKeyDeleteTests.DeleteExistingKeysBulkAsync();
             BulkKeyDeleteTests.DeleteNonExistingKeysBulk();
             BulkKeyDeleteTests.DeleteNonExistingKeysBulkAsync();
-        }
-
-        private static void RunPubSubOperationsTests()
-        {
-            PubSubTests.PublishMessageOnExistingTopic();
-            PubSubTests.SubscribeOnChannel();
-            PubSubTests.PublishMessageOnExistingTopicAsync();
-            PubSubTests.PublishMessageOnNonExistingTopic();
-            PubSubTests.PublishMessageOnNonExistingTopicAsync();
         }
 
         private static void RunDatastructuresTests()
