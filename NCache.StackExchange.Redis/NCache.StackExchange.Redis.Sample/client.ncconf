@@ -19,6 +19,6 @@
       enable-client-logs="False" 
       log-level="error">
       <server 
-        name="20.200.20.28"/>
+        name="**.**.**.**"/>
     </cache>
   </configuration>
