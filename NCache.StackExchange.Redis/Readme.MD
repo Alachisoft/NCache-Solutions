@@ -51,7 +51,7 @@ Following these steps, you should now be able to run your StackExchange.Redis ap
 In order to demonstrate the use of the NCache StackExchange.Redis Wrapper library, you can use the accompanying [sample](./NCache.StackExchange.Redis.Sample).
 The sample uses a local cache configured using the project [**client.ncconf**](./NCache.StackExchange.Redis.Sample/client.ncconf) file.
 
-Before running the application, modify the project [**client.ncconf**](./NCache.StackExchange.Redis.Sample/client.ncconf) file by replacing *testcache* value in the cache id attribute with the name of the clustered cache and replace the server name attribute with the IP address of one of the cache servers.
+Before running the application, modify the project [**client.ncconf**](./NCache.StackExchange.Redis.Sample/client.ncconf) file by replacing *testcache* value in the cache id attribute with the name of the clustered cache and replace the server name attribute with the IP addresses of the cache servers.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -74,6 +74,8 @@ Before running the application, modify the project [**client.ncconf**](./NCache.
       load-balance="True" 
       enable-client-logs="False" 
       log-level="error">
+      <server 
+        name="**.**.**.**"/>
       <server 
         name="**.**.**.**"/>
     </cache>
