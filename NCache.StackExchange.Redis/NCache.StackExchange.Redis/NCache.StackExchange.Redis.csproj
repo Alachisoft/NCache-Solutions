@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -12,9 +12,11 @@
     <Description>NCache provides a wrapper for StackExchange.Redis that allows you to migrate your .NET applications smoothly from Redis to NCache with minimal code change.</Description>
     <PackageIcon>Icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Alachisoft/NCache-Solutions/</RepositoryUrl>
-    <PackageTags>Alachisoft, NCache, Cache, Caching, DistributedCache, In-Memory, Enterprise, Redis, StackExchange.Redis, Wrapper, Distributed, Object, ObjectCaching, RedisLabs, Migrate, Alternative, Replacement, 5.1.0, Alternate</PackageTags>
-    <Version>5.1.0</Version>
+    <PackageTags>Alachisoft, NCache, Cache, Caching, DistributedCache, In-Memory, Enterprise, Redis, StackExchange.Redis, Wrapper, Distributed, Object, ObjectCaching, RedisLabs, Migrate, Alternative, Replacement, 5.2.0, Alternate</PackageTags>
+    <Version>5.2.0</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AssemblyVersion>5.2.0.0</AssemblyVersion>
+    <FileVersion>5.2.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,9 +25,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.1.0" />
+    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.2.0" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +36,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="config.ncconf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tls.ncconf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\..\..\TFSNCacheWebManagerLite\NuGet\NHibernate.NCache\license.txt">

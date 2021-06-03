@@ -10,7 +10,7 @@
       connection-timeout="5" 
       port="9800"/>
     <cache 
-      id="testcache" 
+      id="demoCache" 
       client-cache-id="" 
       client-cache-syncmode="optimistic" 
       default-readthru-provider="" 
