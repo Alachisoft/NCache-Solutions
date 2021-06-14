@@ -318,7 +318,7 @@ internal class NCacheChangeFeedObserver : IChangeFeedObserver
 Once the project is built and assemblies created, deploy the assemblies to a cache using the method shown in the previous section. After this is done, you can start the cache.
 Once the cache is started, we can test that the dependency is working. Below is a code snippet showing how an instance of the ICustomDependencyProvider implementation we have created and deployed can be used at the client side:
 ```csharp
-string providerNName = "CosmosDbNotificationDependency"; //This is the name of your provider deployed on cache server
+string providerName = "CosmosDbNotificationDependency"; //This is the name of your provider deployed on cache server
 
 IDictionary<string, string> parameters = new Dictionary<string, string>();
                 parameters.Add("Key", "Customer:CustomerID:ALFKI");

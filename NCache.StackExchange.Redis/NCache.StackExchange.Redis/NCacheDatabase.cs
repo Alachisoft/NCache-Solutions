@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Alachisoft.NCache.Client;
 using Alachisoft.NCache.Runtime.Caching;
+using Alachisoft.NCache.Runtime.Exceptions;
+using NCache.StackExchange.Redis;
 
 namespace NCache.StackExchange.Redis
 {
@@ -450,7 +452,11 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
-                _cache.Remove(key);
+                _cache.Remove(key, out object removedItem);
+                if (removedItem == null)
+                {
+                    return false;
+                }
                 return true;
             }
             catch (Exception)
@@ -466,8 +472,10 @@ namespace NCache.StackExchange.Redis
             try
             {
                 List<string> nKeys = RedisKeysToStringList(keys);
-                _cache.RemoveBulk(nKeys);
-                return keys.Count();
+
+                _cache.RemoveBulk(nKeys, out IDictionary<string, object> removedItems);
+
+                return removedItems.Count();
             }
             catch (Exception)
             {
@@ -578,10 +586,17 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
-                var cacheItem = _cache.GetCacheItem(key);
-                cacheItem.Expiration = expiry != null ? new Alachisoft.NCache.Runtime.Caching.Expiration(Alachisoft.NCache.Runtime.Caching.ExpirationType.Sliding, expiry.Value) : null;
-                _cache.Insert(key, cacheItem);
-                return true;
+                if (_cache.Contains(key))
+                {
+                    var cacheItem = _cache.GetCacheItem(key);
+                    cacheItem.Expiration = expiry != null ? new Alachisoft.NCache.Runtime.Caching.Expiration(Alachisoft.NCache.Runtime.Caching.ExpirationType.Sliding, expiry.Value) : null;
+                    _cache.Insert(key, cacheItem);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception)
             {
@@ -594,10 +609,17 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
-                var cacheItem = _cache.GetCacheItem(key);
-                cacheItem.Expiration = expiry != null ? new Alachisoft.NCache.Runtime.Caching.Expiration(Alachisoft.NCache.Runtime.Caching.ExpirationType.Absolute, new TimeSpan(expiry.Value.Ticks - DateTime.Now.Ticks)) : null;
-                _cache.Insert(key, cacheItem);
-                return true;
+                if (_cache.Contains(key))
+                {
+                    var cacheItem = _cache.GetCacheItem(key);
+                    cacheItem.Expiration = expiry != null ? new Alachisoft.NCache.Runtime.Caching.Expiration(Alachisoft.NCache.Runtime.Caching.ExpirationType.Absolute, new TimeSpan(expiry.Value.Ticks - DateTime.Now.Ticks)) : null;
+                    _cache.Insert(key, cacheItem);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception)
             {
@@ -657,6 +679,12 @@ namespace NCache.StackExchange.Redis
             try
             {
                 var cacheItem = _cache.GetCacheItem(key);
+
+                if (cacheItem == null || cacheItem.Expiration == null)
+                {
+                    return false;
+                }
+
                 cacheItem.Expiration = null;
                 _cache.Insert(key, cacheItem);
                 return true;
@@ -678,21 +706,32 @@ namespace NCache.StackExchange.Redis
 
         public RedisKey KeyRandom(CommandFlags flags = CommandFlags.None)
         {
-            IDictionaryEnumerator cacheKeys = (IDictionaryEnumerator)_cache.GetEnumerator();
-            var cacheCount = _cache.Count;
-            Random r = new Random();
-            int randomNumber = r.Next(0, (int)(cacheCount - 1));
-            if (cacheKeys != null)
+            try
             {
-                long index = 0;
-                while (cacheKeys.MoveNext())
+                if (_cache.Count > 0)
                 {
-                    if (randomNumber == index)
-                        return new RedisKey(cacheKeys.Key.ToString());
-                    index++;
-                }//end while 
+                    IDictionaryEnumerator cacheKeys = (IDictionaryEnumerator)_cache.GetEnumerator();
+                    var cacheCount = _cache.Count;
+                    Random r = new Random();
+                    int randomNumber = r.Next(0, (int)(cacheCount - 1));
+                    if (cacheKeys != null)
+                    {
+                        long index = 0;
+                        while (cacheKeys.MoveNext())
+                        {
+                            if (randomNumber == index)
+                                return new RedisKey(cacheKeys.Key.ToString());
+                            index++;
+                        }
+                    }
+                }
+
+                return new RedisKey();
             }
-            return new RedisKey();
+            catch (Exception)
+            {
+                return new RedisKey();
+            }
         }
 
         public Task<RedisKey> KeyRandomAsync(CommandFlags flags = CommandFlags.None)
@@ -708,12 +747,21 @@ namespace NCache.StackExchange.Redis
             try
             {
                 var cacheItem = _cache.GetCacheItem(key);
+
+                if (cacheItem == null)
+                {
+                    throw new RedisServerException("ERR no such key");
+                }
+
                 _cache.Remove(key);
                 _cache.Insert(newKey, cacheItem);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                if (ex.Message == "ERR no such key")
+                {
+                    throw;
+                }
                 return false;
             }
 
@@ -733,7 +781,22 @@ namespace NCache.StackExchange.Redis
             var obj = ByteArrayToObject(value);
             var cacheItem = new CacheItem(obj);
             cacheItem.Expiration = expiry != null ? new Alachisoft.NCache.Runtime.Caching.Expiration(Alachisoft.NCache.Runtime.Caching.ExpirationType.Sliding, expiry.Value) : null;
-            _cache.Insert(key, cacheItem);
+            try
+            {
+                _cache.Add(key, cacheItem);
+
+            }
+            catch (OperationFailedException e)
+            {
+                if (e.ErrorCode == NCacheErrorCodes.KEY_ALREADY_EXISTS)
+                {
+                    throw new RedisServerException("BUSYKEY Target key name already exists.");
+                }
+                else
+                {
+                    throw e;
+                }
+            }
         }
 
         public Task KeyRestoreAsync(RedisKey key, byte[] value, TimeSpan? expiry = null, CommandFlags flags = CommandFlags.None)
@@ -758,7 +821,14 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
-                _cache.GetCacheItem(key);
+                if (_cache.Contains(key))
+                {
+                    _cache.GetCacheItem(key);
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception)
             {
@@ -811,9 +881,17 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
-                var dList = _cache.DataTypeManager.GetList<object>(key);
-                var val = dList.ElementAt((int)index);
-                return RedisValue.Unbox(val);
+
+                if (_cache.Contains(key))
+                {
+                    var dList = _cache.DataTypeManager.GetList<object>(key);
+                    var val = dList.ElementAt((int)index);
+                    return RedisValue.Unbox(val);
+                }
+                else
+                {
+                    return new RedisValue();
+                }
             }
             catch (Exception)
             {
@@ -835,12 +913,21 @@ namespace NCache.StackExchange.Redis
             try
             {
                 var dList = _cache.DataTypeManager.GetList<object>(key);
-                dList.InsertAfter(pivot, value);
+
+                if (dList == null)
+                {
+                    return 0;
+                }
+
+                if (!dList.InsertAfter(pivot, value))
+                {
+                    return -1;
+                }
+
                 return dList.Count();
             }
             catch (Exception)
             {
-
                 return -1;
             }
         }
@@ -858,12 +945,21 @@ namespace NCache.StackExchange.Redis
             try
             {
                 var dList = _cache.DataTypeManager.GetList<object>(key);
-                dList.InsertBefore(pivot, value);
+
+                if (dList == null)
+                {
+                    return 0;
+                }
+
+                if (!dList.InsertBefore(pivot, value))
+                {
+                    return -1;
+                }
+
                 return dList.Count();
             }
             catch (Exception)
             {
-
                 return -1;
             }
         }
@@ -978,11 +1074,9 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
-                var dList = _cache.DataTypeManager.GetList<object>(key);
-                if (dList == null)
-                    dList = _cache.DataTypeManager.CreateList<object>(key);
-                
-                var listValues = dList.GetRange((int)start, (int)stop < 0 ? dList.Count - 1 - (int)start : ((int)stop - (int)start));
+                var dList = _cache.DataTypeManager.GetList<object>(key) ?? _cache.DataTypeManager.CreateList<object>(key);
+                var listValues = dList.GetRange((int)start, (int)stop < 0 ? dList.Count + (int)stop + 1 : ((int)stop - (int)start) + 1);
+
                 RedisValue[] values = new RedisValue[listValues.Count];
                 for (int i = 0; i < listValues.Count; i++)
                 {
@@ -992,9 +1086,8 @@ namespace NCache.StackExchange.Redis
             }
             catch (Exception)
             {
-                return null;
+                return new List<RedisValue>().ToArray();
             }
-
         }
 
         public Task<RedisValue[]> ListRangeAsync(RedisKey key, long start = 0, long stop = -1, CommandFlags flags = CommandFlags.None)
@@ -1007,19 +1100,75 @@ namespace NCache.StackExchange.Redis
 
         public long ListRemove(RedisKey key, RedisValue value, long count = 0, CommandFlags flags = CommandFlags.None)
         {
-            var dList = _cache.DataTypeManager.GetList<object>(key);
-            if (dList == null)
-                return 0;
             try
             {
-                dList.Remove(value.Box());
+                var dList = _cache.DataTypeManager.GetList<object>(key);
+
+                if (dList == null)
+                {
+                    return 0;
+                }
+
+                long itemsRemoved = 0;
+
+                if (count == 0)
+                {
+                    for (int i = 0; i < dList.Count; i++)
+                    {
+                        if (!dList.Remove(value.Box()))
+                        {
+                            break;
+                        }
+                        itemsRemoved++;
+                    }
+                }
+                else if (count > 0)
+                {
+                    for (int i = 0; i < dList.Count; i++)
+                    {
+                        if (itemsRemoved != count)
+                        {
+                            if (!dList.Remove(value.Box()))
+                            {
+                                break;
+                            }
+                            itemsRemoved++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                else if (count < 0)
+                {
+                    count = (-1) * (count);
+
+                    dList.Reverse();
+
+                    for (int i = 0; i < dList.Count; i++)
+                    {
+                        if (itemsRemoved != count)
+                        {
+                            if (!dList.Remove(value.Box()))
+                            {
+                                break;
+                            }
+                            itemsRemoved++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    dList.Reverse();
+                }
+                return itemsRemoved;
             }
             catch (Exception)
             {
+                return 0;
             }
-
-
-            return dList.Count;
         }
 
         public Task<long> ListRemoveAsync(RedisKey key, RedisValue value, long count = 0, CommandFlags flags = CommandFlags.None)
@@ -1058,18 +1207,18 @@ namespace NCache.StackExchange.Redis
             var dSourceList = _cache.DataTypeManager.GetList<object>(source);
             var dDestinationList = _cache.DataTypeManager.GetList<object>(destination);
             if (dSourceList == null || dDestinationList == null)
-                return new RedisValue();
+                return 0;
             try
             {
-                var poped = dSourceList.Last();
+                var popped = dSourceList.Last();
                 dSourceList.RemoveAt(dSourceList.Count - 1);
-                dDestinationList.InsertAtHead(poped);
-                return RedisValue.Unbox(poped);
+                dDestinationList.InsertAtHead(popped);
+                return RedisValue.Unbox(popped);
             }
             catch (Exception)
             {
             }
-            return new RedisValue();
+            return 0;
         }
 
         public Task<RedisValue> ListRightPopLeftPushAsync(RedisKey source, RedisKey destination, CommandFlags flags = CommandFlags.None)
@@ -1133,13 +1282,14 @@ namespace NCache.StackExchange.Redis
         {
             var dList = _cache.DataTypeManager.GetList<object>(key);
             if (dList == null)
-                return;
+                throw new Exception("ERR no such key");
             try
             {
                 dList[(int)index] = (value.Box());
             }
             catch (Exception)
             {
+                throw;
             }
         }
 
@@ -1232,7 +1382,7 @@ namespace NCache.StackExchange.Redis
                 topic.Publish(new Alachisoft.NCache.Runtime.Caching.Message(message.Box()), Alachisoft.NCache.Runtime.Caching.DeliveryOption.All);
                 return 1;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return 0;
@@ -1289,13 +1439,18 @@ namespace NCache.StackExchange.Redis
 
         public bool SetAdd(RedisKey key, RedisValue value, CommandFlags flags = CommandFlags.None)
         {
-            var dSet = _cache.DataTypeManager.GetHashSet<object>(key);
-            if (dSet == null)
-                dSet = _cache.DataTypeManager.CreateHashSet<object>(key);
+            var dSet = _cache.DataTypeManager.GetHashSet<object>(key) ?? _cache.DataTypeManager.CreateHashSet<object>(key);
+
             try
             {
-
+                var initialCount = dSet.Count;
                 dSet.Add(value.Box());
+
+                if (dSet.Count == initialCount)
+                {
+                    return false;
+                }
+
                 return true;
             }
             catch (Exception)
@@ -1306,17 +1461,16 @@ namespace NCache.StackExchange.Redis
 
         public long SetAdd(RedisKey key, RedisValue[] values, CommandFlags flags = CommandFlags.None)
         {
-            var dSet = _cache.DataTypeManager.GetHashSet<object>(key);
-            if (dSet == null)
-                dSet = _cache.DataTypeManager.CreateHashSet<object>(key);
-
             var itemsAddedCount = 0;
+
             foreach (var value in values)
             {
                 try
                 {
-                    dSet.Add(value.Box());
-                    itemsAddedCount++;
+                    if (SetAdd(key, value))
+                    {
+                        itemsAddedCount++;
+                    }
                 }
                 catch
                 {
@@ -1345,20 +1499,22 @@ namespace NCache.StackExchange.Redis
 
         public RedisValue[] SetCombine(SetOperation operation, RedisKey first, RedisKey second, CommandFlags flags = CommandFlags.None)
         {
-            var firstSet = _cache.DataTypeManager.CreateHashSet<object>(first);
+            var firstSet = _cache.DataTypeManager.GetHashSet<object>(first) ?? _cache.DataTypeManager.CreateHashSet<object>(first);
+            var secondSet = _cache.DataTypeManager.GetHashSet<object>(second) ?? _cache.DataTypeManager.CreateHashSet<object>(second);
+
             try
             {
                 IEnumerable<object> result = new List<object>();
                 switch (operation)
                 {
                     case SetOperation.Union:
-                        result = firstSet.Union(second);
+                        result = firstSet.Union(secondSet);
                         break;
                     case SetOperation.Intersect:
-                        result = firstSet.Intersect(second);
+                        result = firstSet.Intersect(secondSet);
                         break;
                     case SetOperation.Difference:
-                        result = firstSet.Difference(second);
+                        result = firstSet.Except(secondSet);
                         break;
                 }
 
@@ -1379,35 +1535,43 @@ namespace NCache.StackExchange.Redis
 
         public RedisValue[] SetCombine(SetOperation operation, RedisKey[] keys, CommandFlags flags = CommandFlags.None)
         {
+            if (keys.Count() < 2)
+            {
+                return null;
+            }
+
+            foreach (var key in keys)
+            {
+                var setCreator = _cache.DataTypeManager.GetHashSet<object>(key) ?? _cache.DataTypeManager.CreateHashSet<object>(key);
+            }
+
             try
             {
-
-                string tempKey = Guid.NewGuid().ToString();
-                var tempSet = _cache.DataTypeManager.CreateHashSet<object>(tempKey);
-                foreach (var key in keys)
+                IEnumerable<object> result = new List<object>();
+                result = result.Union(_cache.DataTypeManager.GetHashSet<object>(keys[0]));
+                for (int i = 0; i < keys.Length - 1; i++)
                 {
                     switch (operation)
                     {
                         case SetOperation.Union:
-                            tempSet.StoreUnion(tempKey, key);
+                            result = result.Union(_cache.DataTypeManager.GetHashSet<object>(keys[i + 1]));
                             break;
                         case SetOperation.Intersect:
-                            tempSet.StoreIntersection(tempKey, key);
+                            result = result.Intersect(_cache.DataTypeManager.GetHashSet<object>(keys[i + 1]));
                             break;
                         case SetOperation.Difference:
-                            tempSet.StoreDifference(tempKey, key);
+                            result = result.Except(_cache.DataTypeManager.GetHashSet<object>(keys[i + 1]));
                             break;
                     }
                 }
+                RedisValue[] values = new RedisValue[result.Count()];
 
-                RedisValue[] values = new RedisValue[
-                tempSet.Count];
                 int index = 0;
-                foreach (var item in tempSet)
+
+                foreach (var item in result)
                 {
                     values[index++] = RedisValue.Unbox(item);
                 }
-                _cache.DataTypeManager.Remove(tempKey);
                 return values;
             }
             catch (Exception)
@@ -1418,63 +1582,73 @@ namespace NCache.StackExchange.Redis
 
         public long SetCombineAndStore(SetOperation operation, RedisKey destination, RedisKey first, RedisKey second, CommandFlags flags = CommandFlags.None)
         {
-            string tempKey = Guid.NewGuid().ToString();
-            var destinationSet = _cache.DataTypeManager.GetHashSet<object>(destination);
+            var firstSet = _cache.DataTypeManager.GetHashSet<object>(first) ?? _cache.DataTypeManager.CreateHashSet<object>(first);
+            var secondSet = _cache.DataTypeManager.GetHashSet<object>(second) ?? _cache.DataTypeManager.CreateHashSet<object>(second);
+            var destinationSet = _cache.DataTypeManager.GetHashSet<object>(destination) ?? _cache.DataTypeManager.CreateHashSet<object>(destination);
 
-            destinationSet = destinationSet == null ? _cache.DataTypeManager.CreateHashSet<object>(destination) : destinationSet;
             try
             {
                 destinationSet.Clear();
                 switch (operation)
                 {
                     case SetOperation.Union:
-                        destinationSet.StoreUnion(first, second);
+                        firstSet.StoreUnion(destination, second);
                         break;
                     case SetOperation.Intersect:
-                        destinationSet.StoreIntersection(first, second);
+                        firstSet.StoreIntersection(destination, second);
                         break;
                     case SetOperation.Difference:
-                        destinationSet.StoreDifference(first, second);
+                        firstSet.StoreDifference(destination, second);
                         break;
                 }
-
+                return _cache.DataTypeManager.GetHashSet<object>(destination).Count;
             }
             catch (Exception)
             {
+                return 0;
             }
-            return destinationSet.Count;
         }
 
         public long SetCombineAndStore(SetOperation operation, RedisKey destination, RedisKey[] keys, CommandFlags flags = CommandFlags.None)
         {
-            string tempKey = Guid.NewGuid().ToString();
-            var destinationSet = _cache.DataTypeManager.GetHashSet<object>(destination);
+            if (keys.Count() < 2)
+            {
+                return 0;
+            }
 
-            destinationSet = destinationSet == null ? _cache.DataTypeManager.CreateHashSet<object>(destination) : destinationSet;
+            foreach (var key in keys)
+            {
+                var setCreator = _cache.DataTypeManager.GetHashSet<object>(key) ?? _cache.DataTypeManager.CreateHashSet<object>(key);
+            }
+
+            var tempSet = _cache.DataTypeManager.GetHashSet<object>(keys[0]) ?? _cache.DataTypeManager.CreateHashSet<object>(keys[0]);
+            var destinationSet = _cache.DataTypeManager.GetHashSet<object>(destination) ?? _cache.DataTypeManager.CreateHashSet<object>(destination);
+
             try
             {
                 destinationSet.Clear();
-                foreach (var key in keys)
+                for (int i = 1; i < keys.Length; i++)
                 {
                     switch (operation)
                     {
                         case SetOperation.Union:
-                            destinationSet.StoreUnion(destination, key);
+                            tempSet.StoreUnion(destination, keys[i]);
                             break;
                         case SetOperation.Intersect:
-                            destinationSet.StoreIntersection(destination, key);
+                            tempSet.StoreIntersection(destination, keys[i]);
                             break;
                         case SetOperation.Difference:
-                            destinationSet.StoreDifference(destination, key);
+                            tempSet.StoreDifference(destination, keys[i]);
                             break;
                     }
+                    tempSet = _cache.DataTypeManager.GetHashSet<object>(destination);
                 }
-
+                return destinationSet.Count;
             }
             catch (Exception)
             {
+                return 0;
             }
-            return destinationSet.Count;
         }
 
         public Task<long> SetCombineAndStoreAsync(SetOperation operation, RedisKey destination, RedisKey first, RedisKey second, CommandFlags flags = CommandFlags.None)
@@ -1515,7 +1689,9 @@ namespace NCache.StackExchange.Redis
             {
                 var set = _cache.DataTypeManager.GetHashSet<object>(key);
                 if (set == null)
+                {
                     return false;
+                }
                 return set.Contains(value.Box());
             }
             catch (Exception)
@@ -1559,10 +1735,10 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
+                var values = new List<RedisValue>();
                 var set = _cache.DataTypeManager.GetHashSet<object>(key);
                 if (set == null)
-                    return null;
-                List<RedisValue> values = new List<RedisValue>();
+                    return values.ToArray();
                 foreach (var member in set)
                 {
                     values.Add(RedisValue.Unbox(member));
@@ -1571,7 +1747,7 @@ namespace NCache.StackExchange.Redis
             }
             catch (Exception)
             {
-                return null;
+                return new List<RedisValue>().ToArray();
             }
         }
 
@@ -1588,12 +1764,20 @@ namespace NCache.StackExchange.Redis
             try
             {
                 var sourceSet = _cache.DataTypeManager.GetHashSet<object>(source);
-                var destinationSet = _cache.DataTypeManager.GetHashSet<object>(destination);
-                if (sourceSet == null || destinationSet == null)
+
+                if (sourceSet == null)
+                {
                     return false;
-                sourceSet.Remove(value.Box());
-                destinationSet.Add(value.Box());
-                return true;
+                }
+
+                var destinationSet = _cache.DataTypeManager.GetHashSet<object>(destination) ?? _cache.DataTypeManager.CreateHashSet<object>(destination);
+
+                if (sourceSet.Remove(value.Box()))
+                {
+                    destinationSet.Add(value.Box());
+                    return true;
+                }
+                return false;
             }
             catch (Exception)
             {
@@ -1615,7 +1799,9 @@ namespace NCache.StackExchange.Redis
             {
                 var set = _cache.DataTypeManager.GetHashSet<object>(key);
                 if (set == null)
+                {
                     return new RedisValue();
+                }
 
                 return RedisValue.Unbox(set.RemoveRandom());
             }
@@ -1629,11 +1815,11 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
+                var redisValues = new List<RedisValue>();
                 var set = _cache.DataTypeManager.GetHashSet<object>(key);
                 if (set == null)
-                    return null;
+                    return redisValues.ToArray();
                 var values = set.GetRandom((int)count);
-                List<RedisValue> redisValues = new List<RedisValue>();
                 foreach (var value in values)
                 {
                     set.Remove(value);
@@ -1643,7 +1829,7 @@ namespace NCache.StackExchange.Redis
             }
             catch (Exception)
             {
-                return null;
+                return new List<RedisValue>().ToArray();
             }
         }
 
@@ -1669,8 +1855,10 @@ namespace NCache.StackExchange.Redis
             {
                 var set = _cache.DataTypeManager.GetHashSet<object>(key);
                 if (set == null)
+                {
                     return new RedisValue();
-                ;
+                }
+
                 return RedisValue.Unbox(set.GetRandom());
             }
             catch (Exception)
@@ -1691,11 +1879,11 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
+                var redisValues = new List<RedisValue>();
                 var set = _cache.DataTypeManager.GetHashSet<object>(key);
                 if (set == null)
-                    return null;
+                    return redisValues.ToArray();
                 var values = set.GetRandom((int)count);
-                List<RedisValue> redisValues = new List<RedisValue>();
                 foreach (var value in values)
                 {
                     redisValues.Add(RedisValue.Unbox(value));
@@ -1704,7 +1892,7 @@ namespace NCache.StackExchange.Redis
             }
             catch (Exception)
             {
-                return null;
+                return new List<RedisValue>().ToArray();
             }
         }
 
@@ -1745,8 +1933,13 @@ namespace NCache.StackExchange.Redis
                 }
                 return set.Remove(itemsToRemove);
             }
-            catch (Exception)
+
+            catch (Exception e)
             {
+                if (e.Message == "Value cannot be null. (Parameter 'Invalid item found.')")
+                {
+                    throw new Exception("A null value is not valid in this context"); ;
+                }
                 return 0;
             }
         }
@@ -1784,67 +1977,23 @@ namespace NCache.StackExchange.Redis
 
         public RedisValue[] Sort(RedisKey key, long skip = 0, long take = -1, Order order = Order.Ascending, SortType sortType = SortType.Numeric, RedisValue by = default, RedisValue[] get = null, CommandFlags flags = CommandFlags.None)
         {
-            var list = _cache.DataTypeManager.GetList<object>(key)?.ToList<object>();
-            if (list == null)
-            {
-                list = _cache.DataTypeManager.GetHashSet<object>(key)?.ToList<object>();
-                if (list == null)
-                    return null;
-            }
-            list.Sort();
-            var index = 0;
-            RedisValue[] redisValues = new RedisValue[list.Count];
-            foreach (var item in list)
-            {
-                redisValues[index++] = RedisValue.Unbox(item);
-            }
-            return redisValues;
+            throw new NotSupportedException();
         }
 
         public long SortAndStore(RedisKey destination, RedisKey key, long skip = 0, long take = -1, Order order = Order.Ascending, SortType sortType = SortType.Numeric, RedisValue by = default, RedisValue[] get = null, CommandFlags flags = CommandFlags.None)
         {
-            bool isList = true;
-            var list = _cache.DataTypeManager.GetList<object>(key)?.ToList<object>();
-            if (list == null)
-            {
-                isList = false;
-                list = _cache.DataTypeManager.GetHashSet<object>(key)?.ToList<object>();
-                if (list == null)
-                    return 0;
-            }
-            list.Sort();
-            if (isList)
-            {
-                var destinationList = _cache.DataTypeManager.GetList<object>(destination);
-                if (destinationList == null)
-                    destinationList = _cache.DataTypeManager.CreateList<object>(destination);
-                destinationList.AddRange(list);
-                return destinationList.Count();
-            }
-            else
-            {
-                var destinationSet = _cache.DataTypeManager.GetHashSet<object>(destination);
-                if (destinationSet == null)
-                    destinationSet = _cache.DataTypeManager.CreateHashSet<object>(destination);
-                destinationSet.AddRange(list);
-                return destinationSet.Count();
-            }
+            throw new NotSupportedException();
+
         }
 
         public Task<long> SortAndStoreAsync(RedisKey destination, RedisKey key, long skip = 0, long take = -1, Order order = Order.Ascending, SortType sortType = SortType.Numeric, RedisValue by = default, RedisValue[] get = null, CommandFlags flags = CommandFlags.None)
         {
-            return Task.Run(() =>
-            {
-                return SortAndStore(destination, key);
-            });
+            throw new NotSupportedException();
         }
 
         public Task<RedisValue[]> SortAsync(RedisKey key, long skip = 0, long take = -1, Order order = Order.Ascending, SortType sortType = SortType.Numeric, RedisValue by = default, RedisValue[] get = null, CommandFlags flags = CommandFlags.None)
         {
-            return Task.Run(() =>
-            {
-                return Sort(key);
-            });
+            throw new NotSupportedException();
         }
 
         public bool SortedSetAdd(RedisKey key, RedisValue member, double score, CommandFlags flags)
@@ -2374,10 +2523,22 @@ namespace NCache.StackExchange.Redis
 
         public long StringAppend(RedisKey key, RedisValue value, CommandFlags flags = CommandFlags.None)
         {
-            string str = _cache.Contains(key) ? _cache.Get<string>(key) : null;
+            var obj = _cache.Get<object>(key);
+
+            string str = "";
+
+            if (obj != null)
+            {
+
+                str = obj.ToString();
+            }
 
             try
             {
+                if (value.IsNullOrEmpty && obj != null)
+                {
+                    return str.Length;
+                }
                 if (str == null)
                 {
                     str = value;
@@ -2402,7 +2563,8 @@ namespace NCache.StackExchange.Redis
                 return StringAppend(key, value, flags);
             });
         }
-        static int countSetBits(char n)
+
+        static int CountSetBits(char n)
         {
             int count = 0;
             while (n > 0)
@@ -2412,17 +2574,18 @@ namespace NCache.StackExchange.Redis
             }
             return count;
         }
+
         public long StringBitCount(RedisKey key, long start = 0, long end = -1, CommandFlags flags = CommandFlags.None)
         {
             string str = RedisValue.Unbox(_cache.Get<object>(key));
             try
             {
-                if(str != null)
+                if (str != null)
                 {
                     int bitSetCount = 0;
-                    for (long i = start; i <( end < 0 ? str.Length : end); i++)
+                    for (long i = start; i < (end < 0 ? str.Length : end); i++)
                     {
-                        bitSetCount += countSetBits(str[(int)i]);
+                        bitSetCount += CountSetBits(str[(int)i]);
                     }
                     return bitSetCount;
                 }
@@ -2471,7 +2634,7 @@ namespace NCache.StackExchange.Redis
             throw new NotSupportedException();
         }
 
-        public long StringDecrement(RedisKey key, long value = 1, CommandFlags flags = CommandFlags.None)
+        public long StringIncrement(RedisKey key, long value = 1, CommandFlags flags = CommandFlags.None)
         {
 
             try
@@ -2492,7 +2655,7 @@ namespace NCache.StackExchange.Redis
             }
         }
 
-        public double StringDecrement(RedisKey key, double value, CommandFlags flags = CommandFlags.None)
+        public double StringIncrement(RedisKey key, double value, CommandFlags flags = CommandFlags.None)
         {
             try
             {
@@ -2512,19 +2675,19 @@ namespace NCache.StackExchange.Redis
             }
         }
 
-        public Task<long> StringDecrementAsync(RedisKey key, long value = 1, CommandFlags flags = CommandFlags.None)
+        public Task<long> StringIncrementAsync(RedisKey key, long value = 1, CommandFlags flags = CommandFlags.None)
         {
             return Task.Run(() =>
             {
-                return StringDecrement(key, value, flags);
+                return StringIncrement(key, value, flags);
             });
         }
 
-        public Task<double> StringDecrementAsync(RedisKey key, double value, CommandFlags flags = CommandFlags.None)
+        public Task<double> StringIncrementAsync(RedisKey key, double value, CommandFlags flags = CommandFlags.None)
         {
             return Task.Run(() =>
             {
-                return StringDecrement(key, value, flags);
+                return StringIncrement(key, value, flags);
             });
         }
 
@@ -2594,10 +2757,15 @@ namespace NCache.StackExchange.Redis
             RedisValue ret = new RedisValue();
             try
             {
-                if (_cache.Contains(key))
+                var value = _cache.Get<object>(key);
+                if (value != null)
                 {
-                    var val = (string)RedisValue.Unbox(_cache.Get<object>(key));
-                    ret = val.Substring((int)start, (int)(end < 0 ? val.Length - 1 - end : val.Length - 1));
+                    var val = (string)RedisValue.Unbox(value);
+                    if (start < 0 || start > val.Length)
+                    {
+                        return String.Empty;
+                    }
+                    ret = val.Substring((int)start, (int)(end < 0 ? end < -val.Length ? 1 : val.Length + end + 1 : end > val.Length ? val.Length : end + 1));
                 }
             }
             catch (Exception)
@@ -2648,40 +2816,59 @@ namespace NCache.StackExchange.Redis
             throw new NotSupportedException();
         }
 
-        public long StringIncrement(RedisKey key, long value = 1, CommandFlags flags = CommandFlags.None)
+        public long StringDecrement(RedisKey key, long value = 1, CommandFlags flags = CommandFlags.None)
         {
-            return StringDecrement(key, -value, flags);
+            return StringIncrement(key, -value, flags);
         }
 
-        public double StringIncrement(RedisKey key, double value, CommandFlags flags = CommandFlags.None)
+        public double StringDecrement(RedisKey key, double value, CommandFlags flags = CommandFlags.None)
         {
-            return StringDecrement(key, -value, flags);
+            return StringIncrement(key, -value, flags);
         }
 
-        public Task<long> StringIncrementAsync(RedisKey key, long value = 1, CommandFlags flags = CommandFlags.None)
+        public Task<long> StringDecrementAsync(RedisKey key, long value = 1, CommandFlags flags = CommandFlags.None)
         {
             return Task.Run(() =>
             {
-                return StringIncrement(key, value, flags);
+                return StringDecrement(key, value, flags);
             });
         }
 
-        public Task<double> StringIncrementAsync(RedisKey key, double value, CommandFlags flags = CommandFlags.None)
+        public Task<double> StringDecrementAsync(RedisKey key, double value, CommandFlags flags = CommandFlags.None)
         {
             return Task.Run(() =>
             {
-                return StringIncrement(key, value, flags);
+                return StringDecrement(key, value, flags);
             });
         }
 
         public long StringLength(RedisKey key, CommandFlags flags = CommandFlags.None)
         {
-            throw new NotSupportedException();
+            try
+            {
+                var item = _cache.Get<object>(key);
+
+                if (item == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return item.ToString().Length;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
 
         public Task<long> StringLengthAsync(RedisKey key, CommandFlags flags = CommandFlags.None)
         {
-            throw new NotSupportedException();
+            return Task.Run(() =>
+            {
+                return StringLength(key, flags);
+            });
         }
 
         public bool StringSet(RedisKey key, RedisValue value, TimeSpan? expiry = null, When when = When.Always, CommandFlags flags = CommandFlags.None)
@@ -2689,15 +2876,56 @@ namespace NCache.StackExchange.Redis
             try
             {
                 var cacheItem = new CacheItem(value);
-                if (expiry != null)
-                    cacheItem.Expiration = new Alachisoft.NCache.Runtime.Caching.Expiration(Alachisoft.NCache.Runtime.Caching.ExpirationType.Sliding, expiry.Value);
-                _cache.Insert(key, value.Box());
+                switch (when)
+                {
+                    case When.Always:
+                        
+                        if (expiry != null)
+                        {
+                            cacheItem.Expiration = new Alachisoft.NCache.Runtime.Caching.Expiration(Alachisoft.NCache.Runtime.Caching.ExpirationType.Sliding, expiry.Value);
+                        }
+                        _cache.Insert(key, value.Box());
+                        break;
 
+                    case When.Exists:
+                        if (_cache.Contains(key))
+                        {
+                            cacheItem = new CacheItem(value);
+                            if (expiry != null)
+                            {
+                                cacheItem.Expiration = new Alachisoft.NCache.Runtime.Caching.Expiration(Alachisoft.NCache.Runtime.Caching.ExpirationType.Sliding, expiry.Value);
+                            }
+                            _cache.Insert(key, value.Box());
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                        break;
+
+                    case When.NotExists:
+                        if (!_cache.Contains(key))
+                        {
+                            cacheItem = new CacheItem(value);
+                            if (expiry != null)
+                            {
+                                cacheItem.Expiration = new Alachisoft.NCache.Runtime.Caching.Expiration(Alachisoft.NCache.Runtime.Caching.ExpirationType.Sliding, expiry.Value);
+                            }
+                            _cache.Insert(key, value.Box());
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
                 return false;
             }
         }
@@ -2706,22 +2934,59 @@ namespace NCache.StackExchange.Redis
         {
             try
             {
+                if (when == When.Exists)
+                {
+                    throw new ArgumentException("Exists is not valid in this context; the permitted values are: Always, NotExists");
+                }
+
                 RedisKey[] keys = new RedisKey[values.Count()];
                 IDictionary<string, CacheItem> items = new Dictionary<string, CacheItem>();
                 for (int i = 0; i < values.Count(); i++)
                 {
                     keys[i] = values[i].Key;
-                    items.Add(values[i].ToString(), new CacheItem(values[i].Value.Box()));
+                    items.Add(values[i].Key.ToString(), new CacheItem(values[i].Value.Box()));
                 }
-                var contains = _cache.ContainsBulk(RedisKeysToStringList(keys));
-                if (contains.Where(s => s.Value == false).Count() > 0)
-                    return false;
-                _cache.InsertBulk(items);
 
+                switch (when)
+                {
+                    case When.Always:
+                        _cache.InsertBulk(items);
+                        break;
+
+                    case When.Exists:
+                        var exists = _cache.ContainsBulk(RedisKeysToStringList(keys));
+
+                        if (exists.Where(s => s.Value == true).Count() > 0)
+                        {
+                            _cache.InsertBulk(items);
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                        break;
+
+                    case When.NotExists:
+                        var contains = _cache.ContainsBulk(RedisKeysToStringList(keys));
+                        if (contains.Where(s => s.Value == true).Count() > 0)
+                        {
+                            return false;
+                        }
+                        _cache.InsertBulk(items);
+                        break;
+
+                    default:
+                        break;
+                }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                if (ex.Message == "Exists is not valid in this context; the permitted values are: Always, NotExists")
+                {
+                    throw;
+                }
+
                 return false;
             }
         }
