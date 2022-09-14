@@ -71,9 +71,8 @@ data using the example that follows.
     the backup path to the configured store location either manually or
     using PowerShell. The following PowerShell command copies all items
     from backup folder to the store location of ClusteredCache.*
-
-> *Copy-Item -Path \"F:\\PersistentCacheBackup\" -Destination
-> \"\\\\fileserver\\stores\\demoClusteredCache_db\" -Recurse*
+    *Copy-Item -Path \"F:\\PersistentCacheBackup\" -Destination
+    \"\\\\fileserver\\stores\\demoClusteredCache_db\" -Recurse*
 
 -   Once it is copied, start ClusteredCache cache on all server nodes
     from NCache Web Manager or using Start-Cache PowerShell cmdlet.
