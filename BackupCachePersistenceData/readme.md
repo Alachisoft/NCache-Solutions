@@ -27,47 +27,23 @@ together. The following example demonstrates how to backup persistence
 store of a Distributed Cache with Persistence named ClusteredCache
 created with NCache Persistence.
 
--   First, while running the provided script through PowerShell command,
+For running the provided script through PowerShell command,
 
-> *powershell -ExecutionPolicy Bypass -File
-> \'.\\PersistenceBackup_Script.ps1\' \'ClusteredCache\'
-> \'\\\\20.200.20.29\\MyPersistenceFiles\\ClusteredCache_db\'
-> \'\\\\20.200.20.29\\MyPersistenceFiles\\ClusteredCache1_db\'*
+*\'.\\PersistenceBackup_Script.ps1\' \'ClusteredCache\'
+\'\\\\20.200.20.29\\MyPersistenceFiles\\ClusteredCache_db\'
+\'\\\\20.200.20.29\\MyPersistenceFiles\\ClusteredCache1_db\'*
+
+Here, you need to provide three parameters in the command,
+
+> Name of Distributed Cache with Persistence
 >
-> Here, you need to provide three parameters in the command,
+> UNC path of configured store location of cache
+>
+> Backup folder path
 
--   Name of Distributed Cache with Persistence
-
--   UNC path of configured store location of cache
-
--   Backup folder path
-
-> Valid paths must be specified and read access permissions must be
-> provided for UNC path of configured store location of cache and write
-> access permissions must be provided for backup folder path.
-
--   Second, stop data writing to the persistence store of ClusteredCache
-    using Suspend-NCacheDataPersistence cmdlet to avoid possible data
-    corruption as follows.
-
-> *Suspend-NCacheDataPersistence -CacheName \"ClusteredCache\"*
-
--   Next, create backup of data. For this, you need to copy all the
-    items from the configured store location (UNC path) of your cache.
-    You can find the UNC path of the persistence store configured for
-    your cache under store information in NCache Web Manager. The
-    following PowerShell command copies NCache Persistence database
-    named ClusteredCache_db from the configured store location to a
-    backup folder.
-
-> *Copy-Item -Path \"\\\\fileserver\\stores\\ClusteredCache_db\"
-> -Destination \"F:\\PersistentCacheBackup\" -Recurse*
-
--   Once backup is created, resume persisting data to the persistence
-    store of ClusteredCache using Resume-NCacheDataPersistence cmdlet as
-    follows.
-
-> *Resume-NCacheDataPersistence -CacheName \"ClusteredCache\"*
+Valid paths must be specified and read access permissions must be
+provided for UNC path of configured store location of cache and write
+access permissions must be provided for backup folder path.
 
 Note: Make sure there are no configuration changes (node additions or
 deletions, or joins or departures) that could cause state transfers on
