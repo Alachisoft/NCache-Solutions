@@ -1,6 +1,6 @@
 # Backup and Restore NCache Persisted Data
 
-## **Introduction
+## Introduction
 
 Using a distributed cache with persistence, you can store data to a
 persistence store. NCache enables flexible backup of the persisted data
