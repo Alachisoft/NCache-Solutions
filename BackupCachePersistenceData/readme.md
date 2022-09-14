@@ -1,4 +1,6 @@
-Backup and Restore NCache Persisted Data
+# Backup and Restore NCache Persisted Data
+
+## **Introduction
 
 Using a distributed cache with persistence, you can store data to a
 persistence store. NCache enables flexible backup of the persisted data
@@ -50,14 +52,17 @@ deletions, or joins or departures) that could cause state transfers on
 the cache while your data persistence to the persistence store has been
 paused.
 
-**Restore NCache Persisted Data**
+## **Restore NCache Persisted Data**
 
 Data from the backup can easily be restored at any moment to your cache.
 The persistence store of ClusteredCache can be used to recover backup
 data using the example that follows.
 
--   Start by stopping ClusteredCache using Stop-Cache PowerShell cmdelt
-    or NCache Web Manager.
+-   First, you need to stop ClusteredCache using Stop-Cache PowerShell cmdelt
+    or NCache Web Manager.The following command stops the cache named 
+    ClusteredCache on the specified server 20.200.20.39.
+    Stop-Cache ClusteredCache -Server 20.200.20.39
+
 
 -   *Next, you need to copy all the items from your backup folder to the
     configured store location (UNC path) of your cache. You can find the
@@ -70,5 +75,5 @@ data using the example that follows.
 > *Copy-Item -Path \"F:\\PersistentCacheBackup\" -Destination
 > \"\\\\fileserver\\stores\\demoClusteredCache_db\" -Recurse*
 
--   Once it is copied, restart ClusteredCache cache on all server nodes
+-   Once it is copied, start ClusteredCache cache on all server nodes
     from NCache Web Manager or using Start-Cache PowerShell cmdlet.
