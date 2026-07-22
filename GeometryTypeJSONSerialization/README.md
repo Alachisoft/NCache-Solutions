@@ -1,30 +1,83 @@
-﻿External Newtonsoft JsonConverter Support:
+﻿# External Newtonsoft `JsonConverter` Support
 
-Newtonsoft allows the user to provide custom implemented JSON converters for handling serialization and deserialization to and from JSON. The user may provide a list of converters while configuring serialization settings for Newtonsoft. A custom JSON converter is a class derived from JsonConverter abstract class contained within Newtonsoft. A single implementation is supposed to handle only one type of data, or at least data types with a common parent class. A sample implementation is provided below:
+## Table of Contents
 
+* [Overview](#overview)
+* [Example](#example)
+* [NetTopologySuite Converter Support](#nettopologysuite-converter-support)
+* [Configuration](#configuration)
+
+  * [Example Configuration](#example-configuration)
+* [Initialization](#initialization)
+* [Adding Custom Converters](#adding-custom-converters)
+
+---
+
+## Overview
+
+`Newtonsoft.Json` allows applications to provide custom implementations of `JsonConverter` for handling JSON serialization and deserialization. These converters can be registered through `JsonSerializerSettings` and are automatically used whenever the associated data type is encountered.
+
+A custom converter must inherit from the `JsonConverter` abstract class provided by `Newtonsoft.Json`. Typically, a single converter is responsible for serializing and deserializing one specific type or a group of related types.
+
+## Example
+
+```csharp
 public class ProductConverter : JsonConverter
 {
-	public override bool CanConvert(Type objectType)
-	{
-		return typeof(Product).IsAssignableFrom(objectType);
-	}
+    public override bool CanConvert(Type objectType)
+    {
+        return typeof(Product).IsAssignableFrom(objectType);
+    }
 
-	public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-	{
-		// Logic for reading JSON
-	}
+    public override object ReadJson(
+        JsonReader reader,
+        Type objectType,
+        object existingValue,
+        JsonSerializer serializer)
+    {
+        // Logic for reading JSON
+    }
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-	{
-		// Logic for writing JSON
-	}
+    public override void WriteJson(
+        JsonWriter writer,
+        object value,
+        JsonSerializer serializer)
+    {
+        // Logic for writing JSON
+    }
 }
+```
 
+## NetTopologySuite Converter Support
 
-The current solution provide converters for serialization of Geometry data types belonging to NetTopologySuite [https://github.com/NetTopologySuite/NetTopologySuite] library. The converters are taken from NetTopologySuite.IO.GeoJSON [https://github.com/NetTopologySuite/NetTopologySuite.IO.GeoJSON] with some bug fixes, as the currently implemented converters where unable to serialize/deserialize Geometry type arrays such as MultiPoint, MultiLineString etc.
+This solution includes built-in converters for serializing and deserializing geometry types from the **NetTopologySuite** library.
 
-The user is required to include the following JSON object in their appsettings.json file. The "Converters" array accepts a list of objects with two properties specifying the fully qualified assembly names of both the type as well as the converter, user needs to specify the FQNs for each converter they want to use for serialization of a specific type. For Geometry types of NetTopologySuite please use the following JSON:
+The converters are based on the implementations from **NetTopologySuite.IO.GeoJSON**, with additional fixes to address issues involving geometry collections and arrays such as:
 
+* `MultiPoint`
+* `MultiLineString`
+* `MultiPolygon`
+* Other `Geometry`-derived collection types
+
+### References
+
+* **NetTopologySuite:** https://github.com/NetTopologySuite/NetTopologySuite
+* **NetTopologySuite.IO.GeoJSON:** https://github.com/NetTopologySuite/NetTopologySuite.IO.GeoJSON
+
+## Configuration
+
+To register custom converters, add a `Converters` array under the `JsonSerialization` section in your application's `appsettings.json`.
+
+Each converter entry contains two properties:
+
+| Property       | Description                                                                        |
+| -------------- | ---------------------------------------------------------------------------------- |
+| `TypeFQN`      | Fully qualified assembly name of the target type to be serialized or deserialized. |
+| `ConverterFQN` | Fully qualified assembly name of the converter implementation.                     |
+
+### Example Configuration
+
+```json
 {
   "NCacheSettings": {
     "JsonSerialization": {
@@ -57,5 +110,59 @@ The user is required to include the following JSON object in their appsettings.j
     }
   }
 }
+```
 
-By specifying the above configuration, upon initialization of ICache, the converters will be instantiated and made part of our JSON serialization settings. Please make sure the appsettings.json file is present in the root directory of your application.
+## Initialization
+
+During `ICache` initialization, NCache reads the converter configuration from `appsettings.json`, instantiates each configured converter, and registers them with the internal `Newtonsoft.Json` serializer settings.
+
+Once registered, the converters are automatically used whenever objects of their associated types are serialized or deserialized.
+
+> **Note**
+>
+> Ensure that `appsettings.json` is located in the root directory of your application so that NCache can discover and load the converter configuration during startup.
+
+## Adding Custom Converters
+
+To register your own converter:
+
+1. Create a class that inherits from `JsonConverter`.
+2. Implement the required serialization and deserialization logic.
+3. Add an entry to the `Converters` array in `appsettings.json`.
+4. Specify the fully qualified assembly names for:
+
+   * The target type (`TypeFQN`)
+   * The converter (`ConverterFQN`)
+
+The converter will be automatically instantiated and registered during `ICache` initialization.
+
+## Additional Resources
+
+### Documentation
+
+The complete online documentation for NCache is available at:
+
+* **NCache Documentation:** http://www.alachisoft.com/resources/docs/#ncache
+
+### Programmer's Guide
+
+The complete NCache Programmer's Guide is available at:
+
+* **Programmer's Guide:** http://www.alachisoft.com/resources/docs/ncache/prog-guide/
+
+### Technical Support
+
+Alachisoft provides multiple channels for technical support.
+
+For support options, visit:
+
+* **Support Portal:** http://www.alachisoft.com/support.html
+
+To request new features or report any discrepancies in this document, please contact:
+
+* **Email:** [support@alachisoft.com](mailto:support@alachisoft.com)
+
+### Copyright
+
+© 2026 Alachisoft. All rights reserved.
+
