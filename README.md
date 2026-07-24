@@ -46,5 +46,8 @@ Following is a list of the solutions provided:
   
 - [Sync NCache with PostgreSQL using NotifyExtensibleDependency](./PostGreSQLNotifyExtensibleDependency/README.md)
 
-   This solution demonstrates the use of NotifyExtensibleDependency to allow for real-time cache synchronization with PostgreSQL database.
+  This solution demonstrates the use of NotifyExtensibleDependency to allow for real-time cache synchronization with PostgreSQL database.
 
+- [Geometry type JSON Serialization](./GeometryTypeJSONSerialization/README.md)
+
+  This solution demonstrates how custom Newtonsoft JSON converters can be integrated with NCache to enable seamless serialization and deserialization of complex data types. It includes support for NetTopologySuite geometry types and provides a flexible configuration-based approach for registering custom converters.
