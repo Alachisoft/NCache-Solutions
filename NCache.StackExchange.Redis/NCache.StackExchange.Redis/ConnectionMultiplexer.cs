@@ -43,7 +43,8 @@ namespace NCache.StackExchange.Redis
     /// </summary>
     public class ConnectionMultiplexer
     {
-        public static Dictionary<string, ICache> CacheConnections = new Dictionary<string, ICache>();
+        public static StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+        public static Dictionary<string, ICache> CacheConnections = new Dictionary<string, ICache>(comparer);
         public static ConnectionMultiplexer Connect(string cacheName)
         {
             return new ConnectionMultiplexer(cacheName);

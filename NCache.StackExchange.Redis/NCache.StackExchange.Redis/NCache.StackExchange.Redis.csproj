@@ -1,7 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>StackExchange.Redis.Wrapper.NCache</PackageId>
+    <Authors>Alachisoft</Authors>
+    <Company>Alachisoft</Company>
+    <Product>NCache Wrapper for StackExchange.Redis</Product>
+    <Copyright>Copyright 2005-2021 Alachisoft. All rights reserved.</Copyright>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <PackageProjectUrl>http://www.alachisoft.com/ncache/</PackageProjectUrl>
+    <Description>NCache provides a wrapper for StackExchange.Redis that allows you to migrate your .NET applications smoothly from Redis to NCache with minimal code change.</Description>
+    <PackageIcon>Icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Alachisoft/NCache-Solutions/</RepositoryUrl>
+    <PackageTags>Alachisoft, NCache, Cache, Caching, DistributedCache, In-Memory, Enterprise, Redis, StackExchange.Redis, Wrapper, Distributed, Object, ObjectCaching, RedisLabs, Migrate, Alternative, Replacement, 5.2.0, Alternate</PackageTags>
+    <Version>5.2.0</Version>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AssemblyVersion>5.2.0.0</AssemblyVersion>
+    <FileVersion>5.2.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -10,14 +25,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.0.3" />
+    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.2.0" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="client.ncconf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="config.ncconf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tls.ncconf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\TFSNCacheWebManagerLite\NuGet\NHibernate.NCache\license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="Content\Icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="Content\license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
 
