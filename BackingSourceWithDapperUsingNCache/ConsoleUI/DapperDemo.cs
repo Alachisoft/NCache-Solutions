@@ -20,8 +20,19 @@ namespace Alachisoft.NCache.Samples.Dapper.ConsoleUI
         static DapperDemo()
         {
             var cacheId = ConfigurationManager.AppSettings["cacheId"];
+            var cacheServer = ConfigurationManager.AppSettings["cacheServer"];
+            if (string.IsNullOrWhiteSpace(cacheId) || string.IsNullOrWhiteSpace(cacheServer)
+                || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
+                throw new ConfigurationErrorsException(
+                    "App.config must define appSettings cacheId, cacheServer and cachePort.");
 
-            cache = CacheManager.GetCache(cacheId);
+            // Thin client: connect straight to the cache server, no client.ncconf needed
+            var connectionOptions = new ConnectionOptions
+            {
+                Servers = new List<ServerInfo> { new ServerInfo(cacheServer, cachePort) }
+            };
+
+            cache = CacheManager.GetCache(cacheId, connectionOptions);
 
             connectionString =
                 ConfigurationManager.ConnectionStrings["sql"].ConnectionString;
