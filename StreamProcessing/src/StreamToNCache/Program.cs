@@ -22,11 +22,21 @@ namespace StreamToNCache
                                      true)
                                     .Build();
 
-            IDictionary parameters = new Dictionary<string, string>();
-            parameters.Add("cacheId", configuration["settings:cacheId"]);
+            var section = configuration.GetSection("ncache:defaultCache");
+            string cacheName = section["cacheName"];
+            string server = section["server"];
+            if (string.IsNullOrWhiteSpace(cacheName) || string.IsNullOrWhiteSpace(server)
+                || !int.TryParse(section["port"], out int port))
+                throw new InvalidOperationException(
+                    "appsettings.json must define ncache:defaultCache:cacheName, :server and :port.");
 
-            _cache = CacheManager.GetCache(parameters["cacheId"].ToString());
-            Console.WriteLine("Cache Initialized");
+            var options = new ConnectionOptions
+            {
+                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
+            };
+
+            _cache = CacheManager.GetCache(cacheName, options);
+            Console.WriteLine($"Cache '{cacheName}' initialized on {server}:{port}");
         }
 
         static private void PopulateCache()
