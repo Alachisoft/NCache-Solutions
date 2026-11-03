@@ -16,15 +16,48 @@ namespace IdentityServer4.NCache.Utils
     {
         internal static ICache CreateCache(OptionsBase options)
         {
-            if (options.ConnectionOptions == null)
+            if (options == null)
             {
-                return CacheManager.GetCache(
-                    options.CacheId);
+                throw new ArgumentNullException(nameof(options));
             }
-            else
+
+            if (string.IsNullOrWhiteSpace(options.CacheId))
             {
-                return CacheManager.GetCache(options.CacheId, options.ConnectionOptions.CacheConnectionOptions);
+                throw new InvalidOperationException(
+                    "NCache cache name is not configured. Set the 'CacheId' " +
+                    "option (e.g. the \"CacheId\" key in appsettings.json).");
             }
+
+            // Thin client connection: the cache server(s) are supplied in code
+            // instead of through client.ncconf.
+            ConnectionOptions connectionOptions =
+                options.ConnectionOptions?.ToConnectionOptions() ??
+                new ConnectionOptions { Servers = new List<ServerInfo>() };
+
+            if (!string.IsNullOrWhiteSpace(options.CacheServer))
+            {
+                if (options.CachePort <= 0)
+                {
+                    throw new InvalidOperationException(
+                        "NCache server port is not valid. Set the 'CachePort' " +
+                        "option (e.g. the \"CachePort\" key in appsettings.json, default 9800).");
+                }
+
+                connectionOptions.Servers.Insert(
+                    0,
+                    new ServerInfo(options.CacheServer.Trim(), options.CachePort));
+            }
+
+            if (connectionOptions.Servers == null ||
+                connectionOptions.Servers.Count == 0)
+            {
+                throw new InvalidOperationException(
+                    "NCache server is not configured. Set the 'CacheServer' and " +
+                    "'CachePort' options (e.g. the \"CacheServer\" and \"CachePort\" " +
+                    "keys in appsettings.json).");
+            }
+
+            return CacheManager.GetCache(options.CacheId, connectionOptions);
         }
 
         internal static string CreateCachedPersistedGrantStoreKey(
