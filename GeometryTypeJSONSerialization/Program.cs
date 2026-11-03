@@ -1,8 +1,30 @@
 ﻿using Alachisoft.NCache.Client;
+using Microsoft.Extensions.Configuration;
 using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
 
-ICache cache = CacheManager.GetCache("demoCache");
+// Thin client: connection details come from appsettings.json, no client.ncconf needed
+IConfiguration configuration = new ConfigurationBuilder()
+    .SetBasePath(AppContext.BaseDirectory)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+    .Build();
+
+IConfigurationSection cacheSection = configuration.GetSection("CacheConnection");
+string? cacheName = cacheSection["CacheName"];
+string? cacheServer = cacheSection["Server"];
+if (string.IsNullOrWhiteSpace(cacheName) || string.IsNullOrWhiteSpace(cacheServer)
+    || !int.TryParse(cacheSection["Port"], out int cachePort))
+{
+    throw new InvalidOperationException(
+        "appsettings.json must define CacheConnection:CacheName, CacheConnection:Server and CacheConnection:Port.");
+}
+
+var connectionOptions = new ConnectionOptions
+{
+    Servers = new List<ServerInfo> { new ServerInfo(cacheServer, cachePort) }
+};
+
+ICache cache = CacheManager.GetCache(cacheName, connectionOptions);
 
 cache.Clear();
 
