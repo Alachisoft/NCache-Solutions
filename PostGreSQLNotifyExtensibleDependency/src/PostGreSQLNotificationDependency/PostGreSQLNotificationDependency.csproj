@@ -1,12 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net472;net8.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.1.0" />
-    <PackageReference Include="Npgsql" Version="3.1.10" />
+    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.3.800" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Npgsql" Version="8.0.9" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <PackageReference Include="System.Collections.Immutable" Version="10.0.10" />
+    <PackageReference Include="System.Text.Json" Version="10.0.10" />
+    <Reference Include="System.Data" />
   </ItemGroup>
 
 </Project>
