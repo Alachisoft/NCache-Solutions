@@ -2,6 +2,8 @@
 using Entities;
 using Npgsql;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 
 namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleUI
 {
@@ -11,7 +13,7 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
         {
             NpgsqlConnection connection = null;
             try
-            
+
             {
                 // Change the connection string to your PostGreSQL Database
                 const string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=password;Database=database";
@@ -25,7 +27,7 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
 
                 var key = customer.customerid;
 
-                var cache = CacheManager.GetCache("democache");
+                var cache = InitializeCache();
 
                 cache.Insert(key, cacheItem);
 
@@ -46,6 +48,38 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
             }
         }
 
+        /// <summary>
+        /// Connects to the cache as a thin client using the cacheName, cacheServer and cachePort
+        /// values from the appSettings section of App.config.
+        /// </summary>
+        private static ICache InitializeCache()
+        {
+            var cacheName = GetRequiredSetting("cacheName");
+            var server = GetRequiredSetting("cacheServer");
+            var portValue = GetRequiredSetting("cachePort");
 
+            int port;
+            if (!int.TryParse(portValue, out port))
+            {
+                throw new ConfigurationErrorsException($"The 'cachePort' value '{portValue}' in App.config is not a valid port number.");
+            }
+
+            var options = new ConnectionOptions
+            {
+                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
+            };
+
+            return CacheManager.GetCache(cacheName, options);
+        }
+
+        private static string GetRequiredSetting(string key)
+        {
+            var value = ConfigurationManager.AppSettings[key];
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ConfigurationErrorsException($"The '{key}' setting is missing from the appSettings section of App.config.");
+            }
+            return value.Trim();
+        }
     }
 }
