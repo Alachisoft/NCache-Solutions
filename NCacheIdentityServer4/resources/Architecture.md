@@ -138,19 +138,21 @@ You can find a demonstration of how NCache can be registered as an IdentityServe
 
 ### Connection Parameters for Accessing NCache Cluster
 
-The parameters needed to connect to an NCache cluster, whether as a configuration and/or operational store or whether NCache as a caching layer on top of existing IdentityServer4 storage media, is encapsulated in the [**OptionsBase**](../src/IdentityServer4.NCache/Options/OptionsBase.cs) class. The two properties of the class are as follows:
+The parameters needed to connect to an NCache cluster, whether as a configuration and/or operational store or whether NCache as a caching layer on top of existing IdentityServer4 storage media, is encapsulated in the [**OptionsBase**](../src/IdentityServer4.NCache/Options/OptionsBase.cs) class. The provider connects as an NCache thin client using `CacheManager.GetCache(string, ConnectionOptions)`; no **client.ncconf** file is used. The properties of the class are as follows:
 
 - CacheId (**Required**)
 
   This is the cache id of the cache cluster to be used as a store or cache. This value is required and defaults to *default*. This must be changed by the user according to the name of the cache cluster used.
 
+- CacheServer and CachePort (**Required** unless servers are given in *ConnectionOptions.ServerList*)
+
+  The IP address (or host name) and client port (default *9800*) of an NCache server hosting the cache. In the sample these are read from the *CacheServer* and *CachePort* keys of *appsettings.json*. An exception is thrown when no server is configured.
+
 - ConnectionOptions (**Optional**)
 
-  The [**NCacheConnectionOptions**](../src/IdentityServer4.NCache/Options/NCacheConnectionOptions.cs) class is a thin wrapper around the [**CacheConnectionOptions**](https://www.alachisoft.com/resources/docs/ncache/dotnet-api-ref/Alachisoft.NCache.Client.CacheConnectionOptions.html) whose properties are mapped directly to the inner **CacheConnectionOptions** instance. 
+  The [**NCacheConnectionOptions**](../src/IdentityServer4.NCache/Options/NCacheConnectionOptions.cs) class is a thin wrapper around the NCache [**ConnectionOptions**](https://www.alachisoft.com/resources/docs/ncache/dotnet-api-ref/Alachisoft.NCache.Client.ConnectionOptions.html) class. It can supply additional servers (**ServerList**), **AppName**, **ClientBindIP**, **Mode** (InProc/OutProc) and **UserCredentials**. 
   
-  This is an optional parameter that is used to override some or all the parameters in the [**client.ncconf**](https://www.alachisoft.com/resources/docs/ncache-pro/admin-guide/client-config.html) file. If the information regarding connection to the NCache cluster is available in **client.ncconf** file, whether it is in the project folder or whether it is the NCache installation directory in the **Config** subfolder, then this property need not be set. 
-
-  **Warning**: If the **client.ncconf** files in the project folder or the installation directory do not contain the information regarding the cache cluster in question, then the **ConnectionOptions** property **must** be **atleast** set with the information of **atleast** one of the servers making up the NCache cluster. That information is provided within the **ServerList** property of the **NCacheConnectionOptions** class. 
+  Settings such as timeouts, retries, keep-alive, load balancing, client cache sync mode and client logging are no longer client-side options in NCache 5.3; they are configured in the server-side cache configuration.
 
 
 
