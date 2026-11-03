@@ -45,8 +45,13 @@ namespace WebAPI.Controllers
         /// <param name="configuration">configuration file appsettings.json</param>
         public ScoreUpdateController(IConfiguration configuration)
         {
-            // get cache name from appsettings.json
+            // get cache name and cache server (thin client) from appsettings.json
             string cacheName = configuration.GetValue<string>("CacheName");
+            string server = configuration.GetValue<string>("CacheServer");
+            if (string.IsNullOrWhiteSpace(cacheName) || string.IsNullOrWhiteSpace(server)
+                || !int.TryParse(configuration["CachePort"], out int port))
+                throw new InvalidOperationException(
+                    "appsettings.json must define \"CacheName\", \"CacheServer\" and a numeric \"CachePort\".");
 
             // get read/write thru provider name from appsettings.json
             string readThruProviderName = configuration.GetValue<string>("ReadThruProviderName");
@@ -54,10 +59,14 @@ namespace WebAPI.Controllers
 
             // initialize store match handler if not initialized before
             if (_storeHandler == null)
-                _storeHandler = new StoreHandler(cacheName, readThruProviderName, writeThruProviderName);
+                _storeHandler = new StoreHandler(cacheName, server, port, readThruProviderName, writeThruProviderName);
 
             // acquire cache handler
-            _cache = CacheManager.GetCache(configuration.GetValue<string>("CacheName"));
+            var options = new ConnectionOptions
+            {
+                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
+            };
+            _cache = CacheManager.GetCache(cacheName, options);
         }
 
         /// <summary>
