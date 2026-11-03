@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Alachisoft.NCache.Client;
 using FraudDetector.Messaging;
 using FraudDetector.NCacheLogic;
 using System;
@@ -23,11 +22,11 @@ namespace FraudDetector
     {
         private CacheHandler _cache = null;
         private FraudDetectionManager _fraudManger= null;
-        public void StartDetection(string cacheName)
+        public void StartDetection(string cacheName, string cacheServer, int cachePort)
         {
             try
             {
-                _cache = InitiliazeCache(cacheName, null);
+                _cache = InitiliazeCache(cacheName, cacheServer, cachePort);
                 // initialize the respective manager
 
                 // transacion manager is required to give input of the customer where as fraud manager has the logic of completeing 
@@ -50,10 +49,10 @@ namespace FraudDetector
             return fraudMnager;
         }
 
-        private CacheHandler InitiliazeCache(string cacheName, CacheConnectionOptions cacheConnectionOptions)
+        private CacheHandler InitiliazeCache(string cacheName, string cacheServer, int cachePort)
         {
             CacheHandler cache = new CacheHandler();
-            cache.InitializeCache(cacheName, cacheConnectionOptions);
+            cache.InitializeCache(cacheName, cacheServer, cachePort);
             return cache;
         }
 

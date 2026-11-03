@@ -26,14 +26,22 @@ namespace Common
     {  
        // instance of cache
         protected ICache cache;
-        // initialie a cache with respective options
-        public ICache InitializeCache(string cacheName, CacheConnectionOptions cacheConnectionOptions = null)
+        // initialize a cache handle as a thin client connected directly to the given cache server
+        public ICache InitializeCache(string cacheName, string cacheServer, int cachePort)
         {
             if (string.IsNullOrEmpty(cacheName))
-                throw new ArgumentNullException("Cache Name is empty.");
+                throw new ArgumentNullException(nameof(cacheName), "Cache Name is empty.");
+            if (string.IsNullOrEmpty(cacheServer))
+                throw new ArgumentNullException(nameof(cacheServer), "Cache server is empty.");
             try
             {
-                cache = CacheManager.GetCache(cacheName, cacheConnectionOptions);
+                // Thin client: connect straight to the cache server, no client.ncconf needed
+                var connectionOptions = new ConnectionOptions
+                {
+                    Servers = new List<ServerInfo> { new ServerInfo(cacheServer, cachePort) }
+                };
+
+                cache = CacheManager.GetCache(cacheName, connectionOptions);
             }
             catch
             {
