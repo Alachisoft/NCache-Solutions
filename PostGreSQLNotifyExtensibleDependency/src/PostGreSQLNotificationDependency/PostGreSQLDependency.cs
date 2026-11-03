@@ -36,9 +36,10 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency
 
             ((NpgsqlConnection)connection).Notification += (o, e) =>
             {
-                var entity = JsonConvert.DeserializeObject<Entity>(e.AdditionalInformation);
+                // Npgsql 4.0+ exposes the NOTIFY payload as 'Payload' (the old 3.x 'AdditionalInformation' property was removed)
+                var entity = JsonConvert.DeserializeObject<Entity>(e.Payload);
 
-                if (entity.DependencyKey == _dependencyKey && entity.Table == _table && entity.Schema == _schema)
+                if (entity != null && entity.DependencyKey == _dependencyKey && entity.Table == _table && entity.Schema == _schema)
                 {
                     done = true;
                 }
