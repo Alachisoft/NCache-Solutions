@@ -18,6 +18,14 @@ This sample is taken from the IdentityServer4 GitHub [Samples illustrating the u
 which can be found [here](./src/Sample) and it is made up of 4 applications to showcase typical IdentityServer4 behavior. 
 The basic working of the EntityFramework Core sample is explained in the IdentityServer4 docs page given [here](https://identityserver4.readthedocs.io/en/latest/quickstarts/5_entityframework.html).
 
+All projects target **.NET 8** and use the **NCache SDK 5.3.800** (`Alachisoft.NCache.SDK`) as a thin client: the cache name, server and port 
+are given in *appsettings.json* and no *client.ncconf* file is needed.
+
+> **Note on IdentityServer4 version**: The sample uses **IdentityServer4 3.1.3** (with IdentityServer4.EntityFramework 3.1.3). IdentityServer4 
+> has reached **end-of-life** and no longer receives updates or security fixes. Version 3.1.3 targets .NET Core 3.1 and runs on .NET 8. 
+> Because IdentityServer4.EntityFramework 3.1.3 is built against EF Core 3.1, the sample uses **EF Core 3.1.x** (not EF Core 8). 
+> For production use, consider moving to a supported product such as [Duende IdentityServer](https://duendesoftware.com/products/identityserver).
+
 ### Steps Before Starting Application
 
 As mentioned in the [introduction](#introduction), the sample has been taken from the IdentityServer4 Quickstarts section and as such, the applications will run as expected from a single machine. 
@@ -163,25 +171,29 @@ We have modified the sample to demonstrate how NCache can be used as a configura
 
 To demonstrate NCache as an IdentityServer4 store for configuration and operational data, make the following changes in the code:
 
-- In [**Program.cs**](./src/Sample/IdentityServer/Program.cs), modify the code shown below by uncommenting *.UseStartup\<StartupNCache>()*
-  and commenting out *.UseStartup\<StartupEFCore>()* as shown below.
+- In [**Program.cs**](./src/Sample/IdentityServer/Program.cs), modify the code shown below by uncommenting *webBuilder.UseStartup\<StartupNCache>()*
+  and commenting out *webBuilder.UseStartup\<StartupEFCore>()* as shown below.
 
 
   ```csharp
   // beginning of the code
-  public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
-                    .UseStartup<StartupNCache>()
-                   // .UseStartup<StartupEFCore>()
-                    .UseSerilog((context, configuration) =>
+  .ConfigureWebHostDefaults(webBuilder =>
+  {
+      webBuilder.UseStartup<StartupNCache>();
+      //webBuilder.UseStartup<StartupEFCore>();
+  });
   // rest of the code
   ```
   
-- In the [**appsettings.json**](./src/Sample/IdentityServer/appsettings.json) file, modify the value of the *CacheId* key to the name of the 
-  cache you will be using. In the sample, it is given the value of *democache*. Furthermore, for the *Servers* key, use a comma separated list 
-  of one or more IP addresses belonging to the NCache servers making up the NCache cluster. In the sample, I have given a demo IP address 
-  of *20.200.20.45*. 
+- In the [**appsettings.json**](./src/Sample/IdentityServer/appsettings.json) file, set the NCache connection information as shown below. 
+  *CacheId* is the name of the cache you will be using (in the sample, *democache*), *CacheServer* is the IP address of an NCache server 
+  hosting that cache and *CachePort* is the NCache client port (default *9800*).
+
+  ```json
+  "CacheId": "democache",
+  "CacheServer": "{cache server IP}",
+  "CachePort": 9800,
+  ```
   
 - Run applications [**IdentityServer**](./src/Sample/IdentityServer), [**MvcClient**](./src/Sample/MvcClient), [**Api**](./src/Sample/Api), [**JavaScriptClient**](./src/Sample/JavaScriptClient) to see how NCache operates as an IdentityServer4 configuration and operational store after making sure that the demonstration cache used as both a configuration and operational store is running and can be connected to from **IdentityServer** sample
   application.
@@ -197,25 +209,32 @@ as well as a caching mechanism for the [IProfileService](http://docs.identityser
 
 To demonstrate NCache as a configuration store cache while persisting configuration and operational data in SQL Server, make the following changes in the code:
 
-- In [**Program.cs**](./src/Sample/IdentityServer/Program.cs), modify the code shown below by commenting out *.UseStartup\<StartupNCache>()*
-  and uncommenting *.UseStartup\<StartupEFCore>()* as shown below.
+- In [**Program.cs**](./src/Sample/IdentityServer/Program.cs), modify the code shown below by commenting out *webBuilder.UseStartup\<StartupNCache>()*
+  and uncommenting *webBuilder.UseStartup\<StartupEFCore>()* as shown below (this is the default).
 
 
   ```csharp
   // beginning of the code
-  public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
-                  //  .UseStartup<StartupNCache>()
-                    .UseStartup<StartupEFCore>()
-                    .UseSerilog((context, configuration) =>
+  .ConfigureWebHostDefaults(webBuilder =>
+  {
+      //webBuilder.UseStartup<StartupNCache>();
+      webBuilder.UseStartup<StartupEFCore>();
+  });
   // rest of the code
   ```
  
-- In the [**appsettings.json**](./src/Sample/IdentityServer/appsettings.json) file, modify the value of the *CacheId* key to the name of the 
-  cache you will be using. In the sample, it is given the value of *democache*. Furthermore, for the *Servers* key, use a comma separated list 
-  of one or more IP addresses belonging to the NCache servers making up the NCache cluster. In the sample, I have given a demo IP address 
-  of *20.200.20.45*. Also, give the connection string of the SQL Server. 
+- In the [**appsettings.json**](./src/Sample/IdentityServer/appsettings.json) file, set the NCache connection information (*CacheId*, *CacheServer* 
+  and *CachePort*) as shown below, and give the connection string of the SQL Server in *ConnectionStrings:db*.
+
+  ```json
+  "CacheId": "democache",
+  "CacheServer": "{cache server IP}",
+  "CachePort": 9800,
+
+  "ConnectionStrings": {
+    "db": "server=tcp:{SQL Server IP},1433;database=IdentityServer4.EntityFramework;User Id={user};Password={password};"
+  }
+  ```
   
   **IMPORTANT**: The application will generate the database and all relevant tables using EF Core migrations using that connection string. Don't create
   the database beforehand.
@@ -227,14 +246,16 @@ To demonstrate NCache as a configuration store cache while persisting configurat
 
 Requirements:
 
-- .net core  3.0 and 3.1 sdk and runtimes for building and running the applications comprising the sample.
-- NCache Enterprise Edition 5.0 SP3 running on server(s)
+- .NET 8 SDK and runtime for building and running the applications comprising the sample.
+- NCache 5.3 running on server(s). The sample uses the [Alachisoft.NCache.SDK](https://www.nuget.org/packages/Alachisoft.NCache.SDK/) NuGet package, version 5.3.800.
+- SQL Server (required when using *StartupEFCore*, the default), reachable from the **IdentityServer** sample application.
 
 Before the sample application is executed make sure that:
 - appsettings.json have been changed according to the configurations. 
-	- Change the cache name and server IP address information
+	- Change the cache name (*CacheId*), cache server IP address (*CacheServer*) and port (*CachePort*).
+	- Change the SQL Server connection string (*ConnectionStrings:db*).
 - Make sure that cache is running. 
-- Make sure a [**client.ncconf**](https://www.alachisoft.com/resources/docs/ncache-pro/admin-guide/client-config.html) file is available with **Copy Always** setting.
+- The cache server must be reachable from the client machine on the NCache client port (default 9800).
 
 
 ### Build and Run the Sample

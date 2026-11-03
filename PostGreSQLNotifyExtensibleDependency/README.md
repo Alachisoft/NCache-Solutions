@@ -60,19 +60,35 @@ A sample ***ReadThruProvider*** implementation given in the sample follows the a
 
 Also given in this project are the scripts for creating the [demo customers table](./Resources/CustomerTable.sql), the [trigger](./Resources/CustomerTableTrigger.sql) to invoke the trigger function for notification and the [trigger function](./Resources/CustomerTriggerFunction.sql) itself. 
 
-Besides these, there are two console applications that reference the [***NotifyExtensibleDependency***](./src/PostGreSQLNotificationDependency/) .NET Standard 2.0 library. One is [PostGresDependencyNETConsoleUI](./src/PostGresDependencyNETConsoleUI/) which is a .NET Framework 4.7.2 application and the other is [PostGresDependencyNETCOREConsoleUI](./src/PostGresDependencyNETCOREConsoleUI/) which is a .NET Core 3.1 application.
+Besides these, there are two console applications that reference the [***NotifyExtensibleDependency***](./src/PostGreSQLNotificationDependency/) library (multi-targeted to .NET Framework 4.7.2 and .NET 8). One is [PostGresDependencyNETConsoleUI](./src/PostGresDependencyNETConsoleUI/) which is a .NET Framework 4.7.2 application and the other is [PostGresDependencyNETCOREConsoleUI](./src/PostGresDependencyNETCOREConsoleUI/) which is a .NET 8 application.
 
-These two console applications are identical in their source code and are meant to show that both a .NET Core client and a .NET framework client can make use of the same ***NotifyExtensibleDependency*** feature.
+These two console applications are identical in their source code and are meant to show that both a .NET client and a .NET Framework client can make use of the same ***NotifyExtensibleDependency*** feature.
 
-Besides these, there are two console applications that reference the [***ReadThruProvider***](./src/PostGreSQLBackingSourceProvider/) .NET Standard 2.0 library. One is [NETConsoleUI](./src/NETConsoleUI/) which is a .NET Framework 4.7.2 application and the other is [NETCOREConsoleUI](./src/NETCOREConsoleUI/) which is a .NET Core 3.1 application. These two console applications are identical in their source code and are meant to show that both a .NET Core client and a .NET framework client can get the value from datasource automatically and then from cache using ***ReadThruProvider*** feature.
+Besides these, there are two console applications that use the [***ReadThruProvider***](./src/PostGreSQLBackingSourceProvider/) deployed on the cache. One is [NETConsoleUI](./src/NETConsoleUI/) which is a .NET Framework 4.7.2 application and the other is [NETCOREConsoleUI](./src/NETCOREConsoleUI/) which is a .NET 8 application. These two console applications are identical in their source code and are meant to show that both a .NET client and a .NET Framework client can get the value from datasource automatically and then from cache using ***ReadThruProvider*** feature.
+
+| Project | Target framework | Description |
+|---------|------------------|-------------|
+| [Entities](./src/Entities/) | .NET Standard 2.0 | `Customer` entity shared by all projects |
+| [PostGreSQLNotificationDependency](./src/PostGreSQLNotificationDependency/) | .NET Framework 4.7.2 and .NET 8 (`net472;net8.0`) | ***NotifyExtensibleDependency*** implementation using PostgreSQL LISTEN/NOTIFY |
+| [PostGreSQLBackingSourceProvider](./src/PostGreSQLBackingSourceProvider/) | .NET Framework 4.7.2 | ***ReadThruProvider*** implementation, deployed on the cache servers |
+| [PostGresDependencyNETConsoleUI](./src/PostGresDependencyNETConsoleUI/) | .NET Framework 4.7.2 | Adds an item with the PostgreSQL dependency |
+| [PostGresDependencyNETCOREConsoleUI](./src/PostGresDependencyNETCOREConsoleUI/) | .NET 8 | Adds an item with the PostgreSQL dependency |
+| [NETConsoleUI](./src/NETConsoleUI/) | .NET Framework 4.7.2 | Reads an item through the ReadThruProvider |
+| [NETCOREConsoleUI](./src/NETCOREConsoleUI/) | .NET 8 | Reads an item through the ReadThruProvider |
+
+All NCache projects use the [Alachisoft.NCache.SDK](https://www.nuget.org/packages/Alachisoft.NCache.SDK/) NuGet package version 5.3.800, and the PostgreSQL projects use [Npgsql](https://www.nuget.org/packages/Npgsql/) 8.0.9.
+
+**NOTE**: NCache 5.3 marks ***NotifyExtensibleDependency*** (along with `ExtensibleDependency`, `CacheDependency` and the `CacheItem.Dependency` property) as obsolete: this feature is being retired and will not be continued in future versions. The sample still works with NCache 5.3, but building it shows obsolete (CS0618) warnings.
 
 ### Prerequisites
 
 Before the sample application is executed make sure that:
 
-- The latest version of NCache Enterprise is installed. The latest version can be gotten from [here](https://www.alachisoft.com/download-ncache.html). If you are using a Linux cache server, download the Enterprise .NET Core installation. For a Windows cache server, you can install either the .NET Framework or the .NET Core installation.
+- NCache Enterprise 5.3 is installed on the cache servers. The latest version can be gotten from [here](https://www.alachisoft.com/download-ncache.html).
 
-  **NOTE**: The rest of this article assumes you have installed the .NET Framework installation although the steps for the .NET Core application are exactly the same.
+  **NOTE**: The rest of this article assumes a Windows cache server running .NET Framework based providers; the server-side assemblies of this sample are built for .NET Framework 4.7.2.
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) and the .NET Framework 4.7.2 Developer Pack (or Visual Studio 2022 with both workloads) are installed on the development machine. The NuGet packages (Alachisoft.NCache.SDK 5.3.800, Npgsql 8.0.9) are restored automatically when the solution is built.
   
 - Make sure the relevant ports are open to allow for full communication between NCache and the PostgreSQL Database.
 This sample was tested with PostgreSQL version "10.15"
@@ -93,47 +109,35 @@ This sample was tested with PostgreSQL version "10.15"
   // Rest of code
   ```
    
-   Furthermore, make sure the [*client.ncconf*](https://www.alachisoft.com/resources/docs/ncache/admin-guide/client-config.html) is configured with the IP address of one of the servers of your demo cache in the *server* attribute as shown below:
+   Furthermore, all four console applications connect to the cache as thin clients; no *client.ncconf* is needed. In the *App.config* of each console application ([NETConsoleUI](./src/NETConsoleUI/App.config), [NETCOREConsoleUI](./src/NETCOREConsoleUI/App.config), [PostGresDependencyNETConsoleUI](./src/PostGresDependencyNETConsoleUI/App.config) and [PostGresDependencyNETCOREConsoleUI](./src/PostGresDependencyNETCOREConsoleUI/App.config)), set the cache name and the IP address and port of one of the servers of your demo cache:
 
    ```xml
-
-   <?xml version="1.0" encoding="UTF-8"?>
-  <configuration>
-    <ncache-server 
-		connection-retries="5" 
-		retry-connection-delay="0" 
-		retry-interval="1" 
-		command-retries="3" 
-		command-retry-interval="0.1" 
-		client-request-timeout="90" 
-		connection-timeout="5" port="9800"/>
-    <cache 
-		id="democache" 
-		client-cache-id="" 
-		client-cache-syncmode="optimistic" 
-		default-readthru-provider="" 
-		default-writethru-provider="" 
-		load-balance="True"
-		enable-client-logs="False" 
-		log-level="error">
-      	<server 
-			name="***.***.***.***"/>
-    </cache>
-  </configuration>
-
+   <appSettings>
+     <add key="cacheName" value="democache" />
+     <add key="cacheServer" value="{cache server IP}" />
+     <add key="cachePort" value="9800" />
+   </appSettings>
    ```
 
-   After making the above mentioned changes, build the solution in ***Release*** mode to generate the assemblies.
+   The applications pass these values to `CacheManager.GetCache(cacheName, new ConnectionOptions { Servers = ... })` and throw a `ConfigurationErrorsException` if any of them is missing.
+
+   After making the above mentioned changes, build the solution to generate the assemblies.
 
 - Create a cache named *democache* using the [*NCache Web Manager*](https://www.alachisoft.com/resources/docs/ncache/admin-guide/ncache-web-manager.html?tabs=windows%2Cwindows-start-manager) GUI. The steps for doing this are given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-new-cache-cluster.html?tabs=windows#using-ncache-web-manager).
 
   **IMPORTANT**: Do not start the cache after creating it as we will be deploying the ***NotificyExtensibleDependency*** implementation dependencies as shown in the next step.
 
-- Once *democache* is created configure the ReadThruProvider using the tutorial mentioned [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/read-through-provider.html). Name the ReadThruProvider with Name "PostGreSqlReadThruProvider" and add **connectionSting** as parameter with "Host=localhost;Port=5432;Username=postgres;Password=password;Database=database". 
+- Once *democache* is created configure the ReadThruProvider using the tutorial mentioned [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/read-through-provider.html). Name the ReadThruProvider with Name "PostGreSqlReadThruProvider", use the class *PostGreSQLBackingSourceProvider.PostGreSQLReadThruProvider* and add **connectionString** as parameter with your PostgreSQL connection string, e.g. "Host={database server};Port=5432;Username={user};Password={password};Database={database}". 
 
 - Once *democache* is created, we need to deploy the assemblies related to PostGreSQLNotificationDependency and PostGreSQLBackingSourceProvider to allow for the PostgreSQL notification logic and ReadThruProvider with PostGreSQL to run on the server side onto *democache*.
 
-  Since we are assuming an NCache Enterprise .NET Framework server installation, we will deploying the .NET Framework assemblies. For that, use the assemblies given in the /bin/release folder for the [*PostGresDependencyNETConsoleUI*](./src/PostGresDependencyNETConsoleUI/) application.
+  The server-side assemblies are built for .NET Framework 4.7.2. Deploy them from the `bin\Debug\net472` (or `bin\Release\net472`) folder of the [*PostGreSQLBackingSourceProvider*](./src/PostGreSQLBackingSourceProvider/) project; that project copies all of its dependencies to its output folder. Deploy:
+
+  - *PostGreSQLBackingSourceProvider.dll*, *PostGreSQLNotificationDependency.dll* and *Entities.dll*
+  - *Npgsql.dll* and its dependencies from the same folder (e.g. *Microsoft.Extensions.Logging.Abstractions.dll*, *Microsoft.Bcl.HashCode.dll*, *System.Threading.Channels.dll*, *System.Text.Json.dll*, *System.Collections.Immutable.dll*, *System.Diagnostics.DiagnosticSource.dll*, *System.Memory.dll*, *System.Runtime.CompilerServices.Unsafe.dll*, *System.Threading.Tasks.Extensions.dll*, *System.Buffers.dll*, *System.Numerics.Vectors.dll*, *System.Text.Encodings.Web.dll*, *Microsoft.Bcl.AsyncInterfaces.dll*)
+  - *Newtonsoft.Json.dll* only if your NCache installation does not already provide it
+
+  Do **not** deploy the *Alachisoft.NCache.\** assemblies; they are already part of the NCache installation.
 
   Once the assemblies are deployed using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html), start the cache.
 		
@@ -149,7 +153,9 @@ This sample was tested with PostgreSQL version "10.15"
 
   In turn, the cached item will be invalidated and removed from cache, as demonstrated by the *Count* field in the *NCache Web Manager* *Statistics* page for *democache* going back to *0*.
 
-- Repeat the steps for the *PostGresDependencyNETCoreConsoleUI* application to confirm that the same behavior is observed when data is added from a .NET Core Client application onto an NCache Enterprise .NET Framework application.
+- Repeat the steps for the *PostGresDependencyNETCOREConsoleUI* application to confirm that the same behavior is observed when data is added from a .NET 8 client application.
+
+- To try Read-Through, run the *NETConsoleUI* or *NETCOREConsoleUI* application. It fetches the customer *ALFKI* through the *PostGreSqlReadThruProvider*, which loads it from PostgreSQL with the PostgreSQL dependency and resync enabled.
 
 ### Additional Resources
 

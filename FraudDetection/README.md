@@ -220,12 +220,57 @@ The cache is configured for backing source. For storing customer information in 
 After this, a new message is made from this result and is published back on Replies Topic. This topic is subscribed by transaction request manager. It receives the message and publish result back to client application. 
 
 ## How to SetUp Environment for Fraud Detection
-* You will need .netcore 2.2 to run this project.
-* Create a new partitioned of replica cluster, configure backing source dll with following parameters 
-name=connstring value="Data Source=localhost;Initial Catalog=Fraud-Detection;User ID=sa;Password=*******"
-* Deploy backing source dll, common and customer sample as backingsource provider and third party depndent dll's. And Start the Cache.
-* Start Fraud Detector project. it will start an instance of fraud detector. 
-* Start card payment app. And give input. 
+
+### Prerequisites
+* NCache Enterprise 5.3 (tested with `Alachisoft.NCache.SDK` 5.3.800)
+* .NET 8.0 SDK and Runtime (for *CardPaymentApp*, *FraudDetector* and *Common*)
+* .NET Framework 4.7.2 Developer Pack (for the *BackingSource* provider, which runs inside the NCache server)
+* SQL Server with the *Fraud-Detection* database. Create it with [resources/FraudDetection.sql](resources/FraudDetection.sql).
+* Visual Studio 2022 (or the `dotnet` CLI)
+
+| Project | Target | Description |
+|---|---|---|
+| `CardPaymentApp` | `net8.0` | Client application and transaction request manager |
+| `FraudDetector` | `net8.0` | Fraud detection manager and caching tier |
+| `Common` | `net8.0` | Shared pub/sub logic (NCache client) |
+| `BackingSource` | `net472` | Write-through provider deployed into the NCache server |
+| `CustomerSample` | `netstandard2.0` | Shared models and SQL Server data access |
+
+### Configure the Sample
+Both applications connect to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name and the cache server in the *App.config* of [CardPaymentApp](src/CardpaymentApp/App.config) and [FraudDetector](src/FraudDetector/App.config):
+
+```xml
+<appSettings>
+  <add key="CacheID" value="cardPaymentApp"/>
+  <add key="cacheServer" value="{cache server IP}"/>
+  <add key="cachePort" value="9800"/>
+  <!-- CardPaymentApp only -->
+  <add key="ConnString" value="Data Source={server};Initial Catalog=Fraud-Detection;User ID={user};Password={password};"/>
+</appSettings>
+```
+
+* *CacheID*: the name of your cache.
+* *cacheServer* / *cachePort*: the IP address and client port (default `9800`) of an NCache server hosting the cache.
+* *ConnString*: the connection string of the *Fraud-Detection* database (used by *CardPaymentApp* to load customer card information).
+
+If *cacheServer* or *cachePort* is missing, the applications stop with a clear configuration error.
+
+### Configure and Deploy the Backing Source
+* Create a new Partition-of-Replica cluster cache with the name given in *CacheID*, and keep it **stopped**.
+* Build the solution. The provider files are in `src\BackingSource\bin\Debug\net472\`. Deploy only these files; the NCache assemblies are already on the server:
+	* `BackingSource.dll`
+	* `CustomerSample.dll`
+	* `System.Data.SqlClient.dll`
+* In the cache's **Backing Source** settings, enable **Write Through** (with **Write Behind**) and add a provider:
+	* Library: `BackingSource.dll`
+	* Class: `BackingSource.SqlWriteThruProvider`
+	* Parameter: `connstring` = `Data Source={server};Initial Catalog=Fraud-Detection;User ID={user};Password={password}`
+	* Mark it as the default provider, since the sample writes with `WriteMode.WriteBehind` without naming a provider.
+* Save the changes and start the cache.
+
+### Run the Sample
+* Start the *FraudDetector* project. It will start an instance of fraud detector. 
+* Start the *CardPaymentApp* project and give input. 
 
 ## Conclusion
 NCache is a scaleable and distributed in-memory .net cache. It provides multiple features, that you can use according to your algorithm. You can also add client cache in this application, as client cache is much faster than cluster cache. Client cache is in memory near local cache, and gives result faster than far cache (cluster cache). Its data is updated in cluster cache using write thru. 

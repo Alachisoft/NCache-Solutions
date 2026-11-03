@@ -20,39 +20,43 @@ These instructions will get you a copy of the project up and running on your loc
 
 Following are required before you can run this app:
 
- - NCache Enterprise (version 5.0)
- - DotNET Core Runtime (version 2.2)
- - DotNET Core SDK (version 2.2)
- - IISExpress (version 10)
- - Visual Studio (VS2017)
+ - NCache Enterprise (version 5.3)
+ - .NET 6.0 SDK and ASP.NET Core 6.0 Runtime
+ - IISExpress (version 10), or the `dotnet` CLI
+ - Visual Studio 2022 (or the `dotnet` CLI)
 
-Note that the app has been tested with the mentioned versions.
+Note that the app has been tested with NCache SDK `Alachisoft.NCache.SDK` 5.3.800.
 
 ### Installing
 *Please ensure that the prerequisites are installed before continuing.*
 
 #### Create Cache
-A cache needs to be linked with the app. 
-On installing NCache, two caches are created by the name of `mypartitionedcache` and `myreplicatedcache`.
-If the default cache is not available, Create a new cache.
+A cache needs to be linked with the app. The sample is configured for a cache named `democache1`.
+If that cache is not available, create a new cache (or use an existing one and change "CacheName" below). [Docs](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-new-cache-cluster.html?tabs=windows)
 
 #### Link Cache with App
 
-Mention this cache name in "CacheName" attribute of following files:
-1.`\LiveScoreLeaderboard\LiveScoreLeaderboard\appsettings.json`
-2. `\LiveScoreLeaderboard\WebAPI\appsettings.json`
+The apps connect to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name, cache server IP and port in both of the following files:
+1. `src\LiveSimulationWebApp\appsettings.json`
+2. `src\ScoreUpdateWebAPI\appsettings.json`
 
-    {
-		"CacheName":  "mypartitionedcache"
-	}
+```json
+{
+  "CacheName": "democache1",
+  "CacheServer": "{cache server IP}",
+  "CachePort": 9800
+}
+```
+
+If any of these settings is missing, the app stops with a clear error message.
 
 ### Starting the App
-This solution contains three projects:
-1. LiveWebApp
-2. WebAPI
-3. MatchHandler
+This solution contains three projects, all targeting `net6.0`:
+1. LiveWebApp (ASP.NET Core Razor Pages + SignalR)
+2. WebAPI (ASP.NET Core Web API)
+3. MatchHandler (class library shared by both apps)
 
-build the project in windows environment and run LiveWebApp and WebAPI in IIS Express using Visual Studio.
+Build the solution and run LiveWebApp and WebAPI, either in IIS Express using Visual Studio (set multiple startup projects) or with `dotnet run`.
 Upon running, two separate browser windows will be opened:
 1. LiveWebApp opens a page showing the window where scores will be listed.
 2. WebAPI opens a demo page containing buttons and update options.
@@ -149,7 +153,7 @@ When ongoing match updates are being fetched from cache, data stored in database
 
 ### Development Tools
 
-* [Visual Studio 2017](https://visualstudio.microsoft.com/)- For creation of project and code
+* [Visual Studio 2022](https://visualstudio.microsoft.com/) - For creation of project and code
 
 ## Additional Resources
 
