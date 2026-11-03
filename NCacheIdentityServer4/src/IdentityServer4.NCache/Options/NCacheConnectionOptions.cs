@@ -1,344 +1,99 @@
 ﻿using Alachisoft.NCache.Client;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
 namespace IdentityServer4.NCache.Options
 {
+    /// <summary>
+    /// Optional, advanced connection settings. This is a thin wrapper around
+    /// <see cref="Alachisoft.NCache.Client.ConnectionOptions"/>, which replaces the
+    /// deprecated CacheConnectionOptions class in NCache 5.3.
+    /// For the common case, set <see cref="OptionsBase.CacheServer"/> and
+    /// <see cref="OptionsBase.CachePort"/> instead.
+    /// </summary>
+    /// <remarks>
+    /// Timeouts, retries, keep-alive, load balancing, client cache sync mode and
+    /// client logging are no longer client-side options in NCache 5.3; they are
+    /// configured in the server-side cache configuration.
+    /// </remarks>
     public class NCacheConnectionOptions
     {
-        internal readonly CacheConnectionOptions CacheConnectionOptions =
-                                  new CacheConnectionOptions
-                                  { 
-                                      // These properties not in use anyway
-                                      DefaultReadThruProvider = "",
-                                      DefaultWriteThruProvider = "" 
-                                  };
-        public TimeSpan? ConnectionTimeout
-        { 
-            get
-            {
-                return CacheConnectionOptions.ConnectionTimeout;
-            }
-            set
-            {
-                CacheConnectionOptions.ConnectionTimeout = value;
-            }
-        }
+        /// <summary>
+        /// Additional cache servers to connect to.
+        /// </summary>
+        public IList<NCacheServerInfo> ServerList { get; set; }
 
-        public NCacheCredentials UserCredentials
-        {
-            get
-            {
-                if (CacheConnectionOptions.UserCredentials != null)
-                {
-                    return new NCacheCredentials(CacheConnectionOptions.UserCredentials); 
-                }
+        public string AppName { get; set; }
 
-                return null;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    CacheConnectionOptions.UserCredentials =
-                                new Credentials(value.credentials.UserID,                   
-                                                value.credentials.Password); 
-                }
-            }
-        }
-        public TimeSpan? KeepAliveInterval
-        {
-            get
-            {
-                return CacheConnectionOptions.KeepAliveInterval;
-            }
-            set
-            {
-                CacheConnectionOptions.KeepAliveInterval = value;
-            }
-        }
+        /// <summary>
+        /// Maps to <see cref="Alachisoft.NCache.Client.ConnectionOptions.BindToIP"/>.
+        /// </summary>
+        public string ClientBindIP { get; set; }
 
-        public bool? EnableKeepAlive
-        {
-            get
-            {
-                return CacheConnectionOptions.EnableKeepAlive;
-            }
-            set
-            {
-                CacheConnectionOptions.EnableKeepAlive = value;
-            }
-        }
+        /// <summary>
+        /// <see cref="NCacheIsolationLevel.InProc"/> maps to
+        /// <see cref="Alachisoft.NCache.Client.ConnectionOptions.IsInproc"/> = true;
+        /// anything else connects out-of-process (thin client).
+        /// </summary>
+        public NCacheIsolationLevel? Mode { get; set; }
 
-        public TimeSpan? CommandRetryInterval
-        {
-            get
-            {
-                return CacheConnectionOptions.CommandRetryInterval;
-            }
-            set
-            {
-                CacheConnectionOptions.CommandRetryInterval = value;
-            }
-        }
-        public int? CommandRetries
-        {
-            get
-            {
-                return CacheConnectionOptions.CommandRetries;
-            }
-            set
-            {
-                CacheConnectionOptions.CommandRetries = value;
-            }
-        }
-        public NCacheClientCacheSyncMode? ClientCacheMode
-        {
-            get
-            {
-                if (CacheConnectionOptions.ClientCacheMode.HasValue)
-                {
-                    return CacheConnectionOptions.ClientCacheMode.Value ==
-                                ClientCacheSyncMode.Optimistic ?
-                                    NCacheClientCacheSyncMode.Optimistic :
-                                    NCacheClientCacheSyncMode.Pessimistic; 
-                }
+        /// <summary>
+        /// Maps to <see cref="Alachisoft.NCache.Client.ConnectionOptions.Security"/>.
+        /// </summary>
+        public NCacheCredentials UserCredentials { get; set; }
 
-                return null;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    CacheConnectionOptions.ClientCacheMode =
-                                value == NCacheClientCacheSyncMode.Optimistic ?
-                                    ClientCacheSyncMode.Optimistic :
-                                    ClientCacheSyncMode.Pessimistic; 
-                }
-            }
-        }
-        public TimeSpan? RetryConnectionDelay
+        internal ConnectionOptions ToConnectionOptions()
         {
-            get
+            var connectionOptions = new ConnectionOptions
             {
-                return CacheConnectionOptions.RetryConnectionDelay;
-            }
-            set
-            {
-                CacheConnectionOptions.RetryConnectionDelay = value;
-            }
-        }
-        public TimeSpan? RetryInterval
-        {
-            get
-            {
-                return CacheConnectionOptions.RetryInterval;
-            }
-            set
-            {
-                CacheConnectionOptions.RetryInterval = value;
-            }
-        }
-        public int? ConnectionRetries
-        {
-            get
-            {
-                return CacheConnectionOptions.ConnectionRetries;
-            }
-            set
-            {
-                CacheConnectionOptions.ConnectionRetries = value;
-            }
-        }
-        public bool? EnableClientLogs
-        {
-            get
-            {
-                return CacheConnectionOptions.EnableClientLogs;
-            }
-            set
-            {
-                CacheConnectionOptions.EnableClientLogs = value;
-            }
-        }
-        public TimeSpan? ClientRequestTimeOut
-        {
-            get
-            {
-                return CacheConnectionOptions.ClientRequestTimeOut;
-            }
-            set
-            {
-                CacheConnectionOptions.ClientRequestTimeOut = value;
-            }
-        }
-        public bool? LoadBalance
-        {
-            get
-            {
-                return CacheConnectionOptions.LoadBalance;
-            }
-            set
-            {
-                CacheConnectionOptions.LoadBalance = value;
-            }
-        }
-        public string AppName
-        {
-            get
-            {
-                return CacheConnectionOptions.AppName;
-            }
-            set
-            {
-                CacheConnectionOptions.AppName = value;
-            }
-        }
-        public string ClientBindIP
-        {
-            get
-            {
-                return CacheConnectionOptions.ClientBindIP;
-            }
-            set
-            {
-                CacheConnectionOptions.ClientBindIP = value;
-            }
-        }
-        public NCacheIsolationLevel? Mode
-        {
-            get
-            {
-                switch(CacheConnectionOptions.Mode)
-                {
-                    case IsolationLevel.InProc:
-                        {
-                            return NCacheIsolationLevel.InProc;
-                        }
-                    case IsolationLevel.OutProc:
-                        {
-                            return NCacheIsolationLevel.OutProc;
-                        }
-                    default:
-                        {
-                            return NCacheIsolationLevel.Default;
-                        }
-                }
-            }
-            set
-            {
-                switch(value)
-                {
-                    case NCacheIsolationLevel.InProc:
-                        {
-                            CacheConnectionOptions.Mode = IsolationLevel.InProc;
-                        }
-                        break;
-                    case NCacheIsolationLevel.OutProc:
-                        {
-                            CacheConnectionOptions.Mode = IsolationLevel.OutProc;
-                        }
-                        break;
-                    default:
-                        {
-                            CacheConnectionOptions.Mode = IsolationLevel.Default;
-                        }
-                        break;
-                }
-            }
-        }
-        public IList<NCacheServerInfo> ServerList
-        {
-            get
-            {
-                if (CacheConnectionOptions.ServerList != null)
-                {
-                    return CacheConnectionOptions
-                                    .ServerList
-                                        .Select(x => new NCacheServerInfo(x))
-                                            .ToList(); 
-                }
+                Servers = new List<ServerInfo>()
+            };
 
-                return null;
-            }
-            set
+            if (ServerList != null)
             {
-                if (value != null && value.Count > 0)
+                foreach (var server in ServerList.Where(x => x != null))
                 {
-                    CacheConnectionOptions.ServerList =
-                                new List<ServerInfo>(value.Select(x => x.serverInfo)); 
+                    connectionOptions.Servers.Add(server.serverInfo);
                 }
             }
-        }
-        public NCacheLogLevel? LogLevel
-        {
-            get
+
+            if (!string.IsNullOrWhiteSpace(AppName))
             {
-                switch (CacheConnectionOptions.LogLevel)
-                {
-                    case Alachisoft.NCache.Client.LogLevel.Debug:
-                        {
-                            return NCacheLogLevel.Debug;
-                        }
-                    case Alachisoft.NCache.Client.LogLevel.Info:
-                        {
-                            return NCacheLogLevel.Info;
-                        }
-                    default:
-                        {
-                            return NCacheLogLevel.Error;
-                        }
-                }
+                connectionOptions.AppName = AppName;
             }
-            set
+
+            if (!string.IsNullOrWhiteSpace(ClientBindIP))
             {
-                switch (value)
-                {
-                    case NCacheLogLevel.Debug:
-                        {
-                            CacheConnectionOptions.LogLevel = 
-                                Alachisoft.NCache.Client.LogLevel.Debug;
-                        }
-                        break;
-                    case NCacheLogLevel.Info:
-                        {
-                            CacheConnectionOptions.LogLevel =
-                                Alachisoft.NCache.Client.LogLevel.Info;
-                        }
-                        break;
-                    default:
-                        {
-                            CacheConnectionOptions.LogLevel =
-                                Alachisoft.NCache.Client.LogLevel.Error;
-                        }
-                        break;
-                }
+                connectionOptions.BindToIP = ClientBindIP;
             }
+
+            if (Mode.HasValue)
+            {
+                connectionOptions.IsInproc = Mode.Value == NCacheIsolationLevel.InProc;
+            }
+
+            if (UserCredentials != null)
+            {
+                connectionOptions.Security = SecurityOptions.CreateWithCredentials(
+                                                    UserCredentials.UserId,
+                                                    UserCredentials.Password);
+            }
+
+            return connectionOptions;
         }
     }
 
     public class NCacheCredentials
     {
-        internal Credentials credentials {get; set;}
+        internal string UserId { get; }
+        internal string Password { get; }
 
         public NCacheCredentials(string userId, string password)
         {
-            credentials = new Credentials(userId, password);
+            UserId = userId;
+            Password = password;
         }
-
-        internal NCacheCredentials(Credentials credentials)
-        {
-            this.credentials = credentials;
-        }
-
-    }
-
-    public enum NCacheClientCacheSyncMode
-    {
-        Pessimistic = 0,
-        Optimistic = 1
     }
 
     public enum NCacheIsolationLevel
@@ -366,12 +121,5 @@ namespace IdentityServer4.NCache.Options
         {
             this.serverInfo = serverInfo;
         }
-    }
-
-    public enum NCacheLogLevel
-    {
-        Info = 0,
-        Error = 1,
-        Debug = 2
     }
 }
