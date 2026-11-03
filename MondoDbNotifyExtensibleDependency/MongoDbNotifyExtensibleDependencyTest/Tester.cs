@@ -14,7 +14,6 @@
 
 using Alachisoft.NCache.Client;
 using Alachisoft.NCache.Runtime.Dependencies;
-using Microsoft.Extensions.Configuration;
 using Models;
 using MongoDB.Driver;
 using System;
@@ -31,6 +30,8 @@ namespace MongoDbNotifyExtensibleDependencyTest
         private static string _databaseName;                        // MongoDB dtabase name
         private static string _collectionName;                      // MongoDB collection name to be watched
         private static string _cacheName;                           // Name of cache to be synced with MongoDB
+        private static string _cacheServer;                         // IP address of an NCache server hosting the cache
+        private static int _cachePort;                              // Client port of the NCache server (default 9800)
         private static string _providerName;                        // Name of Notify Extensible Dependency provider deployed on cache
 
         private static MongoClient _client;                         // MongoDB client instance
@@ -76,6 +77,11 @@ namespace MongoDbNotifyExtensibleDependencyTest
             _databaseName = ConfigurationManager.AppSettings["Database"];
             _collectionName = ConfigurationManager.AppSettings["Collection"];
             _cacheName = ConfigurationManager.AppSettings["CacheName"];
+            _cacheServer = ConfigurationManager.AppSettings["cacheServer"];
+            if (string.IsNullOrWhiteSpace(_cacheName) || string.IsNullOrWhiteSpace(_cacheServer)
+                || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out _cachePort))
+                throw new ConfigurationErrorsException(
+                    "App.config must define appSettings CacheName, cacheServer and cachePort.");
             _providerName = ConfigurationManager.AppSettings["ProviderName"];
             _customerCount = Int32.Parse(ConfigurationManager.AppSettings["InstanceCount"]);
         }
@@ -91,7 +97,13 @@ namespace MongoDbNotifyExtensibleDependencyTest
         // This method initializes the cache handle
         private static void InitializeCache()
         {
-            _cache = CacheManager.GetCache(_cacheName);
+            // Thin client: connect straight to the cache server, no client.ncconf needed
+            var connectionOptions = new ConnectionOptions
+            {
+                Servers = new List<ServerInfo> { new ServerInfo(_cacheServer, _cachePort) }
+            };
+
+            _cache = CacheManager.GetCache(_cacheName, connectionOptions);
             _cache.Clear();
         }
 
