@@ -11,18 +11,17 @@
 
 ## Introduction
 
-This project highlights how NCache can be used with ML.NET for predicting taxi fares. In real time machine learning scenarios, data is flowing very rapidly and machine learning model is being retrained continuously on the basis of this new data so that accuracy can be maintained. The number of inserts per second is very high in such scenarios. Also, this data is being read on ML side. This can cause slowdowns. To avoid such issues NCache has been used. NCache is a highly scalable distributed cache in .NET. Using NCache for data processing increases the performance of our system as it provides fast read/write operations. NCache being scalable can handle efficiently if the data sets are very large. ML.NET reads data from a file, a data source or Enumerable. NCache provides distributed data structures thus making it very easy for direct retrieval and reading of data by ML.NET. No extra data manipulation is required. User can easily store data in the form of lists and directly load it in his ML.NET model. NCache’s pub/sub functionality can be efficiently used here for notifications without any performance issues. 
+This project highlights how NCache can be used with ML.NET for predicting taxi fares. In real time machine learning scenarios, data is flowing very rapidly and machine learning model is being retrained continuously on the basis of this new data so that accuracy can be maintained. The number of inserts per second is very high in such scenarios. Also, this data is being read on ML side. This can cause slowdowns. To avoid such issues NCache has been used. NCache is a highly scalable distributed cache in .NET. Using NCache for data processing increases the performance of our system as it provides fast read/write operations. NCache being scalable can handle efficiently if the data sets are very large. ML.NET reads data from a file, a data source or Enumerable. NCache provides distributed data structures thus making it very easy for direct retrieval and reading of data by ML.NET. No extra data manipulation is required. User can easily store data in the form of lists and directly load it in his ML.NET model. NCacheâ€™s pub/sub functionality can be efficiently used here for notifications without any performance issues. 
 
 ## Prerequisites
 
 Following are required before you can run this app:
 
- - NCache Enterprise (version 5.0)
- - DotNET Core Runtime (version 3.0)
- - DotNET Core SDK (version 3.0)
- - Visual Studio (VS2019)
+ - NCache Enterprise (version 5.3)
+ - .NET 6.0 SDK and Runtime
+ - Visual Studio 2022 (or the `dotnet` CLI)
 
-Note that the app has been tested with the mentioned versions.
+Note that the app has been tested with NCache SDK `Alachisoft.NCache.SDK` 5.3.800.
 
 ## Running the Application
 
@@ -34,17 +33,31 @@ If the default cache is not available, Create a new cache.
 
 #### Link Cache with App
 
-Mention this cache name in "CacheId" attribute of following files:
+The apps connect to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name, server IP and port in the `appSettings` of both of the following files:
 
-1. `\TaxiFarePrediction\TaxiFarePredictionConsoleApp\App.config 
-2. `\AddTripDataInCache\AddTripDataInCache\App.config
+1. `src\Regression_TaxiFarePrediction\TaxiFarePrediction\TaxiFarePredictionConsoleApp\App.config`
+2. `src\AddTripDataInCache\AddTripDataInCache\App.config`
+
+```xml
+<appSettings>
+  <add key="CacheID" value="mypartitionedcache"/>
+  <add key="cacheServer" value="{cache server IP}"/>
+  <add key="cachePort" value="9800"/>
+  ...
+</appSettings>
+```
+
+- *CacheID*: the name of your cache.
+- *cacheServer* / *cachePort*: the IP address and client port (default `9800`) of an NCache server hosting the cache.
+
+If any of these settings is missing, the app stops with a clear error message.
 
 ### Starting the App
 
 This solution contains three projects:
-1. TaxiFarePrediction
-2. AddTripDataInCache
-3. DataStructures
+1. **TaxiFarePrediction** (`net6.0`): trains, retrains and tests the ML.NET model
+2. **AddTripDataInCache** (`net6.0`): streams new taxi trip data into the cache
+3. **DataStructures** (`netstandard2.0`): shared `TaxiTrip` and prediction classes
 
 Build the project in windows environment and run TaxiFarePrediction app first. Then use the AddTripDataInCache for adding real time continuous data in cache that will be used for retraining of model.
 
@@ -153,7 +166,7 @@ After every training/retraining of model, single value predictions are made on t
 
 ### Development Tools
 
-* [Visual Studio 2019](https://visualstudio.microsoft.com/)- For creation of project and code
+* [Visual Studio 2022](https://visualstudio.microsoft.com/) - For creation of project and code
 
 ## Additional Resources
 
