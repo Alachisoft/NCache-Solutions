@@ -35,17 +35,23 @@ namespace MatchHandler
         /// constructor
         /// </summary>
         /// <param name="cacheName">name of cache</param>
+        /// <param name="server">IP address or host name of the cache server</param>
+        /// <param name="port">client port of the cache server</param>
         /// <param name="readThruProviderName">readthru provider name</param>
         /// <param name="writeThruProviderName">writethru provider name</param>
-        public StoreHandler(string cacheName, string readThruProviderName, string writeThruProviderName)
+        public StoreHandler(string cacheName, string server, int port, string readThruProviderName, string writeThruProviderName)
         {
-            // initialize cache
-            _cache = CacheManager.GetCache(cacheName);
+            // initialize cache (thin client: connect directly to the given cache server, no client.ncconf needed)
+            var options = new ConnectionOptions
+            {
+                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
+            };
+            _cache = CacheManager.GetCache(cacheName, options);
 
             // assign null to provider names if empty provider names are received
-            if (readThruProviderName.Equals(string.Empty))
+            if (string.IsNullOrEmpty(readThruProviderName))
                 readThruProviderName = null;
-            if (writeThruProviderName.Equals(string.Empty))
+            if (string.IsNullOrEmpty(writeThruProviderName))
                 writeThruProviderName = null;
 
             // initialize read/write thru options for later use
