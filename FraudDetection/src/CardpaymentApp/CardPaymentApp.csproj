@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +23,11 @@
     <Compile Remove="Messaging\Topics.cs" />
     <Compile Remove="Messaging\TransactionCompletedMessage.cs" />
     <Compile Remove="Messaging\TransactionMessage.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.3.800" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.14" />
   </ItemGroup>
 
   <ItemGroup>
