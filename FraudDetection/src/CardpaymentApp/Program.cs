@@ -39,9 +39,15 @@ namespace CardPaymentApp
                     return;
                 }
 
+                string cacheServer = ConfigurationManager.AppSettings["cacheServer"];
+                if (string.IsNullOrWhiteSpace(cacheServer)
+                    || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
+                    throw new ConfigurationErrorsException(
+                        "App.config must define appSettings cacheServer and cachePort (thin-client connection to the cache server).");
+
                 Console.WriteLine("CardPayment Application\n\n");
                 TransactionApp transactionApp = new TransactionApp();
-                transactionApp.Start(connstring, cacheName);
+                transactionApp.Start(connstring, cacheName, cacheServer, cachePort);
                 Console.WriteLine("Thank you...");
                 transactionApp.Dispose();
                 Console.ReadLine();

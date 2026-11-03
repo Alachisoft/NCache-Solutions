@@ -31,8 +31,14 @@ namespace FraudDetector
                     return;
                 }
 
+                string cacheServer = ConfigurationManager.AppSettings["cacheServer"];
+                if (string.IsNullOrWhiteSpace(cacheServer)
+                    || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
+                    throw new ConfigurationErrorsException(
+                        "App.config must define appSettings cacheServer and cachePort (thin-client connection to the cache server).");
+
                 FraudDetection detection = new FraudDetection();
-                detection.StartDetection(cache);
+                detection.StartDetection(cache, cacheServer, cachePort);
                 // dispose manager
                 detection.Dispose();
             }
