@@ -1,6 +1,6 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
@@ -13,13 +13,61 @@ namespace BlazorSignalRApp.Server
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         #region snippet_ConfigureServices
         public void ConfigureServices(IServiceCollection services)
         {
+            var ncacheSection = Configuration.GetSection("NCacheConfiguration");
+
+            string cacheName = ncacheSection["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
+            {
+                throw new InvalidOperationException(
+                    "'NCacheConfiguration:CacheName' is missing in appsettings.json.");
+            }
+
+            string cacheServer = ncacheSection["CacheServer"];
+            if (string.IsNullOrWhiteSpace(cacheServer))
+            {
+                throw new InvalidOperationException(
+                    "'NCacheConfiguration:CacheServer' is missing in appsettings.json. Set it to the IP address of the NCache server.");
+            }
+
+            if (!int.TryParse(ncacheSection["CachePort"], out int cachePort))
+            {
+                throw new InvalidOperationException(
+                    "'NCacheConfiguration:CachePort' is missing or invalid in appsettings.json (NCache client port is 9800 by default).");
+            }
+
+            string applicationId = ncacheSection["ApplicationID"];
+            if (string.IsNullOrWhiteSpace(applicationId))
+            {
+                throw new InvalidOperationException(
+                    "'NCacheConfiguration:ApplicationID' is missing in appsettings.json.");
+            }
+
             services.AddSignalR().AddNCache(ncacheOptions =>
             {
-                ncacheOptions.CacheName = "blazor";
-                ncacheOptions.ApplicationID = "chat";
+                ncacheOptions.CacheName = cacheName;
+                ncacheOptions.ApplicationID = applicationId;
+                ncacheOptions.EventKey = applicationId;
+                ncacheOptions.ConnectionOptions = new SignalRConnectionOptions
+                {
+                    ServerList = new[]
+                    {
+                        new SignalRServerInfo
+                        {
+                            Name = cacheServer,
+                            Port = cachePort
+                        }
+                    }
+                };
             });
             services.AddControllersWithViews();
             services.AddResponseCompression(opts =>
