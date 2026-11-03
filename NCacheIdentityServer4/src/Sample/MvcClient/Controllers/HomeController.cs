@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcClient.Models;
-using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MvcClient.Controllers
@@ -32,7 +32,14 @@ namespace MvcClient.Controllers
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var content = await client.GetStringAsync("http://localhost:5001/identity");
 
-            ViewBag.Json = JArray.Parse(content).ToString();
+            // Newtonsoft.Json is no longer pulled in transitively by the .NET 8
+            // OpenIdConnect package, so System.Text.Json is used to pretty-print.
+            using (var document = JsonDocument.Parse(content))
+            {
+                ViewBag.Json = JsonSerializer.Serialize(
+                    document.RootElement,
+                    new JsonSerializerOptions { WriteIndented = true });
+            }
             return View("json");
         }
 
