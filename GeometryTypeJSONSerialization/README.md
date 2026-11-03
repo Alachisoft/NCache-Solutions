@@ -3,6 +3,8 @@
 ## Table of Contents
 
 * [Overview](#overview)
+* [Prerequisites](#prerequisites)
+* [Connecting to the Cache](#connecting-to-the-cache)
 * [Example](#example)
 * [NetTopologySuite Converter Support](#nettopologysuite-converter-support)
 * [Configuration](#configuration)
@@ -18,6 +20,36 @@
 `Newtonsoft.Json` allows applications to provide custom implementations of `JsonConverter` for handling JSON serialization and deserialization. These converters can be registered through `JsonSerializerSettings` and are automatically used whenever the associated data type is encountered.
 
 A custom converter must inherit from the `JsonConverter` abstract class provided by `Newtonsoft.Json`. Typically, a single converter is responsible for serializing and deserializing one specific type or a group of related types.
+
+## Prerequisites
+
+* NCache Enterprise 5.3 (tested with `Alachisoft.NCache.SDK` 5.3.800)
+* .NET 10.0 SDK and Runtime
+* A Visual Studio version that supports .NET 10 (or the `dotnet` CLI)
+
+## Connecting to the Cache
+
+The application connects to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name, server IP and port in the `CacheConnection` section of `appsettings.json`:
+
+```json
+{
+  "CacheConnection": {
+    "CacheName": "demoCache",
+    "Server": "{cache server IP}",
+    "Port": 9800
+  }
+}
+```
+
+| Property    | Description                                        |
+| ----------- | -------------------------------------------------- |
+| `CacheName` | Name of the cache.                                 |
+| `Server`    | IP address of an NCache server hosting the cache.  |
+| `Port`      | Client port of the NCache server (default `9800`). |
+
+If any of these settings is missing, the application stops with a clear error message.
+
+> **Warning:** the sample calls `Clear()` on the cache at startup, which removes **all** of its data. Do not point it at a cache that holds data you need.
 
 ## Example
 
