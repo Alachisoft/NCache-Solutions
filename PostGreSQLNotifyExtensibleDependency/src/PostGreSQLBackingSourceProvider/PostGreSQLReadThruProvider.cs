@@ -34,32 +34,36 @@ namespace PostGreSQLBackingSourceProvider
 
         public ProviderCacheItem LoadFromSource(string key)
         {
-            var query = $"SELECT customerid, address, country, city FROM customers WHERE customerid = '{key}'";
-            // Define a query returning a single row result set
-            NpgsqlCommand command = new NpgsqlCommand(query, _connection as NpgsqlConnection);
-            var reader = command.ExecuteReader();
-            ProviderCacheItem providerCacheItem = null;
-            while (reader.Read())
+            // Define a query returning a single row result set (key is passed as a parameter, not concatenated)
+            const string query = "SELECT customerid, address, country, city FROM customers WHERE customerid = @customerid";
+            using (var command = new NpgsqlCommand(query, _connection as NpgsqlConnection))
             {
-                if (providerCacheItem == null)
+                command.Parameters.AddWithValue("customerid", key);
+                ProviderCacheItem providerCacheItem = null;
+                using (var reader = command.ExecuteReader())
                 {
-                    var customer = new Customer()
+                    while (reader.Read())
                     {
-                        customerid = reader[0] as string,
-                        address = reader[1] as string,
-                        country = reader[2] as string,
-                        city = reader[3] as string,
-                    };
-                    providerCacheItem = new ProviderCacheItem(customer)
-                    {
-                        Dependency = new PostGreSQLDependency(_connectionString, customer.customerid, "public", "customers", "customer_channel"),
-                        ResyncOptions = new ResyncOptions(true)
-                    };
+                        if (providerCacheItem == null)
+                        {
+                            var customer = new Customer()
+                            {
+                                customerid = reader[0] as string,
+                                address = reader[1] as string,
+                                country = reader[2] as string,
+                                city = reader[3] as string,
+                            };
+                            providerCacheItem = new ProviderCacheItem(customer)
+                            {
+                                Dependency = new PostGreSQLDependency(_connectionString, customer.customerid, "public", "customers", "customer_channel"),
+                                ResyncOptions = new ResyncOptions(true)
+                            };
+                        }
+                    }
                 }
-            }
-            reader.Close();
 
-            return providerCacheItem;
+                return providerCacheItem;
+            }
         }
 
         public IDictionary<string, ProviderCacheItem> LoadFromSource(ICollection<string> keys)
