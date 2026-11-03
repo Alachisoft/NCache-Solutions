@@ -47,14 +47,22 @@ namespace Regression_TaxiFarePrediction
         private static void InitializeCache()
         {
             string cache = ConfigurationManager.AppSettings["CacheID"];
+            string cacheServer = ConfigurationManager.AppSettings["cacheServer"];
 
-            if (String.IsNullOrEmpty(cache))
+            if (String.IsNullOrWhiteSpace(cache) || String.IsNullOrWhiteSpace(cacheServer)
+                || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
             {
-                Console.WriteLine("The CacheID cannot be null or empty.");
-                return;
+                throw new ConfigurationErrorsException(
+                    "App.config must define appSettings CacheID, cacheServer and cachePort.");
             }
 
-            Cache = CacheManager.GetCache(cache);
+            // Thin client: connect straight to the cache server, no client.ncconf needed
+            var connectionOptions = new ConnectionOptions
+            {
+                Servers = new List<ServerInfo> { new ServerInfo(cacheServer, cachePort) }
+            };
+
+            Cache = CacheManager.GetCache(cache, connectionOptions);
             Console.WriteLine(string.Format("\nCache '{0}' is initialized.", cache));
             string topic = ConfigurationManager.AppSettings["TopicName"];
 
