@@ -21,7 +21,6 @@
 //===============================================
 
 using Alachisoft.NCache.Client;
-using Alachisoft.NCache.MapReduce;
 using Alachisoft.NCache.Runtime.Caching;
 using System;
 using System.Collections.Generic;
