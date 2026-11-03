@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Alachisoft.NCache.Client;
 using NCache.StackExchange.Redis;
 
@@ -10,8 +11,18 @@ namespace BasicUsageStackExchangeRedis
         {
             try
             {
-                ConnectionMultiplexer ncache = ConnectionMultiplexer.Connect("cacheName");
-                ICache cache = ncache.GetNCacheInterface("cacheName");
+                string cacheName = ConfigurationManager.AppSettings["cacheName"];
+                string cacheServer = ConfigurationManager.AppSettings["cacheServer"];
+                if (string.IsNullOrWhiteSpace(cacheName) || string.IsNullOrWhiteSpace(cacheServer)
+                    || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
+                {
+                    throw new ConfigurationErrorsException(
+                        "App.config must define appSettings cacheName, cacheServer and cachePort.");
+                }
+
+                // Thin client: connect straight to the cache server, no client.ncconf needed
+                ConnectionMultiplexer ncache = ConnectionMultiplexer.Connect(cacheName, cacheServer, cachePort);
+                ICache cache = ncache.GetNCacheInterface(cacheName);
                 cache.Clear();
                 var db = ncache.GetDatabase();
                 db.StringSet("key1", "Value1");
