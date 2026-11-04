@@ -35,28 +35,22 @@ namespace MatchHandler
         /// constructor
         /// </summary>
         /// <param name="cacheName">name of cache</param>
-        /// <param name="server">IP address or host name of the cache server</param>
-        /// <param name="port">client port of the cache server</param>
         /// <param name="readThruProviderName">readthru provider name</param>
         /// <param name="writeThruProviderName">writethru provider name</param>
-        public StoreHandler(string cacheName, string server, int port, string readThruProviderName, string writeThruProviderName)
+        public StoreHandler(string cacheName, string readThruProviderName, string writeThruProviderName)
         {
-            // initialize cache (thin client: connect directly to the given cache server, no client.ncconf needed)
-            var options = new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
-            };
-            _cache = CacheManager.GetCache(cacheName, options);
+            // initialize cache; server and port are read by NCache from the "ncache" section of the app's appsettings.json
+            _cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
 
-            // assign null to provider names if empty provider names are received
-            if (string.IsNullOrEmpty(readThruProviderName))
-                readThruProviderName = null;
-            if (string.IsNullOrEmpty(writeThruProviderName))
-                writeThruProviderName = null;
-
-            // initialize read/write thru options for later use
-            readThruOptions = new ReadThruOptions(ReadMode.ReadThru, readThruProviderName);
-            writeThruOptions = new WriteThruOptions(WriteMode.WriteThru, writeThruProviderName);
+            // initialize read/write thru options for later use.
+            // If no provider name is configured, don't use a backing source (match updates live in the cache only);
+            // otherwise the cache must have that provider configured or NCache throws "Backing source not available".
+            readThruOptions = string.IsNullOrEmpty(readThruProviderName)
+                ? new ReadThruOptions(ReadMode.None)
+                : new ReadThruOptions(ReadMode.ReadThru, readThruProviderName);
+            writeThruOptions = string.IsNullOrEmpty(writeThruProviderName)
+                ? new WriteThruOptions(WriteMode.None)
+                : new WriteThruOptions(WriteMode.WriteThru, writeThruProviderName);
         }
 
         /// <summary>

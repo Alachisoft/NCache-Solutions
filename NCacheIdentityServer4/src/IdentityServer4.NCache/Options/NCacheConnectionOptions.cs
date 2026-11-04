@@ -9,8 +9,8 @@ namespace IdentityServer4.NCache.Options
     /// Optional, advanced connection settings. This is a thin wrapper around
     /// <see cref="Alachisoft.NCache.Client.ConnectionOptions"/>, which replaces the
     /// deprecated CacheConnectionOptions class in NCache 5.3.
-    /// For the common case, set <see cref="OptionsBase.CacheServer"/> and
-    /// <see cref="OptionsBase.CachePort"/> instead.
+    /// For the common case, leave it unset and give the server and port of the
+    /// cache in the "ncache" section of appsettings.json.
     /// </summary>
     /// <remarks>
     /// Timeouts, retries, keep-alive, load balancing, client cache sync mode and

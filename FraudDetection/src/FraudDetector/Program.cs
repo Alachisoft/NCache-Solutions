@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace FraudDetector
 {
@@ -23,22 +23,21 @@ namespace FraudDetector
         {
             try
             {
-                string cache = ConfigurationManager.AppSettings["CacheID"];
+                IConfiguration settings = new ConfigurationBuilder()
+                    .SetBasePath(AppContext.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                string cache = settings["CacheName"];
 
                 if (string.IsNullOrEmpty(cache))
                 {
-                    Console.WriteLine("The CacheID cannot be null or empty.");
+                    Console.WriteLine("The CacheName cannot be null or empty.");
                     return;
                 }
 
-                string cacheServer = ConfigurationManager.AppSettings["cacheServer"];
-                if (string.IsNullOrWhiteSpace(cacheServer)
-                    || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
-                    throw new ConfigurationErrorsException(
-                        "App.config must define appSettings cacheServer and cachePort (thin-client connection to the cache server).");
-
                 FraudDetection detection = new FraudDetection();
-                detection.StartDetection(cache, cacheServer, cachePort);
+                detection.StartDetection(cache);
                 // dispose manager
                 detection.Dispose();
             }

@@ -22,11 +22,11 @@ namespace FraudDetector
     {
         private CacheHandler _cache = null;
         private FraudDetectionManager _fraudManger= null;
-        public void StartDetection(string cacheName, string cacheServer, int cachePort)
+        public void StartDetection(string cacheName)
         {
             try
             {
-                _cache = InitiliazeCache(cacheName, cacheServer, cachePort);
+                _cache = InitiliazeCache(cacheName);
                 // initialize the respective manager
 
                 // transacion manager is required to give input of the customer where as fraud manager has the logic of completeing 
@@ -49,10 +49,10 @@ namespace FraudDetector
             return fraudMnager;
         }
 
-        private CacheHandler InitiliazeCache(string cacheName, string cacheServer, int cachePort)
+        private CacheHandler InitiliazeCache(string cacheName)
         {
             CacheHandler cache = new CacheHandler();
-            cache.InitializeCache(cacheName, cacheServer, cachePort);
+            cache.InitializeCache(cacheName);
             return cache;
         }
 

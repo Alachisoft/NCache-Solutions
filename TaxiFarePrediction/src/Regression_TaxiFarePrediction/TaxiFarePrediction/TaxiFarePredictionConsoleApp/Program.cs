@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using Alachisoft.NCache.Client;
 using Alachisoft.NCache.Client.DataTypes.Collections;
 using Alachisoft.NCache.Runtime.Caching;
+using Microsoft.Extensions.Configuration;
 using Microsoft.ML;
 using Microsoft.ML.Data;
 using Microsoft.ML.Trainers;
@@ -20,14 +20,18 @@ namespace Regression_TaxiFarePrediction
         private static ICache Cache;
         private static ITopic Topic;
         private static IDistributedList<TaxiTrip> TrainingData;
-        private static bool ModelTrained = false;      
+        private static bool ModelTrained = false;
+        private static readonly IConfiguration Settings = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
 
         static void Main(string[] args)
         {
             //Create ML Context with seed for repeatable/deterministic results
             var mlContext = new MLContext(seed: 0);
 
-            //Read values from app.config and set paths
+            //Read values from appsettings.json and set paths
             SetPathValues();
 
             //Initialize cache and subscribe to topic
@@ -46,25 +50,17 @@ namespace Regression_TaxiFarePrediction
 
         private static void InitializeCache()
         {
-            string cache = ConfigurationManager.AppSettings["CacheID"];
-            string cacheServer = ConfigurationManager.AppSettings["cacheServer"];
+            string cache = Settings["CacheName"];
 
-            if (String.IsNullOrWhiteSpace(cache) || String.IsNullOrWhiteSpace(cacheServer)
-                || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
+            if (String.IsNullOrWhiteSpace(cache))
             {
-                throw new ConfigurationErrorsException(
-                    "App.config must define appSettings CacheID, cacheServer and cachePort.");
+                throw new InvalidOperationException("CacheName cannot be null or empty in appsettings.json.");
             }
 
-            // Thin client: connect straight to the cache server, no client.ncconf needed
-            var connectionOptions = new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(cacheServer, cachePort) }
-            };
-
-            Cache = CacheManager.GetCache(cache, connectionOptions);
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
+            Cache = CacheManager.GetCache(cache, new ConnectionOptions());
             Console.WriteLine(string.Format("\nCache '{0}' is initialized.", cache));
-            string topic = ConfigurationManager.AppSettings["TopicName"];
+            string topic = Settings["TopicName"];
 
             if (String.IsNullOrEmpty(topic))
             {
@@ -78,7 +74,7 @@ namespace Regression_TaxiFarePrediction
                 Topic = Cache.MessagingService.CreateTopic(topic);
             
             Topic.CreateSubscription(TaxiFareDataUpdated);
-            string datasetKey = ConfigurationManager.AppSettings["TrainingData"];
+            string datasetKey = Settings["TrainingData"];
 
             if (String.IsNullOrEmpty(datasetKey))
             {
@@ -167,7 +163,7 @@ namespace Regression_TaxiFarePrediction
         private static ITransformer TrainModel(MLContext mlContext)
         {
             // Common data loading configuration
-            string initialdataKey = ConfigurationManager.AppSettings["InitialDataSet"];
+            string initialdataKey = Settings["InitialDataSet"];
 
             if (String.IsNullOrEmpty(initialdataKey))
             {
@@ -254,7 +250,7 @@ namespace Regression_TaxiFarePrediction
         private static void LoadInitialDataInCache(string initialData)
         {
             var currentLine = string.Empty;
-            string datapath = ConfigurationManager.AppSettings["BaseDataRelativePath"];
+            string datapath = Settings["BaseDataRelativePath"];
 
             if (String.IsNullOrEmpty(datapath))
             {
@@ -291,7 +287,7 @@ namespace Regression_TaxiFarePrediction
 
         private static void SetPathValues()
         {
-            string modelpath = ConfigurationManager.AppSettings["BaseModelsRelativePath"];
+            string modelpath = Settings["BaseModelsRelativePath"];
 
             if (String.IsNullOrEmpty(modelpath))
             {
@@ -299,7 +295,7 @@ namespace Regression_TaxiFarePrediction
                 return;
             }
 
-            string pipelinepath = ConfigurationManager.AppSettings["BaseModelsRelativePath"];
+            string pipelinepath = Settings["BaseModelsRelativePath"];
 
             if (String.IsNullOrEmpty(modelpath))
             {

@@ -18,7 +18,7 @@ using Models;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Threading;
 
@@ -30,8 +30,6 @@ namespace MongoDbNotifyExtensibleDependencyTest
         private static string _databaseName;                        // MongoDB dtabase name
         private static string _collectionName;                      // MongoDB collection name to be watched
         private static string _cacheName;                           // Name of cache to be synced with MongoDB
-        private static string _cacheServer;                         // IP address of an NCache server hosting the cache
-        private static int _cachePort;                              // Client port of the NCache server (default 9800)
         private static string _providerName;                        // Name of Notify Extensible Dependency provider deployed on cache
 
         private static MongoClient _client;                         // MongoDB client instance
@@ -73,17 +71,20 @@ namespace MongoDbNotifyExtensibleDependencyTest
         // This method initializes input parameters required to initialize the cache handle and the database client
         public static void Initialize()
         {
-            _conString = ConfigurationManager.AppSettings["ConnectionString"];
-            _databaseName = ConfigurationManager.AppSettings["Database"];
-            _collectionName = ConfigurationManager.AppSettings["Collection"];
-            _cacheName = ConfigurationManager.AppSettings["CacheName"];
-            _cacheServer = ConfigurationManager.AppSettings["cacheServer"];
-            if (string.IsNullOrWhiteSpace(_cacheName) || string.IsNullOrWhiteSpace(_cacheServer)
-                || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out _cachePort))
-                throw new ConfigurationErrorsException(
-                    "App.config must define appSettings CacheName, cacheServer and cachePort.");
-            _providerName = ConfigurationManager.AppSettings["ProviderName"];
-            _customerCount = Int32.Parse(ConfigurationManager.AppSettings["InstanceCount"]);
+            IConfiguration settings = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            _conString = settings["ConnectionString"];
+            _databaseName = settings["Database"];
+            _collectionName = settings["Collection"];
+            _cacheName = settings["CacheName"];
+            if (string.IsNullOrWhiteSpace(_cacheName))
+                throw new InvalidOperationException(
+                    "CacheName cannot be null or empty in appsettings.json.");
+            _providerName = settings["ProviderName"];
+            _customerCount = Int32.Parse(settings["InstanceCount"]);
         }
 
         // This method initializes the database client
@@ -97,13 +98,8 @@ namespace MongoDbNotifyExtensibleDependencyTest
         // This method initializes the cache handle
         private static void InitializeCache()
         {
-            // Thin client: connect straight to the cache server, no client.ncconf needed
-            var connectionOptions = new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(_cacheServer, _cachePort) }
-            };
-
-            _cache = CacheManager.GetCache(_cacheName, connectionOptions);
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
+            _cache = CacheManager.GetCache(_cacheName, new ConnectionOptions());
             _cache.Clear();
         }
 

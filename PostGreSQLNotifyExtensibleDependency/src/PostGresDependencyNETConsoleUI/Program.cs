@@ -2,7 +2,6 @@
 using Entities;
 using Npgsql;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 
 namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleUI
@@ -49,37 +48,18 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
         }
 
         /// <summary>
-        /// Connects to the cache as a thin client using the cacheName, cacheServer and cachePort
-        /// values from the appSettings section of App.config.
+        /// Connects to the cache named by the CacheName appSetting in App.config. NCache reads the
+        /// server and port of the cache from the &lt;ncache&gt; section of the same file.
         /// </summary>
         private static ICache InitializeCache()
         {
-            var cacheName = GetRequiredSetting("cacheName");
-            var server = GetRequiredSetting("cacheServer");
-            var portValue = GetRequiredSetting("cachePort");
-
-            int port;
-            if (!int.TryParse(portValue, out port))
+            var cacheName = ConfigurationManager.AppSettings["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
             {
-                throw new ConfigurationErrorsException($"The 'cachePort' value '{portValue}' in App.config is not a valid port number.");
+                throw new ConfigurationErrorsException("The 'CacheName' setting is missing from the appSettings section of App.config.");
             }
 
-            var options = new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
-            };
-
-            return CacheManager.GetCache(cacheName, options);
-        }
-
-        private static string GetRequiredSetting(string key)
-        {
-            var value = ConfigurationManager.AppSettings[key];
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                throw new ConfigurationErrorsException($"The '{key}' setting is missing from the appSettings section of App.config.");
-            }
-            return value.Trim();
+            return CacheManager.GetCache(cacheName, new ConnectionOptions());
         }
     }
 }

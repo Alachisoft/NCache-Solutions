@@ -6,7 +6,7 @@ using Alachisoft.NCache.Samples.Dapper.ConsoleUI.SeedData;
 using Alachisoft.NCache.Samples.Dapper.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
 using System.Linq;
 
@@ -19,25 +19,17 @@ namespace Alachisoft.NCache.Samples.Dapper.ConsoleUI
         static readonly bool useCache;
         static DapperDemo()
         {
-            var cacheId = ConfigurationManager.AppSettings["cacheId"];
-            var cacheServer = ConfigurationManager.AppSettings["cacheServer"];
-            if (string.IsNullOrWhiteSpace(cacheId) || string.IsNullOrWhiteSpace(cacheServer)
-                || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
-                throw new ConfigurationErrorsException(
-                    "App.config must define appSettings cacheId, cacheServer and cachePort.");
+            var cacheName = AppConfig.Settings["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
+                throw new InvalidOperationException(
+                    "CacheName cannot be null or empty in appsettings.json.");
 
-            // Thin client: connect straight to the cache server, no client.ncconf needed
-            var connectionOptions = new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(cacheServer, cachePort) }
-            };
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
+            cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
 
-            cache = CacheManager.GetCache(cacheId, connectionOptions);
+            connectionString = AppConfig.Settings.GetConnectionString("sql");
 
-            connectionString =
-                ConfigurationManager.ConnectionStrings["sql"].ConnectionString;
-
-            useCache = bool.Parse(ConfigurationManager.AppSettings["UseCache"]);
+            useCache = bool.Parse(AppConfig.Settings["UseCache"]);
 
         }
 

@@ -145,13 +145,11 @@ namespace IdentityServer
             });
         }
 
-        // NCache thin client connection: cache name, server and port come from
-        // appsettings.json ("CacheId", "CacheServer", "CachePort"); no client.ncconf is used.
+        // Cache name comes from "CacheName" in appsettings.json; NCache reads the
+        // server and port of the cache from the "ncache" section of the same file.
         private void SetNCacheConnection(OptionsBase options)
         {
-            options.CacheId = _configuration["CacheId"];
-            options.CacheServer = _configuration["CacheServer"];
-            options.CachePort = _configuration.GetValue<int?>("CachePort") ?? 9800;
+            options.CacheId = _configuration["CacheName"];
         }
 
         private void InitializeDatabase(IApplicationBuilder app)

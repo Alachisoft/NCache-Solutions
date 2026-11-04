@@ -33,24 +33,28 @@ If the default cache is not available, Create a new cache.
 
 #### Link Cache with App
 
-The apps connect to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name, server IP and port in the `appSettings` of both of the following files:
+Set the cache name and the cache server in both of the following files. The server and port go in the `ncache` section, which NCache reads itself, so no `client.ncconf` is needed:
 
-1. `src\Regression_TaxiFarePrediction\TaxiFarePrediction\TaxiFarePredictionConsoleApp\App.config`
-2. `src\AddTripDataInCache\AddTripDataInCache\App.config`
+1. `src\Regression_TaxiFarePrediction\TaxiFarePrediction\TaxiFarePredictionConsoleApp\appsettings.json`
+2. `src\AddTripDataInCache\AddTripDataInCache\appsettings.json`
 
-```xml
-<appSettings>
-  <add key="CacheID" value="mypartitionedcache"/>
-  <add key="cacheServer" value="{cache server IP}"/>
-  <add key="cachePort" value="9800"/>
+```json
+{
+  "CacheName": "mypartitionedcache",
   ...
-</appSettings>
+  "ncache": {
+    "mypartitionedcache": {
+      "server": "{cache server IP}",
+      "port": 9800
+    }
+  }
+}
 ```
 
-- *CacheID*: the name of your cache.
-- *cacheServer* / *cachePort*: the IP address and client port (default `9800`) of an NCache server hosting the cache.
+- *CacheName*: the name of your cache.
+- *ncache*: one entry per cache, keyed by the cache name, with the IP address (`server`) and client port (`port`, default `9800`) of an NCache server hosting the cache.
 
-If any of these settings is missing, the app stops with a clear error message.
+If *CacheName* is missing, the app stops with a clear error message.
 
 ### Starting the App
 

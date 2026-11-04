@@ -32,19 +32,6 @@ namespace BlazorSignalRApp.Server
                     "'NCacheConfiguration:CacheName' is missing in appsettings.json.");
             }
 
-            string cacheServer = ncacheSection["CacheServer"];
-            if (string.IsNullOrWhiteSpace(cacheServer))
-            {
-                throw new InvalidOperationException(
-                    "'NCacheConfiguration:CacheServer' is missing in appsettings.json. Set it to the IP address of the NCache server.");
-            }
-
-            if (!int.TryParse(ncacheSection["CachePort"], out int cachePort))
-            {
-                throw new InvalidOperationException(
-                    "'NCacheConfiguration:CachePort' is missing or invalid in appsettings.json (NCache client port is 9800 by default).");
-            }
-
             string applicationId = ncacheSection["ApplicationID"];
             if (string.IsNullOrWhiteSpace(applicationId))
             {
@@ -52,22 +39,12 @@ namespace BlazorSignalRApp.Server
                     "'NCacheConfiguration:ApplicationID' is missing in appsettings.json.");
             }
 
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
             services.AddSignalR().AddNCache(ncacheOptions =>
             {
                 ncacheOptions.CacheName = cacheName;
                 ncacheOptions.ApplicationID = applicationId;
                 ncacheOptions.EventKey = applicationId;
-                ncacheOptions.ConnectionOptions = new SignalRConnectionOptions
-                {
-                    ServerList = new[]
-                    {
-                        new SignalRServerInfo
-                        {
-                            Name = cacheServer,
-                            Port = cachePort
-                        }
-                    }
-                };
             });
             services.AddControllersWithViews();
             services.AddResponseCompression(opts =>

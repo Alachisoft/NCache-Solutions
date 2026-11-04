@@ -7,11 +7,15 @@
 
   <ItemGroup>
     <PackageReference Include="Alachisoft.NCache.SDK" Version="5.3.800" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.14" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

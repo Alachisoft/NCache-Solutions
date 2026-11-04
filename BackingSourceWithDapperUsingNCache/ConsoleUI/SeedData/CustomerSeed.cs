@@ -2,7 +2,7 @@
 using Bogus;
 using Dapper;
 using System;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -16,11 +16,9 @@ namespace Alachisoft.NCache.Samples.Dapper.ConsoleUI.SeedData
         {
             Randomizer.Seed = new Random(8675309);
 
-            connectionString = 
-                ConfigurationManager.ConnectionStrings["sql"].ConnectionString;
+            connectionString = AppConfig.Settings.GetConnectionString("sql");
 
-            noOfInstances =
-                int.Parse(ConfigurationManager.AppSettings["noOfInstances"]);
+            noOfInstances = int.Parse(AppConfig.Settings["noOfInstances"]);
         }
 
         public static void Initialize()

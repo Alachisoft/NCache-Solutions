@@ -4,8 +4,8 @@ using Alachisoft.NCache.Runtime.Caching;
 using Regression_TaxiFarePrediction.DataStructures;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 using System.Threading;
 
 namespace AddTripDataInCache
@@ -19,25 +19,23 @@ namespace AddTripDataInCache
 
         static void Main(string[] args)
         {
-            string cache = ConfigurationManager.AppSettings["CacheID"];
-            string cacheServer = ConfigurationManager.AppSettings["cacheServer"];
+            IConfiguration settings = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            if (String.IsNullOrWhiteSpace(cache) || String.IsNullOrWhiteSpace(cacheServer)
-                || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
+            string cache = settings["CacheName"];
+
+            if (String.IsNullOrWhiteSpace(cache))
             {
-                throw new ConfigurationErrorsException(
-                    "App.config must define appSettings CacheID, cacheServer and cachePort.");
+                Console.WriteLine("CacheName cannot be null or empty in appsettings.json.");
+                return;
             }
 
-            // Thin client: connect straight to the cache server, no client.ncconf needed
-            var connectionOptions = new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(cacheServer, cachePort) }
-            };
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
+            Cache = CacheManager.GetCache(cache, new ConnectionOptions());
 
-            Cache = CacheManager.GetCache(cache, connectionOptions);
-
-            string topic = ConfigurationManager.AppSettings["TopicName"];
+            string topic = settings["TopicName"];
 
             if (String.IsNullOrEmpty(topic))
             {
@@ -46,7 +44,7 @@ namespace AddTripDataInCache
             }
 
             Topic = Cache.MessagingService.GetTopic(topic);
-            string datasetKey = ConfigurationManager.AppSettings["TrainingData"];
+            string datasetKey = settings["TrainingData"];
 
             if (String.IsNullOrEmpty(datasetKey))
             {

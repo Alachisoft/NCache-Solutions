@@ -25,37 +25,14 @@ namespace IdentityServer4.NCache.Utils
             {
                 throw new InvalidOperationException(
                     "NCache cache name is not configured. Set the 'CacheId' " +
-                    "option (e.g. the \"CacheId\" key in appsettings.json).");
+                    "option (e.g. from the \"CacheName\" key in appsettings.json).");
             }
 
-            // Thin client connection: the cache server(s) are supplied in code
-            // instead of through client.ncconf.
+            // The server and port of the cache are read by NCache from the "ncache"
+            // section of appsettings.json; ConnectionOptions only adds optional settings.
             ConnectionOptions connectionOptions =
                 options.ConnectionOptions?.ToConnectionOptions() ??
-                new ConnectionOptions { Servers = new List<ServerInfo>() };
-
-            if (!string.IsNullOrWhiteSpace(options.CacheServer))
-            {
-                if (options.CachePort <= 0)
-                {
-                    throw new InvalidOperationException(
-                        "NCache server port is not valid. Set the 'CachePort' " +
-                        "option (e.g. the \"CachePort\" key in appsettings.json, default 9800).");
-                }
-
-                connectionOptions.Servers.Insert(
-                    0,
-                    new ServerInfo(options.CacheServer.Trim(), options.CachePort));
-            }
-
-            if (connectionOptions.Servers == null ||
-                connectionOptions.Servers.Count == 0)
-            {
-                throw new InvalidOperationException(
-                    "NCache server is not configured. Set the 'CacheServer' and " +
-                    "'CachePort' options (e.g. the \"CacheServer\" and \"CachePort\" " +
-                    "keys in appsettings.json).");
-            }
+                new ConnectionOptions();
 
             return CacheManager.GetCache(options.CacheId, connectionOptions);
         }

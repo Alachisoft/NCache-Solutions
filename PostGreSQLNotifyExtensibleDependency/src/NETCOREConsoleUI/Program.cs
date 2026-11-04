@@ -1,8 +1,7 @@
 ﻿using Alachisoft.NCache.Client;
 using Entities;
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 
 namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETCOREConsoleUI
 {
@@ -32,36 +31,23 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETCORECons
         }
 
         /// <summary>
-        /// Connects to the cache as a thin client using the cacheName, cacheServer and cachePort
-        /// values from the appSettings section of App.config.
+        /// Connects to the cache named by CacheName in appsettings.json. NCache reads the
+        /// server and port of the cache from the "ncache" section of the same file.
         /// </summary>
         private static ICache InitializeCache()
         {
-            var cacheName = GetRequiredSetting("cacheName");
-            var server = GetRequiredSetting("cacheServer");
-            var portValue = GetRequiredSetting("cachePort");
+            IConfiguration settings = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            if (!int.TryParse(portValue, out int port))
+            var cacheName = settings["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
             {
-                throw new ConfigurationErrorsException($"The 'cachePort' value '{portValue}' in App.config is not a valid port number.");
+                throw new InvalidOperationException("CacheName cannot be null or empty in appsettings.json.");
             }
 
-            var options = new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
-            };
-
-            return CacheManager.GetCache(cacheName, options);
-        }
-
-        private static string GetRequiredSetting(string key)
-        {
-            var value = ConfigurationManager.AppSettings[key];
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                throw new ConfigurationErrorsException($"The '{key}' setting is missing from the appSettings section of App.config.");
-            }
-            return value.Trim();
+            return CacheManager.GetCache(cacheName, new ConnectionOptions());
         }
     }
 }

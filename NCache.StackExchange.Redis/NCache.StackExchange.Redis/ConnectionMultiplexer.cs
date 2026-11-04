@@ -46,19 +46,17 @@ namespace NCache.StackExchange.Redis
         public static Dictionary<string, ICache> CacheConnections = new Dictionary<string, ICache>();
 
         /// <summary>
-        /// Connects to the cache through the given NCache server (thin client, no client.ncconf needed).
+        /// Connects to the cache. NCache reads the server and port of the cache from the
+        /// "ncache" section of the application's appsettings.json (or App.config / Web.config).
         /// </summary>
         /// <param name="cacheName">Name of the cache.</param>
-        /// <param name="server">IP address or host name of an NCache server hosting the cache.</param>
-        /// <param name="port">Client port of the NCache server (default 9800).</param>
-        public static ConnectionMultiplexer Connect(string cacheName, string server, int port = 9800)
+        public static ConnectionMultiplexer Connect(string cacheName)
         {
-            return new ConnectionMultiplexer(cacheName, server, port);
+            return new ConnectionMultiplexer(cacheName);
         }
 
         /// <summary>
-        /// Connects to the cache with the given connection options. <see cref="ConnectionOptions.Servers"/>
-        /// must list at least one NCache server hosting the cache.
+        /// Connects to the cache with additional connection options.
         /// </summary>
         public static ConnectionMultiplexer Connect(string cacheName, ConnectionOptions connectionOptions)
         {
@@ -67,8 +65,8 @@ namespace NCache.StackExchange.Redis
 
         private ICache _cache;
 
-        public ConnectionMultiplexer(string cacheName, string server, int port = 9800)
-            : this(cacheName, CreateConnectionOptions(server, port))
+        public ConnectionMultiplexer(string cacheName)
+            : this(cacheName, new ConnectionOptions())
         {
         }
 
@@ -78,8 +76,6 @@ namespace NCache.StackExchange.Redis
                 throw new ArgumentException("Cache name cannot be null or empty.", nameof(cacheName));
             if (connectionOptions == null)
                 throw new ArgumentNullException(nameof(connectionOptions));
-            if (connectionOptions.Servers == null || connectionOptions.Servers.Count == 0)
-                throw new ArgumentException("ConnectionOptions.Servers must contain at least one NCache server.", nameof(connectionOptions));
 
             var key = cacheName.ToLower();
             if (!CacheConnections.ContainsKey(key))
@@ -88,17 +84,6 @@ namespace NCache.StackExchange.Redis
                 CacheConnections.Add(key, cache);
             }
             _cache = CacheConnections[key];
-        }
-
-        private static ConnectionOptions CreateConnectionOptions(string server, int port)
-        {
-            if (string.IsNullOrWhiteSpace(server))
-                throw new ArgumentException("Cache server cannot be null or empty.", nameof(server));
-
-            return new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
-            };
         }
 
         public INCacheDatabase GetDatabase()

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using System;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace CardPaymentApp
 {
@@ -23,31 +23,30 @@ namespace CardPaymentApp
         {
             try
             {
-                string cacheName = ConfigurationManager.AppSettings["CacheID"];
+                IConfiguration settings = new ConfigurationBuilder()
+                    .SetBasePath(AppContext.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                string cacheName = settings["CacheName"];
 
                 if (string.IsNullOrEmpty(cacheName))
                 {
-                    Console.WriteLine("The CacheID cannot be null or empty.");
+                    Console.WriteLine("The CacheName cannot be null or empty.");
                     return;
                 }
 
-                string connstring = ConfigurationManager.AppSettings["ConnString"];
+                string connstring = settings.GetConnectionString("FraudDetection");
 
                 if (string.IsNullOrEmpty(connstring))
                 {
-                    Console.WriteLine("The ConnString cannot be null or empty.");
+                    Console.WriteLine("The FraudDetection connection string cannot be null or empty.");
                     return;
                 }
 
-                string cacheServer = ConfigurationManager.AppSettings["cacheServer"];
-                if (string.IsNullOrWhiteSpace(cacheServer)
-                    || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
-                    throw new ConfigurationErrorsException(
-                        "App.config must define appSettings cacheServer and cachePort (thin-client connection to the cache server).");
-
                 Console.WriteLine("CardPayment Application\n\n");
                 TransactionApp transactionApp = new TransactionApp();
-                transactionApp.Start(connstring, cacheName, cacheServer, cachePort);
+                transactionApp.Start(connstring, cacheName);
                 Console.WriteLine("Thank you...");
                 transactionApp.Dispose();
                 Console.ReadLine();

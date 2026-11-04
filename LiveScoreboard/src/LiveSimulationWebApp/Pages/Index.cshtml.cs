@@ -57,28 +57,21 @@ namespace LiveScoreLeaderboard.Pages
             // store SignalR hub reference for use
             _hub = hub;
 
-            // get cache name and cache server (thin client) from appsettings.json
+            // get cache name from appsettings.json
             string cacheName = configuration.GetValue<string>("CacheName");
-            string server = configuration.GetValue<string>("CacheServer");
-            if (string.IsNullOrWhiteSpace(cacheName) || string.IsNullOrWhiteSpace(server)
-                || !int.TryParse(configuration["CachePort"], out int port))
-                throw new InvalidOperationException(
-                    "appsettings.json must define \"CacheName\", \"CacheServer\" and a numeric \"CachePort\".");
+            if (string.IsNullOrWhiteSpace(cacheName))
+                throw new InvalidOperationException("appsettings.json must define \"CacheName\".");
 
             // get read/write thru provider name from appsettings.json
             string readThruProviderName = configuration.GetValue<string>("ReadThruProviderName");
             string writeThruProviderName = configuration.GetValue<string>("WriteThruProviderName");
 
-            // acquire cache handler
-            var options = new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
-            };
-            _cache = CacheManager.GetCache(cacheName, options);
+            // acquire cache handler; server and port are read by NCache from the "ncache" section of appsettings.json
+            _cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
 
             // initialize store match handler if not initialized before
             if (_storeHandler == null)
-                _storeHandler = new StoreHandler(cacheName, server, port, readThruProviderName, writeThruProviderName);
+                _storeHandler = new StoreHandler(cacheName, readThruProviderName, writeThruProviderName);
         }
 
         /// <summary>

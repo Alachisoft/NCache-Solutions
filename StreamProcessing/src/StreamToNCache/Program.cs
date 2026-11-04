@@ -22,21 +22,14 @@ namespace StreamToNCache
                                      true)
                                     .Build();
 
-            var section = configuration.GetSection("ncache:defaultCache");
-            string cacheName = section["cacheName"];
-            string server = section["server"];
-            if (string.IsNullOrWhiteSpace(cacheName) || string.IsNullOrWhiteSpace(server)
-                || !int.TryParse(section["port"], out int port))
+            string cacheName = configuration["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
                 throw new InvalidOperationException(
-                    "appsettings.json must define ncache:defaultCache:cacheName, :server and :port.");
+                    "CacheName cannot be null or empty in appsettings.json.");
 
-            var options = new ConnectionOptions
-            {
-                Servers = new List<ServerInfo> { new ServerInfo(server, port) }
-            };
-
-            _cache = CacheManager.GetCache(cacheName, options);
-            Console.WriteLine($"Cache '{cacheName}' initialized on {server}:{port}");
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
+            _cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
+            Console.WriteLine($"Cache '{cacheName}' initialized");
         }
 
         static private void PopulateCache()

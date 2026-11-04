@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Configuration;
 using Alachisoft.NCache.Client;
+using Microsoft.Extensions.Configuration;
 using NCache.StackExchange.Redis;
 
 namespace BasicUsageStackExchangeRedis
@@ -11,17 +11,19 @@ namespace BasicUsageStackExchangeRedis
         {
             try
             {
-                string cacheName = ConfigurationManager.AppSettings["cacheName"];
-                string cacheServer = ConfigurationManager.AppSettings["cacheServer"];
-                if (string.IsNullOrWhiteSpace(cacheName) || string.IsNullOrWhiteSpace(cacheServer)
-                    || !int.TryParse(ConfigurationManager.AppSettings["cachePort"], out int cachePort))
+                IConfiguration settings = new ConfigurationBuilder()
+                    .SetBasePath(AppContext.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                string cacheName = settings["CacheName"];
+                if (string.IsNullOrWhiteSpace(cacheName))
                 {
-                    throw new ConfigurationErrorsException(
-                        "App.config must define appSettings cacheName, cacheServer and cachePort.");
+                    throw new InvalidOperationException("CacheName cannot be null or empty in appsettings.json.");
                 }
 
-                // Thin client: connect straight to the cache server, no client.ncconf needed
-                ConnectionMultiplexer ncache = ConnectionMultiplexer.Connect(cacheName, cacheServer, cachePort);
+                // Server and port are read by NCache from the "ncache" section of appsettings.json
+                ConnectionMultiplexer ncache = ConnectionMultiplexer.Connect(cacheName);
                 ICache cache = ncache.GetNCacheInterface(cacheName);
                 cache.Clear();
                 var db = ncache.GetDatabase();

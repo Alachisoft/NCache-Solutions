@@ -3,24 +3,11 @@
     public abstract class OptionsBase
     {
         /// <summary>
-        /// Name of the NCache cache to connect to (required).
+        /// Name of the NCache cache to connect to (required). The server and port of the
+        /// cache are read by NCache from the "ncache" section of appsettings.json.
         /// </summary>
         public virtual string CacheId { get; set; } =
             "default";
-
-        /// <summary>
-        /// IP address or host name of the NCache server the client connects to
-        /// (required unless servers are supplied through
-        /// <see cref="NCacheConnectionOptions.ServerList"/>).
-        /// </summary>
-        public virtual string CacheServer { get; set; } =
-            null;
-
-        /// <summary>
-        /// Client port of the NCache server. Defaults to 9800.
-        /// </summary>
-        public virtual int CachePort { get; set; } =
-            9800;
 
         /// <summary>
         /// Optional, advanced connection settings.
