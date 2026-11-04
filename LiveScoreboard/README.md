@@ -36,19 +36,23 @@ If that cache is not available, create a new cache (or use an existing one and c
 
 #### Link Cache with App
 
-The apps connect to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name, cache server IP and port in both of the following files:
+Set the cache name and the cache server in both of the following files. The server and port go in the `ncache` section, which NCache reads itself, so no `client.ncconf` is needed:
 1. `src\LiveSimulationWebApp\appsettings.json`
 2. `src\ScoreUpdateWebAPI\appsettings.json`
 
 ```json
 {
-  "CacheName": "democache1",
-  "CacheServer": "{cache server IP}",
-  "CachePort": 9800
+  "CacheName": "democache",
+  "ncache": {
+    "democache": {
+      "server": "{cache server IP}",
+      "port": 9800
+    }
+  }
 }
 ```
 
-If any of these settings is missing, the app stops with a clear error message.
+The `ncache` section has one entry per cache, keyed by the cache name, with the IP address (`server`) and client port (`port`, default `9800`) of an NCache server hosting the cache. If *CacheName* is missing, the app stops with a clear error message.
 
 ### Starting the App
 This solution contains three projects, all targeting `net6.0`:

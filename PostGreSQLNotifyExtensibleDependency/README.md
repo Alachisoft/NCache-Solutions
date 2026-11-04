@@ -109,17 +109,36 @@ This sample was tested with PostgreSQL version "10.15"
   // Rest of code
   ```
    
-   Furthermore, all four console applications connect to the cache as thin clients; no *client.ncconf* is needed. In the *App.config* of each console application ([NETConsoleUI](./src/NETConsoleUI/App.config), [NETCOREConsoleUI](./src/NETCOREConsoleUI/App.config), [PostGresDependencyNETConsoleUI](./src/PostGresDependencyNETConsoleUI/App.config) and [PostGresDependencyNETCOREConsoleUI](./src/PostGresDependencyNETCOREConsoleUI/App.config)), set the cache name and the IP address and port of one of the servers of your demo cache:
+   Furthermore, set the cache name and the IP address and port of one of the servers of your demo cache in each console application. No *client.ncconf* is needed:
 
-   ```xml
-   <appSettings>
-     <add key="cacheName" value="democache" />
-     <add key="cacheServer" value="{cache server IP}" />
-     <add key="cachePort" value="9800" />
-   </appSettings>
-   ```
+   - **.NET 8** apps ([NETCOREConsoleUI](./src/NETCOREConsoleUI/appsettings.json), [PostGresDependencyNETCOREConsoleUI](./src/PostGresDependencyNETCOREConsoleUI/appsettings.json)), in *appsettings.json*:
 
-   The applications pass these values to `CacheManager.GetCache(cacheName, new ConnectionOptions { Servers = ... })` and throw a `ConfigurationErrorsException` if any of them is missing.
+     ```json
+     {
+       "CacheName": "democache",
+       "ncache": {
+         "democache": { "server": "{cache server IP}", "port": 9800 }
+       }
+     }
+     ```
+
+   - **.NET Framework** apps ([NETConsoleUI](./src/NETConsoleUI/App.config), [PostGresDependencyNETConsoleUI](./src/PostGresDependencyNETConsoleUI/App.config)), in *App.config*:
+
+     ```xml
+     <configSections>
+       <section name="ncache" type="Alachisoft.NCache.Client.NCacheSection, Alachisoft.NCache.Client" />
+     </configSections>
+     <appSettings>
+       <add key="CacheName" value="democache" />
+     </appSettings>
+     <ncache>
+       <caches>
+         <add name="democache" server="{cache server IP}" port="9800" />
+       </caches>
+     </ncache>
+     ```
+
+   NCache reads the server and port of the cache from the `ncache` section itself; the applications only read *CacheName*.
 
    After making the above mentioned changes, build the solution to generate the assemblies.
 

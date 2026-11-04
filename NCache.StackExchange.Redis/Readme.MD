@@ -16,39 +16,34 @@ To use this wrapper a sample project "NCache.StackExchange.Redis.Sample" is also
 * Namespace change will be from "StackExchange.Redis" to "NCache.StackExchange.Redis"
 
 ## Connecting to the Cache
-The wrapper connects to the cache server directly (thin client), so no `client.ncconf` is needed. Pass the cache name together with the address of an NCache server hosting the cache:
+Pass the cache name. NCache reads the server and port of the cache from the `ncache` section of the application's *appsettings.json* (or the `<ncache>` section of *App.config* / *Web.config* for .NET Framework), so no `client.ncconf` is needed:
 
 ```csharp
-// Cache server IP and client port (default 9800)
-ConnectionMultiplexer ncache = ConnectionMultiplexer.Connect("myCache", "{cache server IP}", 9800);
-
-// Or with full NCache connection options
-var options = new ConnectionOptions
-{
-    Servers = new List<ServerInfo> { new ServerInfo("{cache server IP}", 9800) }
-};
-ConnectionMultiplexer ncache2 = ConnectionMultiplexer.Connect("myCache", options);
-
+ConnectionMultiplexer ncache = ConnectionMultiplexer.Connect("myCache");
 var db = ncache.GetDatabase();
 ```
 
-`ConnectionOptions` and `ServerInfo` are in the `Alachisoft.NCache.Client` namespace. The `Connect(string cacheName, CacheConnectionOptions options)` overload has been replaced by `Connect(string cacheName, ConnectionOptions options)`, and `Connect(string cacheName)` (which relied on `client.ncconf`) has been removed.
+The `Connect(string cacheName, CacheConnectionOptions options)` overload has been replaced by `Connect(string cacheName, ConnectionOptions options)` (`Alachisoft.NCache.Client` namespace) for any additional connection settings.
 
 ## Configure the Sample
-The sample reads its settings from [App.config](./NCache.StackExchange.Redis.Sample/App.config):
+The sample reads its settings from [appsettings.json](./NCache.StackExchange.Redis.Sample/appsettings.json):
 
-```xml
-<appSettings>
-  <add key="cacheName" value="cacheName"/>
-  <add key="cacheServer" value="{cache server IP}"/>
-  <add key="cachePort" value="9800"/>
-</appSettings>
+```json
+{
+  "CacheName": "demoCache",
+  "ncache": {
+    "demoCache": {
+      "server": "{cache server IP}",
+      "port": 9800
+    }
+  }
+}
 ```
 
-- *cacheName*: the name of your cache.
-- *cacheServer* / *cachePort*: the IP address and client port (default `9800`) of an NCache server hosting the cache.
+- *CacheName*: the name of your cache.
+- *ncache*: one entry per cache, keyed by the cache name, with the IP address (`server`) and client port (`port`, default `9800`) of an NCache server hosting the cache.
 
-If any of these settings is missing, the sample stops with a clear error message.
+If *CacheName* is missing, the sample stops with a clear error message.
 
 > **Warning:** the sample calls `Clear()` on the cache at startup, which removes **all** of its data. Do not point it at a cache that holds data you need.
 

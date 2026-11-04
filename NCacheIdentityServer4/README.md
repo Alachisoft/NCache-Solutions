@@ -18,7 +18,7 @@ This sample is taken from the IdentityServer4 GitHub [Samples illustrating the u
 which can be found [here](./src/Sample) and it is made up of 4 applications to showcase typical IdentityServer4 behavior. 
 The basic working of the EntityFramework Core sample is explained in the IdentityServer4 docs page given [here](https://identityserver4.readthedocs.io/en/latest/quickstarts/5_entityframework.html).
 
-All projects target **.NET 8** and use the **NCache SDK 5.3.800** (`Alachisoft.NCache.SDK`) as a thin client: the cache name, server and port 
+All projects target **.NET 6** and use the **NCache SDK 5.3.800** (`Alachisoft.NCache.SDK`): the cache name and the cache server 
 are given in *appsettings.json* and no *client.ncconf* file is needed.
 
 > **Note on IdentityServer4 version**: The sample uses **IdentityServer4 3.1.3** (with IdentityServer4.EntityFramework 3.1.3). IdentityServer4 
@@ -186,13 +186,17 @@ To demonstrate NCache as an IdentityServer4 store for configuration and operatio
   ```
   
 - In the [**appsettings.json**](./src/Sample/IdentityServer/appsettings.json) file, set the NCache connection information as shown below. 
-  *CacheId* is the name of the cache you will be using (in the sample, *democache*), *CacheServer* is the IP address of an NCache server 
-  hosting that cache and *CachePort* is the NCache client port (default *9800*).
+  *CacheName* is the name of the cache you will be using (in the sample, *democache*). The `ncache` section, which NCache reads itself, 
+  has one entry per cache with the IP address of an NCache server hosting that cache (`server`) and the NCache client port (`port`, default *9800*).
 
   ```json
-  "CacheId": "democache",
-  "CacheServer": "{cache server IP}",
-  "CachePort": 9800,
+  "CacheName": "democache",
+  "ncache": {
+    "democache": {
+      "server": "{cache server IP}",
+      "port": 9800
+    }
+  },
   ```
   
 - Run applications [**IdentityServer**](./src/Sample/IdentityServer), [**MvcClient**](./src/Sample/MvcClient), [**Api**](./src/Sample/Api), [**JavaScriptClient**](./src/Sample/JavaScriptClient) to see how NCache operates as an IdentityServer4 configuration and operational store after making sure that the demonstration cache used as both a configuration and operational store is running and can be connected to from **IdentityServer** sample
@@ -223,13 +227,17 @@ To demonstrate NCache as a configuration store cache while persisting configurat
   // rest of the code
   ```
  
-- In the [**appsettings.json**](./src/Sample/IdentityServer/appsettings.json) file, set the NCache connection information (*CacheId*, *CacheServer* 
-  and *CachePort*) as shown below, and give the connection string of the SQL Server in *ConnectionStrings:db*.
+- In the [**appsettings.json**](./src/Sample/IdentityServer/appsettings.json) file, set the NCache connection information (*CacheName* 
+  and the `ncache` section) as shown below, and give the connection string of the SQL Server in *ConnectionStrings:db*.
 
   ```json
-  "CacheId": "democache",
-  "CacheServer": "{cache server IP}",
-  "CachePort": 9800,
+  "CacheName": "democache",
+  "ncache": {
+    "democache": {
+      "server": "{cache server IP}",
+      "port": 9800
+    }
+  },
 
   "ConnectionStrings": {
     "db": "server=tcp:{SQL Server IP},1433;database=IdentityServer4.EntityFramework;User Id={user};Password={password};"
@@ -246,13 +254,13 @@ To demonstrate NCache as a configuration store cache while persisting configurat
 
 Requirements:
 
-- .NET 8 SDK and runtime for building and running the applications comprising the sample.
+- .NET 6 SDK and runtime for building and running the applications comprising the sample.
 - NCache 5.3 running on server(s). The sample uses the [Alachisoft.NCache.SDK](https://www.nuget.org/packages/Alachisoft.NCache.SDK/) NuGet package, version 5.3.800.
 - SQL Server (required when using *StartupEFCore*, the default), reachable from the **IdentityServer** sample application.
 
 Before the sample application is executed make sure that:
 - appsettings.json have been changed according to the configurations. 
-	- Change the cache name (*CacheId*), cache server IP address (*CacheServer*) and port (*CachePort*).
+	- Change the cache name (*CacheName*) and the cache server IP address and port in the `ncache` section.
 	- Change the SQL Server connection string (*ConnectionStrings:db*).
 - Make sure that cache is running. 
 - The cache server must be reachable from the client machine on the NCache client port (default 9800).

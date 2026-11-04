@@ -54,30 +54,34 @@
 
 ### Configure the Sample
 
-All settings are in [App.config](./ConsoleUI/App.config). The application connects to the cache server directly (thin client), so no `client.ncconf` is needed.
+All settings are in [appsettings.json](./ConsoleUI/appsettings.json). The server and port of the cache go in the `ncache` section, which NCache reads itself, so no `client.ncconf` is needed.
 
-```xml
-<appSettings>
-  <add key="noOfInstances" value="50"/>
-  <add key="cacheId" value="dappercache"/>
-  <add key="cacheServer" value="{cache server IP}"/>
-  <add key="cachePort" value="9800"/>
-  <add key="UseCache" value="true"/>
-</appSettings>
-<connectionStrings>
-  <add name="sql"
-       providerName="System.Data.SqlClient"
-       connectionString="Server={server}\{instance};Database={database};User Id={user};Password={password};TrustServerCertificate=True;"/>
-</connectionStrings>
+```json
+{
+  "CacheName": "dappercache",
+  "noOfInstances": 50,
+  "UseCache": true,
+
+  "ConnectionStrings": {
+    "sql": "Server={server}\\{instance};Database={database};User Id={user};Password={password};TrustServerCertificate=True;"
+  },
+
+  "ncache": {
+    "dappercache": {
+      "server": "{cache server IP}",
+      "port": 9800
+    }
+  }
+}
 ```
 
 - *noOfInstances*: the number of rows added to the test table.
-- *cacheId*: the name of your cache.
-- *cacheServer* / *cachePort*: the IP address and client port (default `9800`) of an NCache server hosting the cache.
+- *CacheName*: the name of your cache.
+- *ncache*: one entry per cache, keyed by the cache name, with the IP address (`server`) and client port (`port`, default `9800`) of an NCache server hosting the cache.
 - *UseCache*: set to *true* to see the NCache backing source in action, or *false* to read directly from the database through *Dapper*. Comparing the two shows the read performance gained with NCache.
 - *sql*: the connection string of the SQL Server database. Keep `TrustServerCertificate=True` if SQL Server uses a self-signed certificate (the default for SQL Express); otherwise the login fails with *"The certificate chain was issued by an authority that is not trusted"*.
 
-If *cacheId*, *cacheServer* or *cachePort* is missing, the application stops with a clear error message.
+If *CacheName* is missing, the application stops with a clear error message.
 
 ### Register the Backing Source Providers
 

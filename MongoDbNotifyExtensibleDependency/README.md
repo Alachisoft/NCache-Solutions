@@ -277,24 +277,29 @@ Here is the main feature of the application demonstrating **NotifyExtensibleDepe
 
   Here are the steps for running the application:
   
-  - The console application connects to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name and the NCache server information in the [**App.config**](./MongoDbNotifyExtensibleDependencyTest/App.config) file:
+  - Set the cache name and the NCache server information in the [**appsettings.json**](./MongoDbNotifyExtensibleDependencyTest/appsettings.json) file of the console application. The server and port go in the `ncache` section, which NCache reads itself, so no `client.ncconf` is needed:
 
-    ```xml
-    <appSettings>
-      <add key="ConnectionString" value="mongodb://{mongo db server IP}:27017"/>
-      <add key="Database" value="changestreamtest"/>
-      <add key="Collection" value="customers"/>
-      <add key="CacheName" value="demoCache"/>
-      <add key="cacheServer" value="{cache server IP}"/>
-      <add key="cachePort" value="9800"/>
-      <add key="ProviderName" value="MongoDbNotifyExtensibleDependencyProvider"/>
-      <add key="InstanceCount" value="1000"/>
-    </appSettings>
+    ```json
+    {
+      "ConnectionString": "mongodb://{mongo db server IP}:27017",
+      "Database": "changestreamtest",
+      "Collection": "customers",
+      "CacheName": "demoCache",
+      "ProviderName": "MongoDbNotifyExtensibleDependencyProvider",
+      "InstanceCount": 1000,
+
+      "ncache": {
+        "demoCache": {
+          "server": "{cache server IP}",
+          "port": 9800
+        }
+      }
+    }
     ```
 
-    *cacheServer* / *cachePort* are the IP address and client port (default `9800`) of an NCache server hosting the cache. If *CacheName*, *cacheServer* or *cachePort* is missing, the application stops with a clear configuration error.
+    The `ncache` section has one entry per cache, keyed by the cache name, with the IP address (`server`) and client port (`port`, default `9800`) of an NCache server hosting the cache. If *CacheName* is missing, the application stops with a clear configuration error.
   - Build the solution and make sure the assemblies have been successfully generated.
-  - Using the [NCache Management Center](https://www.alachisoft.com/resources/docs/ncache/admin-guide/ncache-web-manager.html?tabs=windows%2Cwindows-start-manager), create a [**partitioned-of-replica**(POR)](https://www.alachisoft.com/ncache/caching-topology.html#partitionedreplica) clustered cache using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-new-cache-cluster.html?tabs=windows#using-ncache-web-manager). Make sure the cache name agrees with *CacheName* and that *cacheServer* is the IP address of one of the cache nodes. 
+  - Using the [NCache Management Center](https://www.alachisoft.com/resources/docs/ncache/admin-guide/ncache-web-manager.html?tabs=windows%2Cwindows-start-manager), create a [**partitioned-of-replica**(POR)](https://www.alachisoft.com/ncache/caching-topology.html#partitionedreplica) clustered cache using the steps given [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-new-cache-cluster.html?tabs=windows#using-ncache-web-manager). Make sure the cache name agrees with *CacheName* and that `server` in the `ncache` section is the IP address of one of the cache nodes. 
   
   **Note: Although you can use any cache topology with the application without changing the source code, the POR topology adds reliability with data-paritioning and best demonstrates the capabilities of NCache when a balance between reliability and performance is required.** 
   - Stop the demo cache if it is running and deploy the built [NotifyExtensibleDependency](./MongoDbNotificationDependencyImpl/) project assemblies on the cache servers with the provider name given in *ProviderName* (class `MongoDbNotifyExtensibleDependencyImpl.MongoDbNotifyExtensibleDependencyProvider` in `MongoDbNotifyExtensibleDependencyImpl.dll`). The steps for doing this are shown [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/configure-custom-dependency.html).
@@ -306,7 +311,7 @@ Here is the main feature of the application demonstrating **NotifyExtensibleDepe
 
     [Here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html) is how you can deploy dependent assemblies.
   - Once the logic is deployed, re-start the cache to get the integration assemblies included in the cache host process.
-  - Update the cache name, cache server, provider name, connection string, database name, and collection name values for the Mongo DB instance in the [**App.config**](./MongoDbNotifyExtensibleDependencyTest/App.config) file.
+  - Update the cache name, cache server (`ncache` section), provider name, connection string, database name, and collection name values for the Mongo DB instance in the [**appsettings.json**](./MongoDbNotifyExtensibleDependencyTest/appsettings.json) file.
   - Before starting the application, confirm again that the cache and the Mongo DB instance are running and that the machines hosting the NCache servers can access the Mongo DB instance.
   - [Open the statistics window of the running cache](https://www.alachisoft.com/resources/docs/ncache/admin-guide/browse-cache-statistics.html?tabs=windows#ncache-web-manager) to view data as it is added to the cache in real time. Start the application and watch as the items are first added and then removed when the documents are updated in the database due to the dependencies on the cached items being invoked.  
   

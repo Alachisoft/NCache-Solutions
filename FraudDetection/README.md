@@ -237,26 +237,31 @@ After this, a new message is made from this result and is published back on Repl
 | `CustomerSample` | `netstandard2.0` | Shared models and SQL Server data access |
 
 ### Configure the Sample
-Both applications connect to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name and the cache server in the *App.config* of [CardPaymentApp](src/CardpaymentApp/App.config) and [FraudDetector](src/FraudDetector/App.config):
+Both applications read their settings from *appsettings.json* ([CardPaymentApp](src/CardpaymentApp/appsettings.json) and [FraudDetector](src/FraudDetector/appsettings.json)). The server and port of the cache go in the `ncache` section, which NCache reads itself, so no `client.ncconf` is needed:
 
-```xml
-<appSettings>
-  <add key="CacheID" value="cardPaymentApp"/>
-  <add key="cacheServer" value="{cache server IP}"/>
-  <add key="cachePort" value="9800"/>
-  <!-- CardPaymentApp only -->
-  <add key="ConnString" value="Data Source={server};Initial Catalog=Fraud-Detection;User ID={user};Password={password};"/>
-</appSettings>
+```json
+{
+  "CacheName": "cardPaymentApp",
+
+  "ConnectionStrings": {
+    "FraudDetection": "Data Source={server};Initial Catalog=Fraud-Detection;User ID={user};Password={password};"
+  },
+
+  "ncache": {
+    "cardPaymentApp": {
+      "server": "{cache server IP}",
+      "port": 9800
+    }
+  }
+}
 ```
 
-* *CacheID*: the name of your cache.
-* *cacheServer* / *cachePort*: the IP address and client port (default `9800`) of an NCache server hosting the cache.
-* *ConnString*: the connection string of the *Fraud-Detection* database (used by *CardPaymentApp* to load customer card information).
-
-If *cacheServer* or *cachePort* is missing, the applications stop with a clear configuration error.
+* *CacheName*: the name of your cache.
+* *ncache*: one entry per cache, keyed by the cache name, with the IP address (`server`) and client port (`port`, default `9800`) of an NCache server hosting the cache.
+* *ConnectionStrings:FraudDetection* (*CardPaymentApp* only): the connection string of the *Fraud-Detection* database, used to load customer card information.
 
 ### Configure and Deploy the Backing Source
-* Create a new Partition-of-Replica cluster cache with the name given in *CacheID*, and keep it **stopped**.
+* Create a new Partition-of-Replica cluster cache with the name given in *CacheName*, and keep it **stopped**.
 * Build the solution. The provider files are in `src\BackingSource\bin\Debug\net472\`. Deploy only these files; the NCache assemblies are already on the server:
 	* `BackingSource.dll`
 	* `CustomerSample.dll`

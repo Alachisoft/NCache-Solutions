@@ -47,24 +47,27 @@ Without this index the continuous queries cannot be registered and the customer 
 
 #### Link Cache with App
 
-The apps connect to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name, server IP and port in both of the following files:
+Set the cache name and the cache server in both of the following files. The server and port go in the `ncache` section, which NCache reads itself, so no `client.ncconf` is needed:
 
 1. `src\StreamToNCache\appsettings.json`
 1. `src\StreamProcessingUI\appsettings.json`
 
 ```json
 {
+  "CacheName": "defaultCache",
   "ncache": {
     "defaultCache": {
-      "cacheName": "defaultCache",
-      "server": "20.200.20.44",
+      "server": "{cache server IP}",
       "port": 9800
     }
   }
 }
 ```
 
-If any of these settings is missing, the app stops with a clear error message.
+- *CacheName*: the name of your cache.
+- *ncache*: one entry per cache, keyed by the cache name, with the IP address (`server`) and client port (`port`, default `9800`) of an NCache server hosting the cache.
+
+If *CacheName* is missing, the app stops with a clear error message.
 
 ### Starting the App
 

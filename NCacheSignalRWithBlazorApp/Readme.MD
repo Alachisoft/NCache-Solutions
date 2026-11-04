@@ -36,46 +36,43 @@ View sample implementation of Blazor by Microsoft [here](https://github.com/dotn
 
 ## Configure the Application
 
-The application connects to the NCache server directly, using the cache name, server IP and port specified in the `NCacheConfiguration` section of `appsettings.json` in the "BlazorSignalRApp.Server" project. No `client.ncconf` file is required. Replace `{cache server IP}` with the IP address of your NCache server:
+The settings are in `appsettings.json` of the "BlazorSignalRApp.Server" project. The cache name and application ID go in the `NCacheConfiguration` section, and the server and port of the cache go in the `ncache` section, which NCache reads itself. No `client.ncconf` file is required. Replace `{cache server IP}` with the IP address of your NCache server:
 
 ```json
 "NCacheConfiguration": {
-  "CacheName": "blazor",
-  "ApplicationID": "chat",
-  "CacheServer": "{cache server IP}",
-  "CachePort": 9800
+  "CacheName": "BlazorCache",
+  "ApplicationID": "chat"
+},
+"ncache": {
+  "BlazorCache": {
+    "server": "{cache server IP}",
+    "port": 9800
+  }
 }
 ```
 
 * **CacheName**: Name of the running cache used as the SignalR backplane.
 * **ApplicationID**: Unique identifier of the application; also used as the event key for SignalR messages.
-* **CacheServer**: IP address of the NCache server.
-* **CachePort**: NCache client port (9800 by default).
+* **ncache**: one entry per cache, keyed by the cache name, with the IP address (`server`) and client port (`port`, 9800 by default) of the NCache server.
 
-The application throws an error at startup if any of these values is missing.
+The application throws an error at startup if *CacheName* or *ApplicationID* is missing.
 
 ## Add NCache SignalR in Blazor Server Startup Services 
 
-Following code snippet configures NCache SignalR in Blazor Server (`Startup.cs`). The values are read from `appsettings.json` and the cache server is passed through `ConnectionOptions`:
+Following code snippet configures NCache SignalR in Blazor Server (`Startup.cs`). The values are read from `appsettings.json`:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     var ncacheSection = Configuration.GetSection("NCacheConfiguration");
-    // CacheName, ApplicationID, CacheServer and CachePort are read and validated here
+    // CacheName and ApplicationID are read and validated here
     ...
+    // Server and port are read by NCache from the "ncache" section of appsettings.json
     services.AddSignalR().AddNCache(ncacheOptions =>
     {
         ncacheOptions.CacheName = cacheName;
         ncacheOptions.ApplicationID = applicationId;
         ncacheOptions.EventKey = applicationId;
-        ncacheOptions.ConnectionOptions = new SignalRConnectionOptions
-        {
-            ServerList = new[]
-            {
-                new SignalRServerInfo { Name = cacheServer, Port = cachePort }
-            }
-        };
     });
     ...
 }

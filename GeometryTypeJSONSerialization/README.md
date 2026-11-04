@@ -29,25 +29,27 @@ A custom converter must inherit from the `JsonConverter` abstract class provided
 
 ## Connecting to the Cache
 
-The application connects to the cache server directly (thin client), so no `client.ncconf` is needed. Set the cache name, server IP and port in the `CacheConnection` section of `appsettings.json`:
+Set the cache name and the cache server in `appsettings.json`. The server and port go in the `ncache` section, which NCache reads itself, so no `client.ncconf` is needed:
 
 ```json
 {
-  "CacheConnection": {
-    "CacheName": "demoCache",
-    "Server": "{cache server IP}",
-    "Port": 9800
+  "CacheName": "demoCache",
+  "ncache": {
+    "demoCache": {
+      "server": "{cache server IP}",
+      "port": 9800
+    }
   }
 }
 ```
 
-| Property    | Description                                        |
-| ----------- | -------------------------------------------------- |
-| `CacheName` | Name of the cache.                                 |
-| `Server`    | IP address of an NCache server hosting the cache.  |
-| `Port`      | Client port of the NCache server (default `9800`). |
+| Setting                  | Description                                        |
+| ------------------------ | -------------------------------------------------- |
+| `CacheName`              | Name of the cache.                                 |
+| `ncache:<cache>:server`  | IP address of an NCache server hosting the cache.  |
+| `ncache:<cache>:port`    | Client port of the NCache server (default `9800`). |
 
-If any of these settings is missing, the application stops with a clear error message.
+If *CacheName* is missing, the application stops with a clear error message.
 
 > **Warning:** the sample calls `Clear()` on the cache at startup, which removes **all** of its data. Do not point it at a cache that holds data you need.
 

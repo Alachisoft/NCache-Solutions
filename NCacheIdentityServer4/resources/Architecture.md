@@ -138,15 +138,11 @@ You can find a demonstration of how NCache can be registered as an IdentityServe
 
 ### Connection Parameters for Accessing NCache Cluster
 
-The parameters needed to connect to an NCache cluster, whether as a configuration and/or operational store or whether NCache as a caching layer on top of existing IdentityServer4 storage media, is encapsulated in the [**OptionsBase**](../src/IdentityServer4.NCache/Options/OptionsBase.cs) class. The provider connects as an NCache thin client using `CacheManager.GetCache(string, ConnectionOptions)`; no **client.ncconf** file is used. The properties of the class are as follows:
+The parameters needed to connect to an NCache cluster, whether as a configuration and/or operational store or whether NCache as a caching layer on top of existing IdentityServer4 storage media, is encapsulated in the [**OptionsBase**](../src/IdentityServer4.NCache/Options/OptionsBase.cs) class. The server and port of the cache are not part of these options: NCache reads them from the `ncache` section of the application's *appsettings.json*, so no **client.ncconf** file is used. The properties of the class are as follows:
 
 - CacheId (**Required**)
 
-  This is the cache id of the cache cluster to be used as a store or cache. This value is required and defaults to *default*. This must be changed by the user according to the name of the cache cluster used.
-
-- CacheServer and CachePort (**Required** unless servers are given in *ConnectionOptions.ServerList*)
-
-  The IP address (or host name) and client port (default *9800*) of an NCache server hosting the cache. In the sample these are read from the *CacheServer* and *CachePort* keys of *appsettings.json*. An exception is thrown when no server is configured.
+  This is the cache id of the cache cluster to be used as a store or cache. This value is required and defaults to *default*. This must be changed by the user according to the name of the cache cluster used. In the sample it is read from the *CacheName* key of *appsettings.json*, and the `ncache` section of the same file has an entry for that cache with its `server` and `port` (default *9800*).
 
 - ConnectionOptions (**Optional**)
 
