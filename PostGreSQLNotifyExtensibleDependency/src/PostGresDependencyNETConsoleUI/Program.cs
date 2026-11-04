@@ -15,7 +15,7 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
 
             {
                 // Change the connection string to your PostGreSQL Database
-                const string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=password;Database=database";
+                const string connectionString = "Host={server};Port=5432;Username={user};Password={password};Database={database}";
 
                 var customer = new Customer() { customerid = "ALFKI", address = "USA", city = "Newyork", country = "USA"};
 

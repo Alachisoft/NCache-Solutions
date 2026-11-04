@@ -104,7 +104,7 @@ This sample was tested with PostgreSQL version "10.15"
   // Beginning of Program.cs
 
   // Change the connection string to your PostGreSQL Database
-    const string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=password;Database=database";
+    const string connectionString = "Host={server};Port=5432;Username={user};Password={password};Database={database}";
 
   // Rest of code
   ```

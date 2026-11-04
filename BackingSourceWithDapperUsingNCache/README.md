@@ -94,11 +94,11 @@ First build the solution. The provider files are in `DapperBackingSource\bin\Deb
 - `Alachisoft.NCache.Samples.Dapper.Models.dll`
 - `Dapper.dll`
 
-Both providers read a parameter named **`connectionString`**. Set it to the same connection string as in *App.config*.
+Both providers read a parameter named **`connectionString`**. Set it to the same connection string as in *appsettings.json*.
 
 #### Using NCache Management Center
 
-1. Create a clustered cache with the name given in *App.config* (`cacheId`), and keep it **stopped**.
+1. Create a clustered cache with the name given in *appsettings.json* (`CacheName`), and keep it **stopped**.
 1. Open the cache's **Backing Source** settings.
 1. Enable **Read Through** and add a provider:
 	- Provider name: e.g. `DapperReadThruProvider`
