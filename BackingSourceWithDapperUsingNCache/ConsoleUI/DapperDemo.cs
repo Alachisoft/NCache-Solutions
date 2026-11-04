@@ -19,7 +19,12 @@ namespace Alachisoft.NCache.Samples.Dapper.ConsoleUI
         static readonly bool useCache;
         static DapperDemo()
         {
-            var cacheName = AppConfig.Settings["CacheName"];
+            IConfiguration settings = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var cacheName = settings["CacheName"];
             if (string.IsNullOrWhiteSpace(cacheName))
                 throw new InvalidOperationException(
                     "CacheName cannot be null or empty in appsettings.json.");
@@ -27,9 +32,9 @@ namespace Alachisoft.NCache.Samples.Dapper.ConsoleUI
             // Server and port are read by NCache from the "ncache" section of appsettings.json
             cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
 
-            connectionString = AppConfig.Settings.GetConnectionString("sql");
+            connectionString = settings.GetConnectionString("sql");
 
-            useCache = bool.Parse(AppConfig.Settings["UseCache"]);
+            useCache = bool.Parse(settings["UseCache"]);
 
         }
 

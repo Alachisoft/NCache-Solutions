@@ -16,9 +16,14 @@ namespace Alachisoft.NCache.Samples.Dapper.ConsoleUI.SeedData
         {
             Randomizer.Seed = new Random(8675309);
 
-            connectionString = AppConfig.Settings.GetConnectionString("sql");
+            IConfiguration settings = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            noOfInstances = int.Parse(AppConfig.Settings["noOfInstances"]);
+            connectionString = settings.GetConnectionString("sql");
+
+            noOfInstances = int.Parse(settings["noOfInstances"]);
         }
 
         public static void Initialize()
