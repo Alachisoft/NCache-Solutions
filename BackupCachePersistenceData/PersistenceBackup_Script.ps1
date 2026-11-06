@@ -1,84 +1,70 @@
-write-host("Persistence Cache Backup Script") 
+<#
+.SYNOPSIS
+    Backs up or restores the data of an NCache cache (NCache 5.3).
+
+.DESCRIPTION
+    Backup  : Export-CacheData dumps every item in the cache to the backup folder.
+    Restore : Import-CacheData reloads the items from the backup folder into the cache.
+
+.EXAMPLE
+    .\PersistenceBackup_Script.ps1 -CacheName demoCache -BackupPath "C:\CacheBackup" -Server 20.200.20.44
+
+.EXAMPLE
+    .\PersistenceBackup_Script.ps1 -CacheName demoCache -BackupPath "C:\CacheBackup" -Server 20.200.20.44 -Restore
+#>
+param(
+    [Parameter(Mandatory = $true)] [string] $CacheName,
+    [Parameter(Mandatory = $true)] [string] $BackupPath,
+    [string] $Server = "localhost",
+    [switch] $Restore,
+    [ValidateSet("None", "Adjusted", "Asbefore")] [string] $Expiry = "Adjusted"
+)
+
+$ErrorActionPreference = "Stop"
+
 try {
-	$cacheName = $args[0]
-	$dbPath = $args[1]
-	$destinationPath = $args[2]
-	Write-Output "Destination Path: $destinationPath"
-	Write-Output "DB Path: $dbPath"
+    # Load the NCache PowerShell module if it is not already loaded.
+    if (-not (Get-Command Export-CacheData -ErrorAction SilentlyContinue)) {
+        $module = Join-Path $env:NCHOME "bin\tools\ncacheps\ncacheps.psd1"
+        if (-not $env:NCHOME -or -not (Test-Path $module)) {
+            $module = "C:\Program Files\NCache\bin\tools\ncacheps\ncacheps.psd1"
+        }
+        Import-Module $module
+    }
 
-	#$cachesList = Get-Caches
-	#Write-Host $cachesList
+    # The cache must be registered and running on the server.
+    # Get-Caches returns text, so read the "Status:" line of this cache's block.
+    $caches = Get-Caches -Server $Server -Detail 6>&1 | Out-String
+    $match = [regex]::Match($caches, "(?ims)^Cache-Name:\s*$([regex]::Escape($CacheName))\s*$.*?^Status:\s*(\w+)")
+    if (-not $match.Success) {
+        throw "Cache '$CacheName' is not registered on server $Server."
+    }
+    if ($match.Groups[1].Value -ne "Running") {
+        throw "Cache '$CacheName' is not running on server $Server. Start it with: Start-Cache -Name $CacheName -Server $Server"
+    }
 
-	if (-not ($dbPath | Test-Path)) {
-		Write-Host "$dbPath not found. Please specify a valid file or folder path." -foregroundcolor red -ErrorAction Stop
-		throw [System.IO.FileNotFoundException]::new("Thrown a FileNotFoundException")
-	}
-	elseIf(-not ($destinationPath | Test-Path)){
-		Write-Host "$destinationPath not found. Please specify a valid file or folder path." -foregroundcolor red -ErrorAction Stop
-		throw [System.IO.FileNotFoundException]::new("Thrown a FileNotFoundException")
-	}
-	elseIf (($destinationPath -contains "/") -OR ($dbPath -contains "/")) { 
-		Write-Host "Invalid Provided Paths" -foregroundcolor red -ErrorAction Stop
-	}
-	
-    $ACL1 = Get-ACL -Path $dbPath
-	$AccessRule1 = $ACL1.Access[0].FileSystemRights.ToString()
-	Write-Host $AccessRule
-	Write-Output "DB Path: $AccessRule1"
-	
-	if($destinationPath -eq $null){
-		$destinationPath = Read-Host -Prompt "Enter destination path where you want to save files"
-		Write-Output "DesPath: $destinationPath" -foregroundcolor blue 
-		New-Item -Path $destinationPath -ItemType Directory
-		Write-Output "New desPath: $destinationPath" -foregroundcolor blue
-	}
-	If($destinationPath -match "_db$"){
-		$dataPath2 ="\data"
-		$destinationPath = join-path -path $destinationPath -childpath $dataPath2
-		Write-Host "DesPath:  $destinationPath"
-	}
-	If($dbPath -match "_db$"){
-		$dataPath ="\data"
-		$dbPath = join-path -path $dbPath -childpath $dataPath
-		Write-Host "dbPath:  $dbPath"
-	}
-
-	$ACL2 = Get-ACL -Path $destinationPath
-	$AccessRule2 = $ACL2.Access[0].FileSystemRights.ToString()
-	Write-Host $AccessRule2
-
-	If(!($AccessRule1 -match "^FullControl") -AND !($AccessRule2 -match "^FullControl")){
-		throw [System.UnauthorizedAccessException]::new("Thrown a UnauthorizedAccessException")
-	}
-	
-	Suspend-NCacheDataPersistence -CacheName $cacheName -ErrorAction Stop
-	Get-ChildItem -Path $dbPath -Recurse -Filter ce_* | Copy-Item -Destination $destinationPath
-	Get-ChildItem -Path $dbPath -Recurse -Filter dse_* | Copy-Item -Destination $destinationPath
-	Resume-NCacheDataPersistence -CacheName $cacheName -ErrorAction Stop
-	
+    if ($Restore) {
+        if (-not (Test-Path $BackupPath -PathType Container)) {
+            throw "Backup folder '$BackupPath' not found."
+        }
+        Write-Host "Restoring '$CacheName' on $Server from $BackupPath ..."
+        Import-CacheData -Name $CacheName -Path $BackupPath -Server $Server -Expiry $Expiry -NoLogo
+        Write-Host "Restore completed." -ForegroundColor Green
+    }
+    else {
+        if (-not (Test-Path $BackupPath)) {
+            New-Item -Path $BackupPath -ItemType Directory | Out-Null
+        }
+        Write-Host "Backing up '$CacheName' on $Server to $BackupPath ..."
+        Export-CacheData -Name $CacheName -Path $BackupPath -Server $Server -NoLogo
+        Write-Host "Backup completed." -ForegroundColor Green
+    }
 }
-catch [System.Management.Automation.ItemNotFoundException] {
-	"Item not found"
-	Write-Host $_ -foregroundcolor red
-}
-catch [System.IO.FileNotFoundException]{
-	Write-Host $_ -foregroundcolor red
-}
-catch [System.UnauthorizedAccessException]
-{
-    Write-Host "Required File/Folder System Rights are not available." -foregroundcolor red
-}
-catch [System.SystemException] {
-	$ip = (Get-NetIPConfiguration | Where-Object {$_.IPv4DefaultGateway -ne $null -and $_.NetAdapter.status -ne "Disconnected"}).IPv4Address.IPAddress
-	Write-Host "Specified cache is not registered on the server $ip" -foregroundcolor red
-}
-catch [System.Exception] {
-	Write-Host $_ -foregroundcolor red
+catch [System.UnauthorizedAccessException] {
+    Write-Host "Access denied to '$BackupPath'. Run with an account that has read/write rights on it." -ForegroundColor Red
+    exit 1
 }
 catch {
-	Write-Host "An error occurred:" -foregroundcolor red
-	Write-Host $_ -foregroundcolor red
+    Write-Host $_ -ForegroundColor Red
+    exit 1
 }
-pause
-
-

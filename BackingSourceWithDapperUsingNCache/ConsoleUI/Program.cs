@@ -17,7 +17,9 @@ namespace Alachisoft.NCache.Samples.Dapper.ConsoleUI
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message);
+                // Print the full exception (incl. inner exceptions) so failures such as
+                // cache connection errors inside the DapperDemo type initializer are visible.
+                Console.WriteLine(ex);
             }
         }
     }

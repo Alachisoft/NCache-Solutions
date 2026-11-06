@@ -1,8 +1,21 @@
 ﻿using Alachisoft.NCache.Client;
+using Microsoft.Extensions.Configuration;
 using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
 
-ICache cache = CacheManager.GetCache("demoCache");
+IConfiguration configuration = new ConfigurationBuilder()
+    .SetBasePath(AppContext.BaseDirectory)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+    .Build();
+
+string? cacheName = configuration["CacheName"];
+if (string.IsNullOrWhiteSpace(cacheName))
+{
+    throw new InvalidOperationException("CacheName cannot be null or empty in appsettings.json.");
+}
+
+// Server and port are read by NCache from the "ncache" section of appsettings.json
+ICache cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
 
 cache.Clear();
 

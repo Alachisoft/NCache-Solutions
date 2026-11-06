@@ -1,5 +1,6 @@
 ﻿using Alachisoft.NCache.Client;
 using Entities;
+using Microsoft.Extensions.Configuration;
 using System;
 
 namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETCOREConsoleUI
@@ -10,7 +11,7 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETCORECons
         {
             try
             {
-                var cache = CacheManager.GetCache("democache");
+                var cache = InitializeCache();
                 //Key with which customer will be fected from database on the basis of CustomerID
                 var customerId = "ALFKI";
                 var customer = cache.Get<Customer>(customerId, new Runtime.Caching.ReadThruOptions(Runtime.Caching.ReadMode.ReadThru, "PostGreSqlReadThruProvider"));
@@ -29,6 +30,24 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETCORECons
             }
         }
 
+        /// <summary>
+        /// Connects to the cache named by CacheName in appsettings.json. NCache reads the
+        /// server and port of the cache from the "ncache" section of the same file.
+        /// </summary>
+        private static ICache InitializeCache()
+        {
+            IConfiguration settings = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
 
+            var cacheName = settings["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
+            {
+                throw new InvalidOperationException("CacheName cannot be null or empty in appsettings.json.");
+            }
+
+            return CacheManager.GetCache(cacheName, new ConnectionOptions());
+        }
     }
 }

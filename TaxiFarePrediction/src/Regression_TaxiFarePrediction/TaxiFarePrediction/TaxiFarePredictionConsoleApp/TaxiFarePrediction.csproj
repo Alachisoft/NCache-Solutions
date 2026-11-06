@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -13,9 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.0.2" />
+    <PackageReference Include="Alachisoft.NCache.SDK" Version="5.3.800" />
     <PackageReference Include="Microsoft.ML" Version="1.4.0" />
     <PackageReference Include="PLplot" Version="5.13.7" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,21 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\AddTripDataInCache\DataStructures\DataStructures.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DataStructures">
-      <HintPath>..\..\..\AddTripDataInCache\DataStructures\bin\Debug\netstandard2.0\DataStructures.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="client.ncconf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="config.ncconf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

@@ -32,6 +32,11 @@ namespace MvcClient
 
                     options.SaveTokens = true;
 
+                    // In .NET 8 the OIDC handler validates tokens with JsonWebTokenHandler,
+                    // so JwtSecurityTokenHandler.DefaultMapInboundClaims no longer applies;
+                    // keep the original (unmapped) claim types explicitly.
+                    options.MapInboundClaims = false;
+
                     options.Scope.Add("api1");
                     options.Scope.Add("offline_access");
                 });

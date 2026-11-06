@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace FraudDetector
 {
@@ -23,11 +23,16 @@ namespace FraudDetector
         {
             try
             {
-                string cache = ConfigurationManager.AppSettings["CacheID"];
+                IConfiguration settings = new ConfigurationBuilder()
+                    .SetBasePath(AppContext.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                string cache = settings["CacheName"];
 
                 if (string.IsNullOrEmpty(cache))
                 {
-                    Console.WriteLine("The CacheID cannot be null or empty.");
+                    Console.WriteLine("The CacheName cannot be null or empty.");
                     return;
                 }
 

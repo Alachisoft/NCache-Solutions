@@ -4,8 +4,8 @@ using Alachisoft.NCache.Runtime.Caching;
 using Regression_TaxiFarePrediction.DataStructures;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 using System.Threading;
 
 namespace AddTripDataInCache
@@ -19,17 +19,23 @@ namespace AddTripDataInCache
 
         static void Main(string[] args)
         {
-            string cache = ConfigurationManager.AppSettings["CacheID"];
+            IConfiguration settings = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            if (String.IsNullOrEmpty(cache))
+            string cache = settings["CacheName"];
+
+            if (String.IsNullOrWhiteSpace(cache))
             {
-                Console.WriteLine("The CacheID cannot be null or empty.");
+                Console.WriteLine("CacheName cannot be null or empty in appsettings.json.");
                 return;
             }
 
-            Cache = CacheManager.GetCache(cache);
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
+            Cache = CacheManager.GetCache(cache, new ConnectionOptions());
 
-            string topic = ConfigurationManager.AppSettings["TopicName"];
+            string topic = settings["TopicName"];
 
             if (String.IsNullOrEmpty(topic))
             {
@@ -38,7 +44,7 @@ namespace AddTripDataInCache
             }
 
             Topic = Cache.MessagingService.GetTopic(topic);
-            string datasetKey = ConfigurationManager.AppSettings["TrainingData"];
+            string datasetKey = settings["TrainingData"];
 
             if (String.IsNullOrEmpty(datasetKey))
             {

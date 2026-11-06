@@ -15,7 +15,7 @@ Using .NET for client-side web development over JavaScript offers the following 
 * Is compatible with Visual Studio on Windows, Linux, and macOS.
 * Can be built on a common set of languages, frameworks, and tools that are stable, feature-rich, and easy to use.
 
-Learn more about ASP.NET Core Blazor [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-3.1)
+Learn more about ASP.NET Core Blazor [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-6.0)
 
 ## Introduction 
 
@@ -24,27 +24,56 @@ This solution contains information on how to integrate NCache SignalR with the B
 View sample implementation of Blazor by Microsoft [here](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/tutorials/signalr-blazor-webassembly/samples/3.x/BlazorSignalRApp).
 
 ## Pre-requisites
-* Visual Studio 2019 16.6 or later with the ASP.NET and Web development workload
-* .NET Core 3.1 SDK or later
+* Visual Studio 2022 (17.0 or later) with the ASP.NET and Web development workload
+* .NET 6 SDK
+* NCache 5.3 (Enterprise) server, with a cache created and running
+* [AspNetCore.SignalR.NCache](https://www.nuget.org/packages/AspNetCore.SignalR.NCache/) 5.3.800 NuGet package (already referenced by the "BlazorSignalRApp.Server" project)
 
 ## Installing and configuring NCache
 1. Download and install NCache [here](https://www.alachisoft.com/download-ncache.html)
 2. After installation, create a cache named "blazor". Learn how to create a cache [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-cache.html).
 3. Start the cache named "blazor". See how to start the cache by following NCache documentation [here](https://www.alachisoft.com/resources/docs/ncache/admin-guide/start-cache.html) 
 
+## Configure the Application
+
+The settings are in `appsettings.json` of the "BlazorSignalRApp.Server" project. The cache name and application ID go in the `NCacheConfiguration` section, and the server and port of the cache go in the `ncache` section, which NCache reads itself. No `client.ncconf` file is required. Replace `{cache server IP}` with the IP address of your NCache server:
+
+```json
+"NCacheConfiguration": {
+  "CacheName": "BlazorCache",
+  "ApplicationID": "chat"
+},
+"ncache": {
+  "BlazorCache": {
+    "server": "{cache server IP}",
+    "port": 9800
+  }
+}
+```
+
+* **CacheName**: Name of the running cache used as the SignalR backplane.
+* **ApplicationID**: Unique identifier of the application; also used as the event key for SignalR messages.
+* **ncache**: one entry per cache, keyed by the cache name, with the IP address (`server`) and client port (`port`, 9800 by default) of the NCache server.
+
+The application throws an error at startup if *CacheName* or *ApplicationID* is missing.
+
 ## Add NCache SignalR in Blazor Server Startup Services 
 
-Following code snippet configures NCache SignalR in Blazor Server. Download and install NCache ASP.NET Core SignalR [NuGet](https://www.nuget.org/packages/AspNetCore.SignalR.NCache/) in "BlazorSignalRApp.Server" project.
-
+Following code snippet configures NCache SignalR in Blazor Server (`Startup.cs`). The values are read from `appsettings.json`:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
+    var ncacheSection = Configuration.GetSection("NCacheConfiguration");
+    // CacheName and ApplicationID are read and validated here
+    ...
+    // Server and port are read by NCache from the "ncache" section of appsettings.json
     services.AddSignalR().AddNCache(ncacheOptions =>
-            {
-                ncacheOptions.CacheName = "blazor";
-                ncacheOptions.ApplicationID = "chat";
-            });
+    {
+        ncacheOptions.CacheName = cacheName;
+        ncacheOptions.ApplicationID = applicationId;
+        ncacheOptions.EventKey = applicationId;
+    });
     ...
 }
 ```
@@ -60,7 +89,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ### Development Tools
 
-* [Visual Studio 2019](https://visualstudio.microsoft.com/) - For creation of project and code.
+* [Visual Studio 2022](https://visualstudio.microsoft.com/) - For creation of project and code.
 
 ## Additional Resources
 

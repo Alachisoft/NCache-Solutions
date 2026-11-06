@@ -1,7 +1,8 @@
 ﻿using Alachisoft.NCache.Samples.Dapper.Models;
 using Dapper;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -12,8 +13,12 @@ namespace Alachisoft.NCache.Samples.Dapper.ConsoleUI.Repository
         static readonly string connectionString;
         static CustomerRepository()
         {
-            connectionString =
-                ConfigurationManager.ConnectionStrings["sql"].ConnectionString;
+            IConfiguration settings = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            connectionString = settings.GetConnectionString("sql");
         }
 
         public static IEnumerable<string> GetCustomerIDs()

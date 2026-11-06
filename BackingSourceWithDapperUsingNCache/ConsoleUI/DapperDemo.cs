@@ -6,7 +6,7 @@ using Alachisoft.NCache.Samples.Dapper.ConsoleUI.SeedData;
 using Alachisoft.NCache.Samples.Dapper.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
 using System.Linq;
 
@@ -19,14 +19,22 @@ namespace Alachisoft.NCache.Samples.Dapper.ConsoleUI
         static readonly bool useCache;
         static DapperDemo()
         {
-            var cacheId = ConfigurationManager.AppSettings["cacheId"];
+            IConfiguration settings = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            cache = CacheManager.GetCache(cacheId);
+            var cacheName = settings["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
+                throw new InvalidOperationException(
+                    "CacheName cannot be null or empty in appsettings.json.");
 
-            connectionString =
-                ConfigurationManager.ConnectionStrings["sql"].ConnectionString;
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
+            cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
 
-            useCache = bool.Parse(ConfigurationManager.AppSettings["UseCache"]);
+            connectionString = settings.GetConnectionString("sql");
+
+            useCache = bool.Parse(settings["UseCache"]);
 
         }
 

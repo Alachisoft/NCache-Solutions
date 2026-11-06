@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -17,15 +17,15 @@ namespace IdentityServer
         {
             Console.Title = "IdentityServer4";
 
-            CreateWebHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        // Serilog.AspNetCore 8.x no longer supports IWebHostBuilder.UseSerilog(),
+        // so the generic host (IHostBuilder) is used instead of WebHost.
+        public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
+            return Host.CreateDefaultBuilder(args)
                     .UseEnvironment("Development")
-                    //.UseStartup<StartupNCache>() 
-                    .UseStartup<StartupEFCore>()
                     .UseSerilog((context, configuration) =>
                     {
                         configuration
@@ -35,6 +35,11 @@ namespace IdentityServer
                             .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
                             .Enrich.FromLogContext()
                             .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Literate);
+                    })
+                    .ConfigureWebHostDefaults(webBuilder =>
+                    {
+                        //webBuilder.UseStartup<StartupNCache>();
+                        webBuilder.UseStartup<StartupEFCore>();
                     });
         }
     }

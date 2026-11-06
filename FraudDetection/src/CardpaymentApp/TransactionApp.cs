@@ -32,8 +32,8 @@ namespace CardPaymentApp
             bool tryNextTransaction = true;
             transactionTable = new Dictionary<string, bool>();
 
-            // initialize the cache 
-            transactionCache = InitiliazeCache(cacheName, null);
+            // initialize the cache
+            transactionCache = InitiliazeCache(cacheName);
 
             // initialize the datasource
             dataSource = new SqlDataSource();
@@ -100,10 +100,10 @@ namespace CardPaymentApp
 
         }
 
-        private CacheBase InitiliazeCache(string cacheName, CacheConnectionOptions cacheConnectionOptions)
+        private CacheBase InitiliazeCache(string cacheName)
         {
             CacheBase cache = new CacheBase();
-            cache.InitializeCache(cacheName, cacheConnectionOptions);
+            cache.InitializeCache(cacheName);
             return cache;
         }
 

@@ -2,6 +2,7 @@
 using Entities;
 using Npgsql;
 using System;
+using System.Configuration;
 
 namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleUI
 {
@@ -11,10 +12,10 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
         {
             NpgsqlConnection connection = null;
             try
-            
+
             {
                 // Change the connection string to your PostGreSQL Database
-                const string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=password;Database=database";
+                const string connectionString = "Host={server};Port=5432;Username={user};Password={password};Database={database}";
 
                 var customer = new Customer() { customerid = "ALFKI", address = "USA", city = "Newyork", country = "USA"};
 
@@ -25,7 +26,7 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
 
                 var key = customer.customerid;
 
-                var cache = CacheManager.GetCache("democache");
+                var cache = InitializeCache();
 
                 cache.Insert(key, cacheItem);
 
@@ -46,6 +47,19 @@ namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency.NETConsoleU
             }
         }
 
+        /// <summary>
+        /// Connects to the cache named by the CacheName appSetting in App.config. NCache reads the
+        /// server and port of the cache from the &lt;ncache&gt; section of the same file.
+        /// </summary>
+        private static ICache InitializeCache()
+        {
+            var cacheName = ConfigurationManager.AppSettings["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
+            {
+                throw new ConfigurationErrorsException("The 'CacheName' setting is missing from the appSettings section of App.config.");
+            }
 
+            return CacheManager.GetCache(cacheName, new ConnectionOptions());
+        }
     }
 }

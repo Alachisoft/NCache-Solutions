@@ -3,6 +3,8 @@
 ## Table of Contents
 
 * [Overview](#overview)
+* [Prerequisites](#prerequisites)
+* [Connecting to the Cache](#connecting-to-the-cache)
 * [Example](#example)
 * [NetTopologySuite Converter Support](#nettopologysuite-converter-support)
 * [Configuration](#configuration)
@@ -18,6 +20,38 @@
 `Newtonsoft.Json` allows applications to provide custom implementations of `JsonConverter` for handling JSON serialization and deserialization. These converters can be registered through `JsonSerializerSettings` and are automatically used whenever the associated data type is encountered.
 
 A custom converter must inherit from the `JsonConverter` abstract class provided by `Newtonsoft.Json`. Typically, a single converter is responsible for serializing and deserializing one specific type or a group of related types.
+
+## Prerequisites
+
+* NCache Enterprise 5.3 (tested with `Alachisoft.NCache.SDK` 5.3.800)
+* .NET 10.0 SDK and Runtime
+* A Visual Studio version that supports .NET 10 (or the `dotnet` CLI)
+
+## Connecting to the Cache
+
+Set the cache name and the cache server in `appsettings.json`. The server and port go in the `ncache` section, which NCache reads itself, so no `client.ncconf` is needed:
+
+```json
+{
+  "CacheName": "demoCache",
+  "ncache": {
+    "demoCache": {
+      "server": "{cache server IP}",
+      "port": 9800
+    }
+  }
+}
+```
+
+| Setting                  | Description                                        |
+| ------------------------ | -------------------------------------------------- |
+| `CacheName`              | Name of the cache.                                 |
+| `ncache:<cache>:server`  | IP address of an NCache server hosting the cache.  |
+| `ncache:<cache>:port`    | Client port of the NCache server (default `9800`). |
+
+If *CacheName* is missing, the application stops with a clear error message.
+
+> **Warning:** the sample calls `Clear()` on the cache at startup, which removes **all** of its data. Do not point it at a cache that holds data you need.
 
 ## Example
 

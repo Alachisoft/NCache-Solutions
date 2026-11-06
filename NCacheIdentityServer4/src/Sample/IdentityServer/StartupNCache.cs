@@ -1,4 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in 
 // the project root for license information.
 
@@ -9,8 +9,10 @@ using IdentityServer4.NCache.Entities;
 using IdentityServer4.NCache.Mappers;
 using IdentityServer4.NCache.Options;
 using IdentityServer4.NCache.Stores.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,58 +36,29 @@ namespace IdentityServer
                 .AddTestUsers(TestUsers.Users)
                 .AddNCacheConfigurationStore(options =>
                 {
-                    options.CacheId = _configuration["CacheId"];
-
-                    var serverList = _configuration["Servers"].Split(',')
-                                            .Select(x => x.Trim())
-                                            .ToList()
-                                            .Select(y => 
-                                                new NCacheServerInfo(y, 9800))
-                                            .ToList();
-                    options.ConnectionOptions = new NCacheConnectionOptions
-                    {
-                        ServerList = serverList,
-                        EnableClientLogs = true,
-                        LogLevel = NCacheLogLevel.Debug
-                    };
+                    SetNCacheConnection(options);
                 })
-                .AddNCachePersistedGrantStore(options => 
+                .AddNCachePersistedGrantStore(options =>
                 {
-                    options.CacheId = _configuration["CacheId"];
-
-                    var serverList = _configuration["Servers"].Split(',')
-                                            .Select(x => x.Trim())
-                                            .ToList()
-                                            .Select(y => 
-                                                new NCacheServerInfo(y, 9800))
-                                            .ToList();
-                    options.ConnectionOptions = new NCacheConnectionOptions
-                    {
-                        ServerList = serverList,
-                        EnableClientLogs = true,
-                        LogLevel = NCacheLogLevel.Debug
-                    };
+                    SetNCacheConnection(options);
                 })
                 .AddNCacheDeviceCodeStore(options =>
                 {
-                    options.CacheId = _configuration["CacheId"];
-
-                    var serverList = _configuration["Servers"].Split(',')
-                                            .Select(x => x.Trim())
-                                            .ToList()
-                                            .Select(y =>
-                                                new NCacheServerInfo(y, 9800))
-                                            .ToList();
-                    options.ConnectionOptions = new NCacheConnectionOptions
-                    {
-                        ServerList = serverList,
-                        EnableClientLogs = true,
-                        LogLevel = NCacheLogLevel.Debug
-                    };
+                    SetNCacheConnection(options);
                 });
-                
+
 
             builder.AddDeveloperSigningCredential();
+
+            // IdentityServer4 3.1.x configures its authentication cookies with SameSite=None.
+            // Modern browsers reject SameSite=None cookies that are not Secure, and this
+            // sample runs over plain HTTP on localhost, so use Lax instead.
+            services.PostConfigure<CookieAuthenticationOptions>(
+                IdentityServerConstants.DefaultCookieAuthenticationScheme,
+                options => options.Cookie.SameSite = SameSiteMode.Lax);
+            services.PostConfigure<CookieAuthenticationOptions>(
+                IdentityServerConstants.ExternalCookieAuthenticationScheme,
+                options => options.Cookie.SameSite = SameSiteMode.Lax);
 
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
@@ -134,6 +107,13 @@ namespace IdentityServer
             {
                 endpoints.MapDefaultControllerRoute();
             });
+        }
+
+        // Cache name comes from "CacheName" in appsettings.json; NCache reads the
+        // server and port of the cache from the "ncache" section of the same file.
+        private void SetNCacheConnection(OptionsBase options)
+        {
+            options.CacheId = _configuration["CacheName"];
         }
 
         private void InitializeNCacheStore(IApplicationBuilder app)

@@ -47,6 +47,8 @@ namespace WebAPI.Controllers
         {
             // get cache name from appsettings.json
             string cacheName = configuration.GetValue<string>("CacheName");
+            if (string.IsNullOrWhiteSpace(cacheName))
+                throw new InvalidOperationException("appsettings.json must define \"CacheName\".");
 
             // get read/write thru provider name from appsettings.json
             string readThruProviderName = configuration.GetValue<string>("ReadThruProviderName");
@@ -56,8 +58,8 @@ namespace WebAPI.Controllers
             if (_storeHandler == null)
                 _storeHandler = new StoreHandler(cacheName, readThruProviderName, writeThruProviderName);
 
-            // acquire cache handler
-            _cache = CacheManager.GetCache(configuration.GetValue<string>("CacheName"));
+            // acquire cache handler; server and port are read by NCache from the "ncache" section of appsettings.json
+            _cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
         }
 
         /// <summary>

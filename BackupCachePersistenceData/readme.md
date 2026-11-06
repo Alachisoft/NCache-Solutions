@@ -1,78 +1,64 @@
-# Backup and Restore NCache Persisted Data
+# Backup and Restore NCache Cache Data
 
 ## Introduction
 
-Using a distributed cache with persistence, you can store data to a
-persistence store. NCache enables flexible backup of the persisted data
-while the cache is active, taking into account the necessity for
-periodic backup of the persistence store due to maintenance or other
-causes. Thus, you can store a copy of your data in the cache and restore
-it in the event of a crisis.
+This sample backs up the data of a running NCache cache to a folder and
+restores it back into the cache, using the NCache 5.3 PowerShell cmdlets:
 
--   As for backing up persisted data, the write operations on the
-    persistent store during backup may cause data corruption, it is
-    crucial to remember. You can pause and resume the persistence of
-    NCache data to prevent this kind of corruption. For example, you may
-    first pause the data persistence to the persistence store, backup
-    the persistent store, and then resume the data persistence to the
-    persistence store.
+-   **Backup** uses `Export-CacheData`. It dumps every item currently in
+    the cache to a local or network folder while the cache keeps running.
+-   **Restore** uses `Import-CacheData`. It reloads the items from that
+    folder into the cache.
 
--   Whereas for restoring persisted data, you just need to stop the
-    cache, copy the backup, and then resume the cache, you can quickly
-    restore data from the backup.
+> NCache 5.3 no longer has the `Suspend-NCacheDataPersistence` and
+> `Resume-NCacheDataPersistence` cmdlets used by earlier versions of this
+> sample, so the script now uses `Export-CacheData` and `Import-CacheData`.
 
-## **Backup NCache Persisted Data**
+## Prerequisites
 
-You can back up the persistence store of your cache using
-Suspend-NCacheDataPersistence and Resume-NCacheDataPersistence cmdlets
-together. The following example demonstrates how to backup persistence
-store of a Distributed Cache with Persistence named ClusteredCache
-created with NCache Persistence.
+-   NCache 5.3 installed on the machine running the script. The script
+    loads the NCache PowerShell module (`ncacheps`) itself.
+-   The cache must be registered and **running** on the server.
+-   The account running the script needs write access to the backup folder
+    (for backup) or read access to it (for restore).
 
-For running the provided script through PowerShell command,
+## Parameters
 
-*\'.\\PersistenceBackup_Script.ps1\' \'ClusteredCache\'
-\'\\\\20.200.20.29\\MyPersistenceFiles\\ClusteredCache_db\'
-\'\\\\20.200.20.29\\MyPersistenceFiles\\ClusteredCache1_db\'*
+| Parameter     | Required | Description                                                        |
+|---------------|----------|--------------------------------------------------------------------|
+| `-CacheName`  | Yes      | Name of the cache.                                                 |
+| `-BackupPath` | Yes      | Backup folder. Created on backup if it does not exist.             |
+| `-Server`     | No       | IP or name of a server running the cache. Default: `localhost`.    |
+| `-Restore`    | No       | Restore from `-BackupPath` instead of taking a backup.             |
+| `-Expiry`     | No       | Expiration on restore: `None`, `Adjusted` (default), `Asbefore`.   |
 
-Here, you need to provide three parameters in the command,
+## Backup Cache Data
 
-> Name of Distributed Cache with Persistence
->
-> UNC path of configured store location of cache
->
-> Backup folder path
+Open PowerShell in this folder and run:
 
-Valid paths must be specified and read access permissions must be
-provided for UNC path of configured store location of cache and write
-access permissions must be provided for backup folder path.
+```powershell
+.\PersistenceBackup_Script.ps1 -CacheName demoCache -BackupPath "C:\CacheBackup" -Server [server-ip]
+```
 
-Note: Make sure there are no configuration changes (node additions or
-deletions, or joins or departures) that could cause state transfers on
-the cache while your data persistence to the persistence store has been
-paused.
+The backup is written to a subfolder named after the cache, for example
+`C:\CacheBackup\democache`.
 
-## **Restore NCache Persisted Data**
+## Restore Cache Data
 
-Data from the backup can easily be restored at any moment to your cache.
-The persistence store of ClusteredCache can be used to recover backup
-data using the example that follows.
+Make sure the cache is running, then run the script with `-Restore` and the
+same `-BackupPath`:
 
--   First, you need to stop ClusteredCache using Stop-Cache PowerShell cmdelt
-    or NCache Web Manager.The following command stops the cache named 
-    ClusteredCache on the specified server 20.200.20.39.
-    Stop-Cache ClusteredCache -Server 20.200.20.39
+```powershell
+.\PersistenceBackup_Script.ps1 -CacheName demoCache -BackupPath "C:\CacheBackup" -Server [server-ip] -Restore
+```
 
+## Running the cmdlets directly
 
--   *Next, you need to copy all the items from your backup folder to the
-    configured store location (UNC path) of your cache. You can find the
-    UNC path of the persistence store configured for your cache under
-    store information in NCache Web Manager. You can copy backup from
-    the backup path to the configured store location either manually or
-    using PowerShell. The following PowerShell command copies all items
-    from backup folder to the store location of ClusteredCache.*
-    *Copy-Item -Path \"F:\\PersistentCacheBackup\" -Destination
-    \"\\\\fileserver\\stores\\demoClusteredCache_db\" -Recurse*
+The script is a wrapper around these two cmdlets, which you can also run
+yourself:
 
--   Once it is copied, start ClusteredCache cache on all server nodes
-    from NCache Web Manager or using Start-Cache PowerShell cmdlet.
+```powershell
+Import-Module "C:\Program Files\NCache\bin\tools\ncacheps\ncacheps.psd1"
+Export-CacheData -Name demoCache -Path "C:\CacheBackup" -Server [server-ip]
+Import-CacheData -Name demoCache -Path "C:\CacheBackup" -Server [server-ip]
+```

@@ -23,12 +23,15 @@ namespace Alachisoft.StreamProcessingUI
                                      true)
                                     .Build();
 
-            IDictionary parameters = new Dictionary<string, string>();
-            parameters.Add("cacheId", configuration["settings:cacheId"]);
+            string cacheName = configuration["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
+                throw new InvalidOperationException(
+                    "CacheName cannot be null or empty in appsettings.json.");
 
-            _cache = CacheManager.GetCache(parameters["cacheId"].ToString());
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
+            _cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
             _cache.Clear();
-            Console.WriteLine("Cache Initialized");
+            Console.WriteLine($"Cache '{cacheName}' initialized");
 
         }
         public void RegisterContinousQueryForGoldCustomers()

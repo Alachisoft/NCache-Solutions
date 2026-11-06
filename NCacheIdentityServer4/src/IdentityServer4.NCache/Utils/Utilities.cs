@@ -16,15 +16,25 @@ namespace IdentityServer4.NCache.Utils
     {
         internal static ICache CreateCache(OptionsBase options)
         {
-            if (options.ConnectionOptions == null)
+            if (options == null)
             {
-                return CacheManager.GetCache(
-                    options.CacheId);
+                throw new ArgumentNullException(nameof(options));
             }
-            else
+
+            if (string.IsNullOrWhiteSpace(options.CacheId))
             {
-                return CacheManager.GetCache(options.CacheId, options.ConnectionOptions.CacheConnectionOptions);
+                throw new InvalidOperationException(
+                    "NCache cache name is not configured. Set the 'CacheId' " +
+                    "option (e.g. from the \"CacheName\" key in appsettings.json).");
             }
+
+            // The server and port of the cache are read by NCache from the "ncache"
+            // section of appsettings.json; ConnectionOptions only adds optional settings.
+            ConnectionOptions connectionOptions =
+                options.ConnectionOptions?.ToConnectionOptions() ??
+                new ConnectionOptions();
+
+            return CacheManager.GetCache(options.CacheId, connectionOptions);
         }
 
         internal static string CreateCachedPersistedGrantStoreKey(

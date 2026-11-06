@@ -39,18 +39,18 @@ namespace MatchHandler
         /// <param name="writeThruProviderName">writethru provider name</param>
         public StoreHandler(string cacheName, string readThruProviderName, string writeThruProviderName)
         {
-            // initialize cache
-            _cache = CacheManager.GetCache(cacheName);
+            // initialize cache; server and port are read by NCache from the "ncache" section of the app's appsettings.json
+            _cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
 
-            // assign null to provider names if empty provider names are received
-            if (readThruProviderName.Equals(string.Empty))
-                readThruProviderName = null;
-            if (writeThruProviderName.Equals(string.Empty))
-                writeThruProviderName = null;
-
-            // initialize read/write thru options for later use
-            readThruOptions = new ReadThruOptions(ReadMode.ReadThru, readThruProviderName);
-            writeThruOptions = new WriteThruOptions(WriteMode.WriteThru, writeThruProviderName);
+            // initialize read/write thru options for later use.
+            // If no provider name is configured, don't use a backing source (match updates live in the cache only);
+            // otherwise the cache must have that provider configured or NCache throws "Backing source not available".
+            readThruOptions = string.IsNullOrEmpty(readThruProviderName)
+                ? new ReadThruOptions(ReadMode.None)
+                : new ReadThruOptions(ReadMode.ReadThru, readThruProviderName);
+            writeThruOptions = string.IsNullOrEmpty(writeThruProviderName)
+                ? new WriteThruOptions(WriteMode.None)
+                : new WriteThruOptions(WriteMode.WriteThru, writeThruProviderName);
         }
 
         /// <summary>

@@ -22,11 +22,14 @@ namespace StreamToNCache
                                      true)
                                     .Build();
 
-            IDictionary parameters = new Dictionary<string, string>();
-            parameters.Add("cacheId", configuration["settings:cacheId"]);
+            string cacheName = configuration["CacheName"];
+            if (string.IsNullOrWhiteSpace(cacheName))
+                throw new InvalidOperationException(
+                    "CacheName cannot be null or empty in appsettings.json.");
 
-            _cache = CacheManager.GetCache(parameters["cacheId"].ToString());
-            Console.WriteLine("Cache Initialized");
+            // Server and port are read by NCache from the "ncache" section of appsettings.json
+            _cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
+            Console.WriteLine($"Cache '{cacheName}' initialized");
         }
 
         static private void PopulateCache()

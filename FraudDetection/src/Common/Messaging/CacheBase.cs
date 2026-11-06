@@ -26,14 +26,14 @@ namespace Common
     {  
        // instance of cache
         protected ICache cache;
-        // initialie a cache with respective options
-        public ICache InitializeCache(string cacheName, CacheConnectionOptions cacheConnectionOptions = null)
+        // initialize a cache handle; server and port are read by NCache from the "ncache" section of appsettings.json
+        public ICache InitializeCache(string cacheName)
         {
             if (string.IsNullOrEmpty(cacheName))
-                throw new ArgumentNullException("Cache Name is empty.");
+                throw new ArgumentNullException(nameof(cacheName), "Cache Name is empty.");
             try
             {
-                cache = CacheManager.GetCache(cacheName, cacheConnectionOptions);
+                cache = CacheManager.GetCache(cacheName, new ConnectionOptions());
             }
             catch
             {
