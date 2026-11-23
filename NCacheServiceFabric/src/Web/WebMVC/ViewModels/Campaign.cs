@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.WebMVC.ViewModels
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.WebMVC.ViewModels
 {
     using System.Collections.Generic;
 

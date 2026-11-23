@@ -1,4 +1,5 @@
-﻿using Alachisoft.NCache.Client;
+﻿// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
+using Alachisoft.NCache.Client;
 using Devspaces.Support;
 using HealthChecks.UI.Client;
 using Microsoft.ApplicationInsights.Extensibility;

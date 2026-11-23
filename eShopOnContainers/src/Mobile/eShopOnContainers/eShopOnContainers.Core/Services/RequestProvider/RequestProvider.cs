@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Exceptions;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Exceptions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;

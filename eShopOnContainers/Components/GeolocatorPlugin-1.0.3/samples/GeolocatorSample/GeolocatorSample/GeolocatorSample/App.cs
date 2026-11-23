@@ -1,4 +1,5 @@
-﻿using Geolocator.Plugin;
+﻿// Copyright (c) 2014 James Montemagno / Refractored LLC.
+using Geolocator.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;

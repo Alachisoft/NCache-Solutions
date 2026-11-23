@@ -1,4 +1,5 @@
-﻿using Alachisoft.StreamProcessingUI;
+﻿// Copyright (c) 2026 Alachisoft.
+using Alachisoft.StreamProcessingUI;
 using System;
 
 namespace StreamProcessing

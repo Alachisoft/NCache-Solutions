@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors.
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microsoft.Extensions.Logging;

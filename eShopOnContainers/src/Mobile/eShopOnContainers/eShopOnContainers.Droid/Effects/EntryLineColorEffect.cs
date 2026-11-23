@@ -1,3 +1,4 @@
+// Copyright (c) 2017 Microsoft Corp.
 using Android.Widget;
 using eShopOnContainers.Core.Behaviors;
 using eShopOnContainers.Droid.Effects;

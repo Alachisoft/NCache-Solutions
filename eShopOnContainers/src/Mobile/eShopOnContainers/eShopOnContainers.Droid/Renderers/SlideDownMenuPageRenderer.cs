@@ -1,3 +1,4 @@
+// Copyright (c) 2017 Microsoft Corp.
 using Android.Content;
 using eShopOnContainers.Core.Views;
 using eShopOnContainers.Droid.Renderers;

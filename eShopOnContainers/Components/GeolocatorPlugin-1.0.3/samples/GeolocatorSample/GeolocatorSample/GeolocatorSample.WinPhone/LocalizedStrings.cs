@@ -1,4 +1,5 @@
-﻿using GeolocatorSample.WinPhone.Resources;
+﻿// Copyright (c) 2014 James Montemagno / Refractored LLC.
+using GeolocatorSample.WinPhone.Resources;
 
 namespace GeolocatorSample.WinPhone
 {

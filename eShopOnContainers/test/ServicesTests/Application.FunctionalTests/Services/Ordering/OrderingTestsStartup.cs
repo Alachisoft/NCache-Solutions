@@ -1,4 +1,5 @@
-﻿using FunctionalTests.Middleware;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using FunctionalTests.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.eShopOnContainers.Services.Ordering.API;

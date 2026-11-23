@@ -1,4 +1,5 @@
-﻿namespace Ordering.API.Application.IntegrationEvents.Events
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Ordering.API.Application.IntegrationEvents.Events
 {
     using System.Collections.Generic;
     using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;

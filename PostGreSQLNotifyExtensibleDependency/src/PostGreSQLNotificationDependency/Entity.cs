@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿// Copyright (c) 2026 Alachisoft.
+using Newtonsoft.Json;
 using System;
 
 namespace Alachisoft.NCache.Samples.PostGreSQLNotificationDependency

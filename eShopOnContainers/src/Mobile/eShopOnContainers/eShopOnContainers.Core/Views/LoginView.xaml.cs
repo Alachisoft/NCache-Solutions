@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.ViewModels;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;

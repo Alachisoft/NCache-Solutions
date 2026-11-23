@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

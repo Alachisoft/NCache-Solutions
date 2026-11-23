@@ -1,4 +1,5 @@
-﻿using Acr.UserDialogs;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Acr.UserDialogs;
 using System.Threading.Tasks;
 
 namespace eShopOnContainers.Services

@@ -1,4 +1,5 @@
-﻿namespace eShopOnContainers.Core.Services.Common
+﻿// Copyright (c) 2017 Microsoft Corp.
+namespace eShopOnContainers.Core.Services.Common
 {
     public static class Common
     {

@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Locations.API.Infrastructure.Filters
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Locations.API.Infrastructure.Filters
 {
     using AspNetCore.Mvc;
     using Microsoft.AspNetCore.Hosting;

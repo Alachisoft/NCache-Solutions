@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors.
 using System;
 
 namespace WebMVC.Models

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF;
 using Microsoft.eShopOnContainers.Services.Ordering.API.Infrastructure;

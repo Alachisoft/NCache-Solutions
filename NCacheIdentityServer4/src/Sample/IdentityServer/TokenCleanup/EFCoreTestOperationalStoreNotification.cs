@@ -1,4 +1,5 @@
-﻿using IdentityServer4.EntityFramework;
+﻿// Copyright notices for this sample are in LICENSE-IdentityServer4 and LICENSE-Alachisoft at the sample root.
+using IdentityServer4.EntityFramework;
 using IdentityServer4.EntityFramework.Entities;
 using System;
 using System.Collections.Generic;

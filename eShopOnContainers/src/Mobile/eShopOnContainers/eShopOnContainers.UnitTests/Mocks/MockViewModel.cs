@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Validations;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Validations;
 using eShopOnContainers.Core.ViewModels.Base;
 
 namespace eShopOnContainers.UnitTests

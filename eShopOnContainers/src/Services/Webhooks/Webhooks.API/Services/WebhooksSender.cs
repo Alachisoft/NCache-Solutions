@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

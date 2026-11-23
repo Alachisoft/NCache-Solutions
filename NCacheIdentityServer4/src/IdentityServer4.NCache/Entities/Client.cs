@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿// Copyright (c) 2026 Alachisoft.
+using IdentityServer4.Models;
 using IdentityServer4.NCache.Stores.Interfaces;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
-﻿using Alachisoft.NCache.Sample.Data;
+﻿// Copyright (c) 2026 Alachisoft.
+using Alachisoft.NCache.Sample.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;

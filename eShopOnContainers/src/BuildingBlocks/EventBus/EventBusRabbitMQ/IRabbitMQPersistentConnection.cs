@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using RabbitMQ.Client;
 using System;
 
 namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ

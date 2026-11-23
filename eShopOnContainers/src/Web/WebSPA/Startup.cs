@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.WebSPA;
+﻿// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
+using eShopOnContainers.WebSPA;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.ServiceFabric;
 using Microsoft.eShopOnContainers.BuildingBlocks.NCacheHealthCheck;

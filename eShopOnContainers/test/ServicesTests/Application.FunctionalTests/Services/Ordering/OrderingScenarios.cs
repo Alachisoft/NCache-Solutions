@@ -1,4 +1,5 @@
-﻿using FunctionalTests.Extensions;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using FunctionalTests.Extensions;
 using FunctionalTests.Services.Basket;
 using Microsoft.eShopOnContainers.Services.Basket.API.Model;
 using Microsoft.eShopOnContainers.WebMVC.ViewModels;

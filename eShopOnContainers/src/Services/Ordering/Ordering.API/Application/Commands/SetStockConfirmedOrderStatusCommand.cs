@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;

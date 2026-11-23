@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;

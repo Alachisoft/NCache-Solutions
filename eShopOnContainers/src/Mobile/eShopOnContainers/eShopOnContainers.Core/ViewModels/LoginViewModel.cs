@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Models.User;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Models.User;
 using eShopOnContainers.Core.Services.Identity;
 using eShopOnContainers.Core.Services.OpenUrl;
 using eShopOnContainers.Core.Services.Settings;

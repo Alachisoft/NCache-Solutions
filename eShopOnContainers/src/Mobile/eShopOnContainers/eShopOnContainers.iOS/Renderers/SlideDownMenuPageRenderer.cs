@@ -1,4 +1,5 @@
-﻿using CoreGraphics;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using CoreGraphics;
 using eShopOnContainers.Core.Views;
 using eShopOnContainers.iOS;
 using SlideOverKit.iOS;

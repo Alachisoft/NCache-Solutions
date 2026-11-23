@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.eShopOnContainers.Services.Identity.API.Extensions;
 using Microsoft.eShopOnContainers.Services.Identity.API.Models;

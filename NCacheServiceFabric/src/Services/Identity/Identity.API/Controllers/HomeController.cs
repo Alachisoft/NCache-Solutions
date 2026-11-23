@@ -1,4 +1,5 @@
-﻿
+﻿// Copyright (c) .NET Foundation and Contributors.
+
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopOnContainers.Services.Identity.API.Models;

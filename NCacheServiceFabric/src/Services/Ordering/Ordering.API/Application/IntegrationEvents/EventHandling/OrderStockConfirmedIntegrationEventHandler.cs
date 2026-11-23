@@ -1,4 +1,5 @@
-﻿namespace Ordering.API.Application.IntegrationEvents.EventHandling
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Ordering.API.Application.IntegrationEvents.EventHandling
 {
     using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
     using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Extensions;

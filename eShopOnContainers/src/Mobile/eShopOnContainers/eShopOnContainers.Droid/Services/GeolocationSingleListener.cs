@@ -1,4 +1,5 @@
-﻿using Android.Locations;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Android.Locations;
 using Android.OS;
 using Android.Runtime;
 using eShopOnContainers.Core.Models.Location;

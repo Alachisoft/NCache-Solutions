@@ -1,4 +1,5 @@
-﻿namespace Ordering.API.Application.DomainEventHandlers.OrderGracePeriodConfirmed
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Ordering.API.Application.DomainEventHandlers.OrderGracePeriodConfirmed
 {
     using Domain.Events;
     using MediatR;

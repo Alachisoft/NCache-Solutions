@@ -1,4 +1,5 @@
-﻿using SlideOverKit;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using SlideOverKit;
 
 namespace eShopOnContainers.Core.Views
 {

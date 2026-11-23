@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright notices for this sample are in LICENSE-IdentityServer4 and LICENSE-Alachisoft at the sample root.
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IdentityServer.Data.Migrations.IdentityServer.PersistedGrantDb

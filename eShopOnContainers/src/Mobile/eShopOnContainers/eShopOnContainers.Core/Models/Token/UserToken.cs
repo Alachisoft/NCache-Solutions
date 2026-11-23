@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Newtonsoft.Json;
 
 namespace eShopOnContainers.Core.Models.Token
 {

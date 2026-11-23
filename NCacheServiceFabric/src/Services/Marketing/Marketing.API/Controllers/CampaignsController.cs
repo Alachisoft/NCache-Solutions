@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.Services.Marketing.API.Infrastructure.Services;
+﻿// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
+using Microsoft.eShopOnContainers.Services.Marketing.API.Infrastructure.Services;
 
 namespace Microsoft.eShopOnContainers.Services.Marketing.API.Controllers
 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) 2014 James Montemagno / Refractored LLC.
+using System;
 
 using Android.App;
 using Android.Content.PM;

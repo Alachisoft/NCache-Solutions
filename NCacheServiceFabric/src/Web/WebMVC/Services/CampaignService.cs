@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.WebMVC.Services
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.WebMVC.Services
 {
     using global::WebMVC.Infrastructure;
     using Microsoft.Extensions.Logging;

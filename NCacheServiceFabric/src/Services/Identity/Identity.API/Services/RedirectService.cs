@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.eShopOnContainers.Services.Identity.API.Services

@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors.
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopOnContainers.WebMVC.Services;

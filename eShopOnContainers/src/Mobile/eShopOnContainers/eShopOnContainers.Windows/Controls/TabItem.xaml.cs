@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 

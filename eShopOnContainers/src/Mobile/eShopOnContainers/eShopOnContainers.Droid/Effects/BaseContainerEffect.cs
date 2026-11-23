@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms.Platform.Android;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Xamarin.Forms.Platform.Android;
 
 namespace eShopOnContainers.Droid.Effects
 {

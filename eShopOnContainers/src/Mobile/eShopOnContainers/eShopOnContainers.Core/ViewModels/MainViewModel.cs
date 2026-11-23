@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Models.Navigation;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Models.Navigation;
 using eShopOnContainers.Core.ViewModels.Base;
 using System.Threading.Tasks;
 using System.Windows.Input;

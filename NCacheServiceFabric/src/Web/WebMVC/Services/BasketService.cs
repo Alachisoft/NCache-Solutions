@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.WebMVC.ViewModels;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.WebMVC.ViewModels;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Collections.Generic;

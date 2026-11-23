@@ -1,3 +1,4 @@
+// Copyright notices for this sample are in LICENSE-IdentityServer4 and LICENSE-Alachisoft at the sample root.
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Services;

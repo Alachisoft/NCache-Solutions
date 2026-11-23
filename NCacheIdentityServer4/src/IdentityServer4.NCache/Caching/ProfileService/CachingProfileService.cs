@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿// Copyright (c) 2026 Alachisoft.
+using System.Threading.Tasks;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Logging;
 using IdentityServer4.Extensions;

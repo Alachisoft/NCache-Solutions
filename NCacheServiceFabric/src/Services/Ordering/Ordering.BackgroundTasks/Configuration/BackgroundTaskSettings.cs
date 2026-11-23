@@ -1,4 +1,5 @@
-﻿namespace Ordering.BackgroundTasks.Configuration
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Ordering.BackgroundTasks.Configuration
 {
     public class BackgroundTaskSettings
     {

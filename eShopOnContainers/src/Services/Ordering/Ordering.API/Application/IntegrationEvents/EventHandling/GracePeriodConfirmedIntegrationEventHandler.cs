@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using MediatR;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Extensions;
 using Microsoft.eShopOnContainers.Services.Ordering.API;

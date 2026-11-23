@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿// Copyright (c) 2014 James Montemagno / Refractored LLC.
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;

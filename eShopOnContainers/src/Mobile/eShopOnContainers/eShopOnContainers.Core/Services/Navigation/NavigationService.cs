@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Services.Settings;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Services.Settings;
 using eShopOnContainers.Core.ViewModels;
 using eShopOnContainers.Core.ViewModels.Base;
 using eShopOnContainers.Core.Views;

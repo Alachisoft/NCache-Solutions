@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Alachisoft.NCache.Samples.Dapper.Models")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48840f1e2ab493a9038c3efffc4dcc7a1a904964")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36c48fcad45abc64d16f8519abe30816bb00c40f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Alachisoft.NCache.Samples.Dapper.Models")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Alachisoft.NCache.Samples.Dapper.Models")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

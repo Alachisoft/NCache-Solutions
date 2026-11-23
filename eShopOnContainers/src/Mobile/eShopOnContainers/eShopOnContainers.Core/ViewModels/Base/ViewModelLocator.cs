@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Services.Basket;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Services.Basket;
 using eShopOnContainers.Core.Services.Catalog;
 using eShopOnContainers.Core.Services.Dependency;
 using eShopOnContainers.Core.Services.FixUri;

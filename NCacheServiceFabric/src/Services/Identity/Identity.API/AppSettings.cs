@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Identity.API
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Identity.API
 {
     public class AppSettings
     {

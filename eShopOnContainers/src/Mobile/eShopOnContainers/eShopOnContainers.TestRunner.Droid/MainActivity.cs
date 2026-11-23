@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Android.App;
 using Android.OS;
 using Xunit.Runners.UI;
 using Xunit.Sdk;

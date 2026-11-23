@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.WebMVC;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.WebMVC;
 using Microsoft.eShopOnContainers.WebMVC.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

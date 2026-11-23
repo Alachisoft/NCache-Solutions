@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Extensions;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Extensions;
 using eShopOnContainers.Core.Helpers;
 using eShopOnContainers.Core.Models.Marketing;
 using eShopOnContainers.Core.Services.FixUri;

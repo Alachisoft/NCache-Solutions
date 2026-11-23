@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Foundation;
 using UIKit;
 using Xunit.Runner;
 using Xunit.Sdk;

@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Models.Catalog;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Models.Catalog;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 

@@ -1,4 +1,5 @@
-﻿using FFImageLoading.Forms;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using FFImageLoading.Forms;
 using FFImageLoading.Forms.WinUWP;
 using System;
 using System.Collections.Generic;

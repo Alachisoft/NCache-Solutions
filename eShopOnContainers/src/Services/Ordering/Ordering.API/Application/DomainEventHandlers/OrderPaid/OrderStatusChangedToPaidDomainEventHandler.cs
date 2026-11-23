@@ -1,4 +1,5 @@
-﻿namespace Ordering.API.Application.DomainEventHandlers.OrderPaid
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Ordering.API.Application.DomainEventHandlers.OrderPaid
 {
     using Domain.Events;
     using MediatR;

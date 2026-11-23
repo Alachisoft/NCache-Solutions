@@ -1,4 +1,5 @@
-﻿using Microsoft.ML.Data;
+﻿// Copyright (c) 2026 Alachisoft.
+using Microsoft.ML.Data;
 
 namespace Regression_TaxiFarePrediction.DataStructures
 {

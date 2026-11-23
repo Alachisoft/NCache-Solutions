@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Webhooks.API.Model;
 

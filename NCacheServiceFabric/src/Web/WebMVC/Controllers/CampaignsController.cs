@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors.
 namespace Microsoft.eShopOnContainers.WebMVC.Controllers
 {
     using AspNetCore.Authorization;

@@ -1,4 +1,5 @@
-﻿using BlazorSignalRApp.Shared;
+﻿// Copyright (c) 2026 Alachisoft.
+using BlazorSignalRApp.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

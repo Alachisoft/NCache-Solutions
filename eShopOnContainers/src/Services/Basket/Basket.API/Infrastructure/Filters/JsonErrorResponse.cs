@@ -1,4 +1,5 @@
-﻿namespace Basket.API.Infrastructure.Filters
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Basket.API.Infrastructure.Filters
 {
     public class JsonErrorResponse
     {

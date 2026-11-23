@@ -1,4 +1,5 @@
-﻿using UIKit;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using UIKit;
 
 namespace eShopOnContainers.TestRunner.iOS
 {

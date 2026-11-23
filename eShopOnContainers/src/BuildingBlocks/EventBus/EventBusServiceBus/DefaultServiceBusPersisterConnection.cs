@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Logging;
 using System;
 

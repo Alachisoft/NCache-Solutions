@@ -1,4 +1,5 @@
-﻿using Basket.API.IntegrationEvents.Events;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Basket.API.IntegrationEvents.Events;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.eShopOnContainers.Services.Basket.API;
 using Microsoft.eShopOnContainers.Services.Basket.API.Model;

@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Animations.Base;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Animations.Base;
 using eShopOnContainers.Core.Helpers;
 using System;
 using System.Threading.Tasks;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System;
 using Newtonsoft.Json;
 
 namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events

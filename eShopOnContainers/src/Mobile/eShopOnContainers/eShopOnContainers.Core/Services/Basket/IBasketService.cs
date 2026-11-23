@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Models.Basket;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Models.Basket;
 using System.Threading.Tasks;
 
 namespace eShopOnContainers.Core.Services.Basket

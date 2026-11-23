@@ -1,4 +1,5 @@
-﻿namespace Marketing.FunctionalTests
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Marketing.FunctionalTests
 {
     public class CampaignScenarioBase : MarketingScenarioBase
     {

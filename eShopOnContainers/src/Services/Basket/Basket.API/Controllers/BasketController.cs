@@ -1,4 +1,5 @@
-﻿using Basket.API.IntegrationEvents.Events;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Basket.API.IntegrationEvents.Events;
 using Basket.API.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

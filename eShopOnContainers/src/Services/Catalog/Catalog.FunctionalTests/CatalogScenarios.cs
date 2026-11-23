@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 

@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System.Security;
 
 namespace Microsoft.eShopOnContainers.Services.Marketing.API
 {

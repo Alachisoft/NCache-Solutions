@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) 2018 .NET Foundation.
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.ML.Data;

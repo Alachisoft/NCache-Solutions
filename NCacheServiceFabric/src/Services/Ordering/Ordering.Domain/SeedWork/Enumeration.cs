@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors.
 using System;
 using System.Collections.Generic;
 using System.Linq;

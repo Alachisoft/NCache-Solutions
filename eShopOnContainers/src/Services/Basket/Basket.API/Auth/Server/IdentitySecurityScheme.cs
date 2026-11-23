@@ -1,4 +1,5 @@
-﻿using Swashbuckle.AspNetCore.Swagger;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 
 namespace Microsoft.eShopOnContainers.Services.Basket.API.Auth.Server

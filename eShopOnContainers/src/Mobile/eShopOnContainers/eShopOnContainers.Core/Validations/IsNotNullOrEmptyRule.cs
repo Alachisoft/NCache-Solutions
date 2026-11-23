@@ -1,4 +1,5 @@
-﻿namespace eShopOnContainers.Core.Validations
+﻿// Copyright (c) 2017 Microsoft Corp.
+namespace eShopOnContainers.Core.Validations
 {
     public class IsNotNullOrEmptyRule<T> : IValidationRule<T>
     {

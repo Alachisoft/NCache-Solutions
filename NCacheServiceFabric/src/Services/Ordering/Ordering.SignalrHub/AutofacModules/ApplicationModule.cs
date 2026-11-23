@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Autofac;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Ordering.SignalrHub.IntegrationEvents;
 using System;

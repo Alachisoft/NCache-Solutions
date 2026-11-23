@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.TestHost;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Net.Http;
 

@@ -1,4 +1,5 @@
-﻿using Alachisoft.NCache.Client;
+﻿// Copyright (c) 2026 Alachisoft.
+using Alachisoft.NCache.Client;
 using Alachisoft.NCache.Runtime.Caching;
 using IdentityServer4.Services;
 using IdentityServer4.Stores.Serialization;

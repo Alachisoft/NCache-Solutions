@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.WebSPA;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using eShopOnContainers.WebSPA;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

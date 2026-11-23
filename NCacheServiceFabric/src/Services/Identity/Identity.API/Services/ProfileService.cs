@@ -1,4 +1,5 @@
-﻿using IdentityModel;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;

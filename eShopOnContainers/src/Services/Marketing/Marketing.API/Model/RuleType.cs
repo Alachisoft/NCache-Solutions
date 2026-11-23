@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Marketing.API.Model
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Marketing.API.Model
 {
     using Microsoft.eShopOnContainers.Services.Marketing.API.Infrastructure.Exceptions;
     using System;

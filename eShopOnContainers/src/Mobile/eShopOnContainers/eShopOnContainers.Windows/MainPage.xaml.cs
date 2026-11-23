@@ -1,4 +1,5 @@
-﻿using Windows.Foundation.Metadata;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 

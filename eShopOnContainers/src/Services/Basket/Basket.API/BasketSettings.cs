@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Basket.API
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Basket.API
 {
     public class BasketSettings
     {

@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors.
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;

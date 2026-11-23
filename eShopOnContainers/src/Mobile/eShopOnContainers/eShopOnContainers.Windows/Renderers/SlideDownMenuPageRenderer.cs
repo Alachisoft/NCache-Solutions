@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Views;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Views;
 using eShopOnContainers.Windows.Renderers;
 using SlideOverKit.UWP;
 using System;

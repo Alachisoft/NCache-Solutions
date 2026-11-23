@@ -1,4 +1,5 @@
-﻿namespace Ordering.API.Application.DomainEventHandlers.OrderStockConfirmed
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Ordering.API.Application.DomainEventHandlers.OrderStockConfirmed
 {
     using Domain.Events;
     using MediatR;
