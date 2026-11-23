@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
 using RabbitMQ.Client;

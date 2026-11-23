@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Ordering.API.Application.Commands;
 

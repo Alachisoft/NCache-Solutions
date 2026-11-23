@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System;
 namespace Microsoft.eShopOnContainers.Services.Marketing.API.Dto
 {
     public class UserLocationDTO

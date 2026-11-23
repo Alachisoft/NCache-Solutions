@@ -8,3 +8,7 @@ There are two options for creating VM machines with Docker installed:
 If you want to create a VM for deploying images you build locally, then use the first option.
 
 If you want to create a VM to run images deployed to DockerHub (to provide some test environment) then use the second option.
+
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

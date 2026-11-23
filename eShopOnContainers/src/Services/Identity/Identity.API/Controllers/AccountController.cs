@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;

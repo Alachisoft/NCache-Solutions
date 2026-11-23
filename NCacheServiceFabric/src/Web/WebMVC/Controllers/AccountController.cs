@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.Authentication;

@@ -1,4 +1,5 @@
-﻿using Android;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Android;
 using Android.App;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;

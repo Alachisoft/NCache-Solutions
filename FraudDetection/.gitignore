@@ -7,3 +7,7 @@ bin/
 obj/
 *.csproj.user
 src/BackingSource/Properties/PublishProfiles/
+
+# MSBuild binary logs and test result files
+*.binlog
+*.trx

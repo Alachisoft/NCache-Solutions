@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using System.Threading.Tasks;
 
 namespace eShopOnContainers.Core.Services.Location
 {    

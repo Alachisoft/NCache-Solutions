@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -170,6 +170,7 @@ namespace FraudDetector.TrainedLogic
                 validEmail = false;
             }
 
+            // The spelling of invalidEmailDoamin is part of the cache key. A writer using a corrected spelling would populate a different list.
             IList<string> invalidEmailDoamin = learntCache.GetTrainedDataFromCache("invalidEmailDoamin");
 
             if (invalidEmailDoamin.Contains(email))

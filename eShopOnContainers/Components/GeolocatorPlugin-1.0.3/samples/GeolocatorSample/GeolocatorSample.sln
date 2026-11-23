@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocatorSample.Droid", "G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocatorSample.WinPhone", "GeolocatorSample\GeolocatorSample.WinPhone\GeolocatorSample.WinPhone.csproj", "{82A2958E-AB5B-40B8-A556-DA41952F870F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10342594-3A56-42CE-B5E2-2DD82850899B}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\component\GettingStarted.md = ..\..\component\GettingStarted.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

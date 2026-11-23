@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using FluentValidation;
 using Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands;
 using Microsoft.Extensions.Logging;
 

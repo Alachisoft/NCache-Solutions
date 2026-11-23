@@ -20,6 +20,8 @@ namespace Test
         /// </summary>
         private ICache _cache;
         private string _cacheId;
+        private ConnectionOptions _connectionOptions;
+        private string _server;
         private JSonSerializer _serializer = new JSonSerializer();
 
         #region properties being used to fetch and store user data
@@ -179,8 +181,6 @@ namespace Test
             Customer customer = null;
 
             bool isRunning = true;
-            // clearing cache to see readthru/writethru changes
-            _cache.Clear();
             while (isRunning)
             {
                 try
@@ -264,20 +264,24 @@ namespace Test
             //Name of provider to be deployed
             //PersistenceReadThru , PersistenceWriteThru and PersistenceStartupLoadewr
             var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
-            .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-            .AddJsonFile("appSettings.json", optional: true, reloadOnChange: true);
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appSettings.json", optional: false);
 
             IConfigurationRoot configuration = builder.Build();
 
-            string cacheId = configuration["NCache:cacheName"];
+            string cacheId = configuration["CacheName"];
             if (String.IsNullOrEmpty(cacheId))
             {
-                Console.WriteLine("The CacheID cannot be null or empty.");
-                return;
+                throw new InvalidOperationException("CacheName is required in appSettings.json.");
             }
-            _cacheId=cacheId;
+            _cacheId = cacheId;
+            var endpoint = configuration.GetSection($"ncache:{cacheId}");
+            _server = endpoint["server"];
+            if (string.IsNullOrWhiteSpace(_server) || !int.TryParse(endpoint["port"], out var port) || port < 1 || port > 65535)
+                throw new InvalidOperationException($"Configure a server and port for {cacheId} in appSettings.json.");
+            _connectionOptions = new ConnectionOptions { Servers = new List<ServerInfo> { new ServerInfo(_server, port) } };
             // Initialize an instance of the cache to begin performing operations:
-            _cache = CacheManager.GetCache(cacheId);
+            _cache = CacheManager.GetCache(cacheId, _connectionOptions);
 
             // Print output on console
             Console.WriteLine(string.Format("\nCache '{0}' is initialized.", cacheId));
@@ -289,16 +293,16 @@ namespace Test
         private void RestartCache()
         {
             Console.WriteLine("Restarting Cache");
-            CacheManager.StopCache(_cacheId);
+            CacheManager.StopCache(_cacheId, new CacheConnection(_server));
             Console.WriteLine("Cache stopped");
 
-            CacheManager.StartCache(_cacheId);
+            CacheManager.StartCache(_cacheId, new CacheConnection(_server));
             Console.WriteLine("Cache started again");
 
             Console.WriteLine("Waiting for 20 seconds for startuploader");
             Thread.Sleep(20 * 1000);
 
-            _cache =CacheManager.GetCache(_cacheId);
+            _cache =CacheManager.GetCache(_cacheId, _connectionOptions);
         }
 
         #region Helper Functions

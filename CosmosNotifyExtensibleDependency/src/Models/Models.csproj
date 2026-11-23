@@ -10,3 +10,4 @@
   </ItemGroup>
 
 </Project>
+<!-- ../NotifyExtensibleDependencyTesterUI/NotifyExtensibleDependencyTesterUI.csproj references this project directly at build time. -->

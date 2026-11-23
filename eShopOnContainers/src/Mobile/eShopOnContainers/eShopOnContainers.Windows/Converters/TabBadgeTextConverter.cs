@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Controls;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Controls;
 using System;
 using Xamarin.Forms;
 using UI = Windows.UI;

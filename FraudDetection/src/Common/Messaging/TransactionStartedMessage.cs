@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
 using Alachisoft.NCache.Runtime.Caching;
 using System;
 
+// FraudDetectionManager.cs constructs TransactionStartedMessage in CreateRelevantSubscribtion.
 namespace Common
 {
     // this message is sent to fraud manager for starting a transaction

@@ -254,3 +254,7 @@ paket-files/
 
 # FAKE - F# Make
 .fake/
+
+# Local Xcode workspace state
+xcuserdata/
+*.xcuserstate

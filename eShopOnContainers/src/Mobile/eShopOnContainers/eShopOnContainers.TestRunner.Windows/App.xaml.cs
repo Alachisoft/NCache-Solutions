@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using System.Reflection;
 using Windows.ApplicationModel.Activation;
 using Xunit.Runners.UI;
 

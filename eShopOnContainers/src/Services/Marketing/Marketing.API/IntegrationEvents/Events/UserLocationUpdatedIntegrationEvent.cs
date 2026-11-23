@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Marketing.API.IntegrationEvents.Events
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Marketing.API.IntegrationEvents.Events
 {
     using Marketing.API.Model;
     using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;

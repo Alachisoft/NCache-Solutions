@@ -32,9 +32,10 @@ As such, all the parameters needed to see NCache in action can be populated in t
 
 Besides the original pre-requisites of the eShopOnContainers application, following are the additional requirements when using NCache:
 
-- **NCache 5.0 Enterprise edition** is installed on the cache servers with **Server Activated** licensing. This is important for running containerized applications accessing external NCache server processes. 
-- Make sure to update the NCache server information in the **client.ncconf** files included in each solution project. You also have the option of [creating caches](https://www.alachisoft.com/resources/docs/ncache/admin-guide/create-new-cache-cluster.html) with the IDs already given in the client.ncconf files and just update the IP addresses in the docker compose **environment** sections or the **appsettings.json** files to match the node IP addresses of the corresponding caches.
-- The cache to be used for Pub/Sub messaging between the microservices is common to all the microservices and, as such, should have **identical values for the cluster node IP addresses and cache ID** for each microservice
+- The .NET 8 SDK and Runtime (all services) and the .NET 6 Runtime (Identity.API, because IdentityServer4 cannot run on newer versions) have been installed to compile and package the application.
+- **NCache 5.3 Enterprise edition** is installed on the cache servers with **Server Activated** licensing. This is important for running containerized applications accessing external NCache server processes. 
+- Make sure to update the NCache server information in the `ncache` section of the **appsettings.json** file of each service, which NCache reads itself, so no `client.ncconf` is needed. Each cache the service uses has one entry, keyed by the cache name, for example `"ncache": { "pubsubcache": { "server": "{cache server IP}", "port": 9800 } }`. The cache names must match the cache settings of the service (such as *CacheID* and *EventBusNCachID*), which you can also set in the docker compose **environment** sections.
+- The cache to be used for Pub/Sub messaging between the microservices is common to all the microservices and, as such, should have **identical values for the server, port and cache name** for each microservice
 - Before running the application, make sure all the required caches are running.
 
 ## NCache Features Highlighted in Application
@@ -51,22 +52,12 @@ Therefore, following is a code snippet of the implementation of a persistant con
 public class DefaultNCachePersistentConnection : INCachePersistantConnection
 {
 	// Initialization code
-	private ICache CreateCache(string cacheID, bool enableClientLogs)
+	private ICache CreateCache(string cacheID)
 	{
 		if (_cache == null)
 		{
-			List<ServerInfo> servers = new List<ServerInfo>();
-			foreach(var ipAddress in _ipAddresses)
-			{
-				servers.Add(new ServerInfo(ipAddress));
-			}
-			return CacheManager.GetCache(
-				cacheID, 
-				new CacheConnectionOptions
-				{
-					ServerList = servers,
-					// Other parameters
-				});
+			// NCache reads the server and port of the cache from the "ncache" section of appsettings.json
+			return CacheManager.GetCache(cacheID, new ConnectionOptions());
 		}			
 		return _cache;	
 	}
@@ -74,7 +65,7 @@ public class DefaultNCachePersistentConnection : INCachePersistantConnection
 	{
 		if (_topic == null)
 		{
-			_cache = CreateCache(_cacheID, _enableClientLogs);
+			_cache = CreateCache(_cacheID);
 			_topic = _cache.MessagingService.GetTopic(_topicID);
 			if (_topic == null || _topic.IsClosed)
 			{
@@ -221,7 +212,7 @@ else
 {
 	var options = new CachingOptions
 	{
-		StoreAs = StoreAs.SeperateEntities
+		StoreAs = StoreAs.SeparateEntities
 	};
 	options.SetAbsoluteExpiration(DateTime.Now.AddMinutes(_settings.NCacheAbsoluteExpirationTime));
 	var result = await _catalogContext.CatalogTypes.FromCacheAsync(options);
@@ -242,18 +233,16 @@ NCache can also be used successfully as an external key storage provider when us
 public sealed class NCacheXmlRepository : IXmlRepository
 {
 	private readonly string _cacheID;
-	private readonly CacheConnectionOptions _options;
 
-	public NCacheXmlRepository(string cacheID, CacheConnectionOptions options = null)
+	public NCacheXmlRepository(string cacheID)
 	{
 		_cacheID = cacheID;
-		_options = options;
 	}
 	public IReadOnlyCollection<XElement> GetAllElements()
 	{
 		try
 		{
-			using (var _cache = CacheManager.GetCache(_cacheID, _options))
+			using (var _cache = CacheManager.GetCache(_cacheID, new ConnectionOptions()))
 			{
 				var items = _cache.SearchService.GetByTag<string>(new Tag("NCacheDataProtectionKeys"));
 				var list = new List<XElement>();
@@ -275,7 +264,7 @@ public sealed class NCacheXmlRepository : IXmlRepository
 	}
 	public void StoreElement(XElement element, string friendlyName)
 	{
-		using (var cache = CacheManager.GetCache(_cacheID, _options))
+		using (var cache = CacheManager.GetCache(_cacheID, new ConnectionOptions()))
 		{
 			var xml = element.ToString(SaveOptions.DisableFormatting);
 
@@ -300,11 +289,11 @@ Using this, we can create an extension method on the `IDataProtectionBuilder` in
 public static class NCacheDataProtectionBuilderExtensions
 {
 	public static IDataProtectionBuilder PersistKeysToNCache( this IDataProtectionBuilder builder,
-	string cacheID, CacheConnectionOptions cachingOptions = null)
+	string cacheID)
 	{
 		if (builder == null){ throw new ArgumentNullException(nameof(builder));	}
 		if (cacheID == null){ throw new ArgumentNullException(nameof(cacheID));	}
-		var repository = new NCacheXmlRepository(cacheID, cachingOptions);
+		var repository = new NCacheXmlRepository(cacheID);
 		builder.Services.Configure<KeyManagementOptions>(options =>
 		{
 			options.XmlRepository = repository;
@@ -325,18 +314,16 @@ In this regard, the application provides a `IHealthCheck` implementation for NCa
 public class NCacheHealthCheck : IHealthCheck
 {
 	private readonly string _cacheID;
-	private readonly CacheConnectionOptions _cacheConnectionOptions;
 
-	public NCacheHealthCheck(string cacheID, CacheConnectionOptions cacheConnectionOptions = null)
+	public NCacheHealthCheck(string cacheID)
 	{
 		_cacheID = cacheID ?? throw new ArgumentNullException(nameof(cacheID));
-		_cacheConnectionOptions = cacheConnectionOptions;
 	}	
 	public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default(CancellationToken))
 	{
 		try
 		{
-			using (var cache = CacheManager.GetCache(_cacheID, _cacheConnectionOptions))
+			using (var cache = CacheManager.GetCache(_cacheID, new ConnectionOptions()))
 			{
 				return Task.FromResult(HealthCheckResult.Healthy($"Cache {_cacheID} is running"));
 			}
@@ -355,12 +342,11 @@ public static class NCacheHealthCheckBuilderExtensions
 	public static IHealthChecksBuilder AddNCacheHealthCheck(this IHealthChecksBuilder builder,
 		string cacheID, string name,
 		HealthStatus? failureStatus = HealthStatus.Unhealthy,
-		IEnumerable<string> tags = null,
-		CacheConnectionOptions cacheConnectionOptions = null)
+		IEnumerable<string> tags = null)
 	{
 		return builder.Add(new HealthCheckRegistration(
 			name ?? NAME,
-			sp => new NCacheHealthCheck(cacheID, cacheConnectionOptions),
+			sp => new NCacheHealthCheck(cacheID),
 			failureStatus,
 			tags));
 	}
@@ -373,11 +359,11 @@ Being an extension of the original eShopOnContainers application, running the ap
 
 In addition to the steps given in the previous section, the following checks must be done to use NCache:
 
-- Start [NCache Web Manager](http://www.alachisoft.com/resources/docs/ncache/admin-guide/ncache-web-manager.html) and verify all the required caches are running and that the ID and IP addresses of the nodes match those given in the **appsettings.json** files and/or docker compose environmental variables.
+- Start [NCache Web Manager](http://www.alachisoft.com/resources/docs/ncache/admin-guide/ncache-web-manager.html) and verify all the required caches are running and that the cache names and server IP addresses match those given in the **appsettings.json** files, and that the cache names match the docker compose environment variables.
 
 - Make sure all the ports needed to communicate with NCache are open.
 
-- In the **docker-compose.override.yml** file, make the necessary changes for the NCache cache ID and IP addresses. 
+- In the **docker-compose.override.yml** file, make the necessary changes for the NCache cache IDs. The IP addresses of the cache servers go in the `ncache` section of the **appsettings.json** file of each service. 
 	-   Make sure to set boolean values concerned with enabling/disabling NCache caching to **true**.
 	-   For the cache serving as the pub/sub messaging broker, the IP addresses are given as **xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy**. Individual IP addresses are separated by a hyphen so you can add as many nodes in the NCache cluster as you want. 
 	-   For the caches used for object caching, EF Core caching and those serving as Data Protection Key providers, the IP addresses are similarly given as **aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb**.
@@ -409,4 +395,4 @@ Alachisoft [C] provides various sources of technical support.
 
 ### Copyrights
 
-[C] Copyright 2019 Alachisoft 
+[C] Copyright 2026 Alachisoft 

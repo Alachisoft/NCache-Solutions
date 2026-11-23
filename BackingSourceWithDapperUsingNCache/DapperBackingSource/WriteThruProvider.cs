@@ -1,4 +1,5 @@
-﻿using Alachisoft.NCache.Runtime.DatasourceProviders;
+﻿// Copyright (c) 2026 Alachisoft.
+using Alachisoft.NCache.Runtime.DatasourceProviders;
 using Alachisoft.NCache.Samples.Dapper.Models;
 using Dapper;
 using System;

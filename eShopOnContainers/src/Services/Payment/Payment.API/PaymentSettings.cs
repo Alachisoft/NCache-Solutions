@@ -1,4 +1,5 @@
-﻿namespace Payment.API
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Payment.API
 {
     public class PaymentSettings
     {

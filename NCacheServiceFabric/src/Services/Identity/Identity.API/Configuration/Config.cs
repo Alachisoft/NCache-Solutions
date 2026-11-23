@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 

@@ -86,3 +86,7 @@ You can get the password for accessing going to your virtual machine in azure an
 
 When you have the user and password you can access to the kibana tool, and create the ```eshops-*``` index pattern that is well documented at the beggining of this documentation and then start to discover.
 ![](img/elk/)
+
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

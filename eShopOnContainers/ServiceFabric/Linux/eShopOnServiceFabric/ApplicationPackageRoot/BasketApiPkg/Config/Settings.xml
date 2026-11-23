@@ -7,3 +7,4 @@
   </Section>
   -->
 </Settings>
+<!-- ServiceManifest.xml declares the Config package that carries these settings. Its version identifies the packaged configuration during an upgrade. -->

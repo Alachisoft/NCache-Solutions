@@ -29,3 +29,6 @@ Once the deploy process of docker-compose finishes you have to be able to access
 
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

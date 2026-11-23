@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Locations.API.ViewModel
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Locations.API.ViewModel
 {
     public class LocationRequest
     {

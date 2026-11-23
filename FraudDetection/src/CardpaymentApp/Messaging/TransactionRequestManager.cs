@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,6 +58,7 @@ namespace CardPaymentApp.Messaging
             if (customer != null)
             {
                 TransactionRequest transactionRequest = CreateTransactionFromCustomer(customer);
+                // FraudDetectionManager consumes this request. Its decision comes back on REPLIESTOPICS.
                 _cache.PublishMessageOnTopic(Topics.TRANSACTIONTOPICS, transactionRequest, null);
                 return transactionRequest.TransactionID ;
             }

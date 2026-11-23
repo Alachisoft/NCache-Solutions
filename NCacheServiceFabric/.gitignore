@@ -283,3 +283,7 @@ src/**/inf.yaml
 # Service fabric package
 pkg/
 
+
+# MSBuild binary logs and test result files
+*.binlog
+*.trx

@@ -1,4 +1,5 @@
-﻿using HealthChecks.UI.Client;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using HealthChecks.UI.Client;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.ServiceFabric;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

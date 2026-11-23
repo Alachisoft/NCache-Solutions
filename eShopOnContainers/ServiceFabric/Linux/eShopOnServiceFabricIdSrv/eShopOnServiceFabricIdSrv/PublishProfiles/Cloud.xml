@@ -23,3 +23,4 @@
   <ClusterConnectionParameters ConnectionEndpoint="#{your_sf_dns}#:19000" />
   <ApplicationParameterFile Path="..\ApplicationParameters\Cloud.xml" />
 </PublishProfile>
+<!-- Environment-specific application values come from ..\ApplicationParameters\Cloud.xml. The cluster connection is configured in this profile. -->

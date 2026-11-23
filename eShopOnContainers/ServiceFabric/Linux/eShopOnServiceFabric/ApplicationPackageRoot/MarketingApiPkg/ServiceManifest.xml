@@ -53,3 +53,4 @@
     </Endpoints>
   </Resources>
 </ServiceManifest>
+<!-- ApplicationManifest.xml imports this package as MarketingApiPkg. Keep the import name and version in step with this manifest. -->

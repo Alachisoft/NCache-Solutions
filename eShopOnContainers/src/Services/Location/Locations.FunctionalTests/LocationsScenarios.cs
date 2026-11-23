@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.Services.Locations.API.Model;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.Services.Locations.API.Model;
 using Microsoft.eShopOnContainers.Services.Locations.API.ViewModel;
 using Newtonsoft.Json;
 using System.Collections.Generic;

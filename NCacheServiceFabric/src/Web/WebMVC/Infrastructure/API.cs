@@ -1,4 +1,5 @@
-﻿namespace WebMVC.Infrastructure
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace WebMVC.Infrastructure
 {
     public static class API
     {

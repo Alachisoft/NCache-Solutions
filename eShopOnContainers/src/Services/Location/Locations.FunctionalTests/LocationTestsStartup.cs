@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.eShopOnContainers.Services.Locations.API;
 using Microsoft.Extensions.Configuration;

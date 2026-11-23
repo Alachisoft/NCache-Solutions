@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Marketing.API.Infrastructure.ActionResults
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Marketing.API.Infrastructure.ActionResults
 {
     using AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;

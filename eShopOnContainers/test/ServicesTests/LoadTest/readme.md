@@ -82,3 +82,7 @@ Open the load test you want to perform ***.loadtest** files and click the Run Lo
 <p>
 <img src="./../../../img/loadtests/runloadtest.PNG">
 <p>
+
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

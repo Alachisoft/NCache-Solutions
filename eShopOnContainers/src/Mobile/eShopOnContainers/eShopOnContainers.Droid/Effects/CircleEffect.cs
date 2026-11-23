@@ -1,4 +1,5 @@
-﻿using Android.Graphics;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Android.Graphics;
 using Android.Views;
 using eShopOnContainers.Droid.Effects;
 using System;

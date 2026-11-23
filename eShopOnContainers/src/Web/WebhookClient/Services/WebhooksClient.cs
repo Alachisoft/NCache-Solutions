@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

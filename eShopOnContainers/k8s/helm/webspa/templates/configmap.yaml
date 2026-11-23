@@ -1,4 +1,4 @@
-{{- $name := include "webspa.fullname" . -}}
+{{/* deployment.yaml looks up this ConfigMap by the cfg- prefix and the chart fullname. A rename must be reflected in both templates. */}}{{- $name := include "webspa.fullname" . -}}
 {{- $identity := include "url-of" (list .Values.app.ingress.entries.identity .) -}}
 {{- $webshoppingapigw := include "url-of" (list .Values.app.ingress.entries.webshoppingapigw .) -}}
 {{- $webmarketingapigw := include "url-of" (list .Values.app.ingress.entries.webmarketingapigw .) -}}

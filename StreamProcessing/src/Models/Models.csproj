@@ -9,3 +9,4 @@
   </ItemGroup>
 
 </Project>
+<!-- ../StreamToNCache/StreamToNCache.csproj references this project directly at build time. -->

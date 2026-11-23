@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using System.Collections.Generic;
 using eShopOnContainers.Core.Models.Basket;
 using eShopOnContainers.Core.Models.Catalog;
 using eShopOnContainers.Core.Models.Marketing;

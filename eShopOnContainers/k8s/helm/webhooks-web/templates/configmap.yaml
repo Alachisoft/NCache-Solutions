@@ -1,4 +1,4 @@
-{{- $name := include "webhooks-web.fullname" . -}}
+{{/* deployment.yaml looks up this ConfigMap by the cfg- prefix and the chart fullname. A rename must be reflected in both templates. */}}{{- $name := include "webhooks-web.fullname" . -}}
 {{- $identity := include "url-of" (list .Values.app.ingress.entries.identity .) -}}
 {{- $webhooksweb := include "url-of" (list .Values.app.ingress.entries.webhooksweb .) -}}
 {{- $webhooks := include "url-of" (list .Values.app.ingress.entries.webhooks .) -}}

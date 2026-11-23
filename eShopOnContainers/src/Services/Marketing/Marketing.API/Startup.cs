@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Marketing.API
+﻿// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
+namespace Microsoft.eShopOnContainers.Services.Marketing.API
 {
     using AspNetCore.Builder;
     using AspNetCore.Hosting;

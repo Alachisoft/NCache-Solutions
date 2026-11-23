@@ -1,4 +1,5 @@
-﻿
+﻿// Copyright (c) .NET Foundation and Contributors.
+
 
 using System.Collections.Generic;
 using System.Linq;

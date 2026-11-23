@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors.
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF;

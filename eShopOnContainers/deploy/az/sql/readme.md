@@ -26,11 +26,6 @@ create-resources.cmd sql\sqldeploy newResourceGroup -c westus
 ```
 
 
+## Copyright
 
-
-
-
-
-
-
-
+Copyright (c) .NET Foundation and Contributors.

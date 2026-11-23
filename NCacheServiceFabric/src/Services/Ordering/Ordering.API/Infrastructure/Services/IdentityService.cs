@@ -1,4 +1,5 @@
-﻿
+﻿// Copyright (c) .NET Foundation and Contributors.
+
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

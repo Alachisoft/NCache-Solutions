@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.Services.Ordering.Domain.SeedWork;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.Services.Ordering.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 

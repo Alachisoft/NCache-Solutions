@@ -22,3 +22,7 @@ i. e. if you are in windows, to deploy servicebus in a new resourcegroup located
 ```
 create-resources.cmd servicebus\sbusdeploy newResourceGroup -c westus
 ```
+
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

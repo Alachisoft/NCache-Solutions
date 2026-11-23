@@ -1,4 +1,5 @@
-﻿using Microsoft.ServiceFabric.Services.Runtime;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.ServiceFabric.Services.Runtime;
 using System;
 using System.Diagnostics;
 using System.Threading;

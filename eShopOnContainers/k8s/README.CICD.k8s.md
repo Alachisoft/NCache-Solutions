@@ -64,3 +64,7 @@ or using AKS instead of ACS
  You can use additional parameters (i.e. pass registry and user/password to use custom registry instead of DockerHub. Plase, refer to [README.k8s.md](./README.k8s.md) for more info.
 
 <img src="./img/deploy_script_task.png">
+
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

@@ -1,4 +1,5 @@
-﻿namespace eShopOnContainers.Core.ViewModels.Base
+﻿// Copyright (c) 2017 Microsoft Corp.
+namespace eShopOnContainers.Core.ViewModels.Base
 {
     public class MessageKeys
     {

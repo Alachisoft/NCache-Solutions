@@ -1,4 +1,5 @@
-﻿using Basket.FunctionalTests.Base;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Basket.FunctionalTests.Base;
 using Microsoft.eShopOnContainers.Services.Basket.API.Infrastructure.Repositories;
 using Microsoft.eShopOnContainers.Services.Basket.API.Model;
 using Microsoft.Extensions.DependencyInjection;

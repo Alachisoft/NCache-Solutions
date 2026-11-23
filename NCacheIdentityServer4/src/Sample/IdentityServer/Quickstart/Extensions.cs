@@ -1,3 +1,4 @@
+// Copyright notices for this sample are in LICENSE-IdentityServer4 and LICENSE-Alachisoft at the sample root.
 using System.Threading.Tasks;
 using IdentityServer4.Stores;
 

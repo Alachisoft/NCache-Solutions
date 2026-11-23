@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.eShopOnContainers.WebMVC.ViewModels.Annotations;
 using Newtonsoft.Json;
 using System;

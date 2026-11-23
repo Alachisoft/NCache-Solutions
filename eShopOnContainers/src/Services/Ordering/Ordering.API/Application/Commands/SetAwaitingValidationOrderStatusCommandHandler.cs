@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using MediatR;
 using Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands;
 using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.OrderAggregate;
 using Microsoft.eShopOnContainers.Services.Ordering.Infrastructure.Idempotency;

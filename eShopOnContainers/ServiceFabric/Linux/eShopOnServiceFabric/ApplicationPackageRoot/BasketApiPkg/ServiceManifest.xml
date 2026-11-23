@@ -47,3 +47,4 @@
   </Resources>
 </ServiceManifest>
 
+<!-- ApplicationManifest.xml imports this package as BasketApiPkg. Keep the import name and version in step with this manifest. -->

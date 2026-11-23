@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.IdentityModel.Tokens.Jwt;

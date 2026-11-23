@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.ViewModels.Base;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.ViewModels.Base;
 using Xunit;
 
 namespace eShopOnContainers.UnitTests

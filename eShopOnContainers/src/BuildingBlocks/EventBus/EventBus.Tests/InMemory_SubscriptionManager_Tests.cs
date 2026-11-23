@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors.
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus;
 using System;
 using System.Linq;

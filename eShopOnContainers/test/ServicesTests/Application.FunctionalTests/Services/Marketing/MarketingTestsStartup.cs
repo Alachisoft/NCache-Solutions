@@ -1,4 +1,5 @@
-﻿namespace FunctionalTests.Services.Marketing
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace FunctionalTests.Services.Marketing
 {
     using FunctionalTests.Middleware;
     using Microsoft.AspNetCore.Builder;

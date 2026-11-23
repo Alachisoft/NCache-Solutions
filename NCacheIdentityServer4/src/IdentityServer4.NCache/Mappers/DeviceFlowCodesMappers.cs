@@ -1,4 +1,5 @@
-﻿using IdentityModel;
+﻿// Copyright (c) 2026 Alachisoft.
+using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.NCache.Entities;
 using IdentityServer4.Stores.Serialization;

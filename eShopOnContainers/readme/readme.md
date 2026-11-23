@@ -17,3 +17,6 @@ This file contains links to the documentation of the project.
 
 The `/docs` folder contains the pdfs versions of the books
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

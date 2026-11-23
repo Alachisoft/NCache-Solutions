@@ -264,38 +264,8 @@ public class PersistenceWriteThruProvider : ProviderBase, IWriteThruProvider
 The `WriteToDataSource` method writes the operation in to persistent store using PersistenceWriteThruProvider. For full implementation of the provider, see *PersistenceWriteThruProvider* interface [here](src/Alachisoft.NCache.PersistenceProvider/BackingSourceProviders/PersistenceWriteThruProvider.cs).
 
 ## PersistenceStartupLoader
-PersistenceStartupLoader is called when cache is started and using the loader all the item persisted to persistent store will again be added to cache on cache startup and make no loss of data after cache restart.
 
-```csharp
-public class PersistenceStartupLoader : ProviderBase, ICacheLoader
-{
-    /// <summary>
-    /// LoadNext is to be called until HasMoreData is false
-    /// </summary>
-    /// <param name="userContext">User object to be fetched in next LoadNext call</param>
-    /// <returns></returns>
-    public LoaderResult LoadNext(object userContext)
-    {
-        if(persistentItems == null)
-            persistentItems = _persistenceProvider.GetAll();
-
-        LoaderResult result = new LoaderResult();
-        result.UserContext = userContext;
-        result.HasMoreData = false;
-
-        foreach (var item in persistentItems)
-        {
-            result.Data.Add(new KeyValuePair<string, ProviderItemBase>(item.Key, item.Value));
-            currentIndex++;
-
-            if (currentIndex % singleIterationSize == 0) 
-            break;
-        }  
-        return result;
-    }
-}
-```
-PersistenceStartupLoader LoadNext method will be called at the time of cache startup to load data, which use PersistenceProvider to load data from persistence store. For full implementation of the interface, see  `PersistenceStartupLoader` [here](src/Alachisoft.NCache.PersistenceProvider/BackingSourceProviders/PersistenceStartupLoader.cs).
+NCache 5.3 SP8 calls `LoadDatasetOnStartup` when the configured dataset loads. The loader reads persisted cache items and inserts them in batches of up to 1,000. Configure one dataset for this loader instance. Set its provider parameter `cacheserver` to `20.200.20.44` and optionally set `cacheport` (default `9800`). The cache name comes from NCache when it initializes the loader.
 
 # Configurations
 
@@ -315,13 +285,16 @@ Please refer to the following links to learn how to configure the providers in N
 # Building-the-Providers
 
 ##  Build
-Building providers is quite easy, providers are written in .NET Standard 2.0 and can be used with .Net Core Server or .NET Framework Server. We need to provide all the assemblies deployed with the cache. This solution has two projects:
+Building providers is quite easy, the providers target .NET 8 and .NET Framework 4.7.2. Deploy the output that matches the cache server runtime. We need to provide all the assemblies deployed with the cache. This solution has two projects:
 
 1. *Alachisoft.NCache.PersistenceProvider* project contains the implementation of IReadThru provider, IWriteThru provider and ICacheLoader. After building this project, you can deploy all the providers with cache as explained in [NCache Administrator's Guide](https://www.alachisoft.com/resources/docs/ncache/admin-guide/deploy-providers.html). Once these providers are deployed, you can easily change the database layer by just changing the configuration.
 
 2. *Alachisoft.NCache.PersistenceStore* project contains the actual db layer for the providers, IPersistenceProvider implementation is given in this project FQN for the implementation is required to be configured with providers in the provider project.
 
-## Run 
+## Run
+
+From the repository root, run `dotnet run --project PersistentCache/src/SampleApplication/SampleApplication.csproj` with the .NET 8 SDK or later and the .NET 8 runtime. The sample uses NCache SDK 5.3.800. Its [settings](src/SampleApplication/appSettings.json) select `defaultCache` at `20.200.20.44:9800`. Choose **6** to exit after checking the connection. The customer read and write options require the persistence providers and their database to be configured on that cache.
+
 For using Read-thrugh/Write-through in your application, you need to use NCache API with [WriteThruOptions](http://www.alachisoft.com/resources/docs/ncache/dotnet-api-ref/Alachisoft.NCache.Runtime.Caching.WriteThruOptions.html) and [ReadThruOptions](http://www.alachisoft.com/resources/docs/ncache/prog-guide/using-read-through.html).
 
 ### WriteThru sample
@@ -333,11 +306,11 @@ cache.Add(key, cacheItem, new WriteThruOptions(WriteMode.WriteThru));
 cache.Get(key, new ReadThruOptions(ReadMode.ReadThru));
 ```
 
-On cache start, cache startup loader will be invoked and load all the items automatically residing on database or any other persistent store and add them to the cache using Write-Through. If you only want to add the items that are persisted on the persistent store instead of all the items, then use the Read-Through Provider. This way, the cache will automatically fetch the data from the persistence store. 
+
 
 Both of these implementations have their own advantages and disadvantages. For larger data sets, cache startup loader results in costly overhead while read-through will save you the cost. On the other hand, Read-Through results in an additional network trip since the data is fetched from the backing source which is a slow process. Hoyouver, cache startup loader will automatically load the data on cache startup.
 This means that both methods are effective, based on your business need.
 
 # Copyrights
 
-[C] Copyright 2019 Alachisoft 
+[C] Copyright 2026 Alachisoft 

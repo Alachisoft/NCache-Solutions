@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;

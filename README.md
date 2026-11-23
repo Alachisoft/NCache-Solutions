@@ -51,3 +51,7 @@ Following is a list of the solutions provided:
 - [Geometry type JSON Serialization](./GeometryTypeJSONSerialization/README.md)
 
   This solution demonstrates how custom Newtonsoft JSON converters can be integrated with NCache to enable seamless serialization and deserialization of complex data types. It includes support for NetTopologySuite geometry types and provides a flexible configuration-based approach for registering custom converters.
+
+## Copyright
+
+Copyright 2026 Alachisoft.

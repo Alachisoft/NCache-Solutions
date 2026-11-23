@@ -1,4 +1,5 @@
-﻿using IdentityServer4.NCache.Entities;
+﻿// Copyright (c) 2026 Alachisoft.
+using IdentityServer4.NCache.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

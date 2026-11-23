@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Catalog.API.Infrastructure.IntegrationEventMigrations
 {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -83,6 +83,7 @@ namespace FraudDetector.NCacheLogic
                 // gets data from cache against a customer
                 if (cache.Contains(key))
                 {
+                    // The Contains check gates read-through. An absent key returns null without consulting the provider.
                     ReadThruOptions options = new ReadThruOptions(ReadMode.ReadThru);
                     IDistributedList<FraudRequest> list;
 

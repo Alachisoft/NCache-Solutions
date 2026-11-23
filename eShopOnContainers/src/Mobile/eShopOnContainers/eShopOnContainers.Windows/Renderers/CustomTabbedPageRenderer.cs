@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Controls;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Controls;
 using eShopOnContainers.Windows.Controls;
 using eShopOnContainers.Windows.Extensions;
 using eShopOnContainers.Windows.Helpers;

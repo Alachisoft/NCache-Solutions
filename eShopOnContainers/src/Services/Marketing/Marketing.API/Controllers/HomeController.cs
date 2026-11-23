@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors.
 namespace Microsoft.eShopOnContainers.Services.Marketing.API.Controllers
 {
     using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Models.Location;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Models.Location;
 using System;
 
 namespace eShopOnContainers.Droid.Extensions

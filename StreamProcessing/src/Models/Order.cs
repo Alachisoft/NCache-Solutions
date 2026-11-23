@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿// Copyright (c) 2026 Alachisoft.
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 
 namespace Models

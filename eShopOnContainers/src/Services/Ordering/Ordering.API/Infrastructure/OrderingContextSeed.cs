@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Ordering.API.Infrastructure
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Ordering.API.Infrastructure
 {
     using global::Ordering.API.Extensions;
     using Microsoft.AspNetCore.Hosting;

@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Locations.API.Infrastructure.Repositories
+﻿// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
+namespace Microsoft.eShopOnContainers.Services.Locations.API.Infrastructure.Repositories
 {
     using Alachisoft.NCache.Client;
     using Alachisoft.NCache.Runtime.Caching;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebMVC.Services.ModelDTOs

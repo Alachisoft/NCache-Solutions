@@ -1,4 +1,5 @@
-﻿
+﻿// Copyright (c) 2026 Alachisoft.
+
 using Microsoft.ML.Data;
 using System;
 

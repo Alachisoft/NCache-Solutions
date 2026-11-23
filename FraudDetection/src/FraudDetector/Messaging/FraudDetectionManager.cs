@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -111,6 +111,7 @@ namespace FraudDetector.Messaging
             try
             {
                 TransactionResult transactionResult = new TransactionResult(transaction.CustomerID, transaction.CustomerName, result,transaction.TransactionID);
+                // TransactionRequestManager subscribes to this topic to receive the detector's decision.
                 _cache.PublishMessageOnTopic(Topics.REPLIESTOPICS, transactionResult, null);
             }
             catch

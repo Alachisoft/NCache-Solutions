@@ -1,3 +1,4 @@
+// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
 namespace Microsoft.eShopOnContainers.Services.Marketing.API.Controllers
 {
     using Alachisoft.NCache.EntityFrameworkCore;

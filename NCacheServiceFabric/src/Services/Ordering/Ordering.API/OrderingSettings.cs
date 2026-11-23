@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Ordering.API
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Ordering.API
 {
     public class OrderingSettings
     {

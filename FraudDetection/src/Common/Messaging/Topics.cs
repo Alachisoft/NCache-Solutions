@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ namespace Common
     // topics on which messages will be published
     public class Topics
     {
+        // The card payment app publishes on TRANSACTIONTOPICS and listens on REPLIESTOPICS for the detector's decision.
         public const string REPLIESTOPICS = "REPLIESTOPICS";
         public const string TRANSACTIONTOPICS = "TRANSACTIONTOPICS";
     }    

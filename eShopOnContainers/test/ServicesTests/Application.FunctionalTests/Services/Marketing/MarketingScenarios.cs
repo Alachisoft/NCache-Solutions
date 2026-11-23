@@ -1,4 +1,5 @@
-﻿namespace FunctionalTests.Services.Marketing
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace FunctionalTests.Services.Marketing
 {
     using UserLocation = Microsoft.eShopOnContainers.Services.Locations.API.Model.UserLocation;
     using LocationRequest = Microsoft.eShopOnContainers.Services.Locations.API.ViewModel.LocationRequest;

@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

@@ -53,3 +53,4 @@
     </Endpoints>
   </Resources>
 </ServiceManifest>
+<!-- ApplicationManifest.xml imports this package as WebMVCPkg. Keep the import name and version in step with this manifest. -->

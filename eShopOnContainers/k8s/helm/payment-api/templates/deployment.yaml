@@ -1,4 +1,4 @@
-{{- $name := include "payment-api.fullname" . -}}
+{{/* service.yaml routes to the port named http. Keep the name in sync if the container port changes. */}}{{- $name := include "payment-api.fullname" . -}}
 {{- $cfgname := printf "%s-%s" "cfg" $name -}}
 apiVersion: apps/v1beta2
 kind: Deployment

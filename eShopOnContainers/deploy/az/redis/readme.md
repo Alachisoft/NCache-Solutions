@@ -21,11 +21,6 @@ i. e. if you are in windows, to deploy a Redis cache in a new Azure Resource Gro
 create-resources.cmd redis\redisdeploy newResourceGroup -c westus
 ```
 
+## Copyright
 
-
-
-
-
-
-
-
+Copyright (c) .NET Foundation and Contributors.

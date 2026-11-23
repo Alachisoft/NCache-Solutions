@@ -1,3 +1,4 @@
+<!-- ../ConsoleUI/Alachisoft.NCache.Samples.Dapper.ConsoleUI.csproj references this project directly at build time. -->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>

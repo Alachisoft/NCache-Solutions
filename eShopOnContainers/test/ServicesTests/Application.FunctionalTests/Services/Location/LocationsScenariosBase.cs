@@ -1,4 +1,5 @@
-﻿namespace FunctionalTests.Services.Locations
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace FunctionalTests.Services.Locations
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;

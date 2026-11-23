@@ -44,3 +44,6 @@ Test the SPA app by running the following URL in a browser:
 <b> http://TBD</b>
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

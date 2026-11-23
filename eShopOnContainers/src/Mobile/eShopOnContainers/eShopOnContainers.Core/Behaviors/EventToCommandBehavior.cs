@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Behaviors.Base;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Behaviors.Base;
 using System;
 using System.Globalization;
 using System.Linq;

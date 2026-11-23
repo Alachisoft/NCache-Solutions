@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2020 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+// CosmosDbChangFeedObserverFactory.cs constructs NCacheChangeFeedObserver in CreateObserver.
 namespace Alachisoft.NCache.Samples
 {
     // The NCacheChangeFeedObserver is used to process changes in the monitored collection

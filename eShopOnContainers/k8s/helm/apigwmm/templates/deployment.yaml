@@ -1,4 +1,4 @@
-{{- $name := include "apigwmm.fullname" . -}}
+{{/* service.yaml routes to the port named http. Keep the name in sync if the container port changes. */}}{{- $name := include "apigwmm.fullname" . -}}
 {{- $cfgname := printf "%s-%s" "cfg" $name -}}
 {{- $ocelotcfgname := printf "%s-%s" "ocelot" $name -}}
 apiVersion: apps/v1beta2

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System;
 
 namespace Catalog.API.Infrastructure.Exceptions
 {

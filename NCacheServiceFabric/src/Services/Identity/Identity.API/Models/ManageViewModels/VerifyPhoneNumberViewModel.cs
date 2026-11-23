@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System.ComponentModel.DataAnnotations;
 
 namespace Microsoft.eShopOnContainers.Services.Identity.API.Models.ManageViewModels
 {

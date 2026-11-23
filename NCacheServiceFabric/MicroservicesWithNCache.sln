@@ -83,6 +83,11 @@ Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ServiceFabricApp", "src\Ser
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureSFDeployment", "src\AzureSFDeployment\AzureSFDeployment.deployproj", "{79742169-495B-4313-9F9D-CC0B03A37B0D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE09BF10-0085-4C54-9727-9674CE1227A8}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

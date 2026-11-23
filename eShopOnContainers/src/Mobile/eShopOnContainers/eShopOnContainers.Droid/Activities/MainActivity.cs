@@ -1,3 +1,4 @@
+// Copyright (c) 2017 Microsoft Corp.
 using Acr.UserDialogs;
 using Android.App;
 using Android.Content;

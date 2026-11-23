@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Identity.API.Models.AccountViewModels
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Identity.API.Models.AccountViewModels
 {
     public class LoggedOutViewModel
     {

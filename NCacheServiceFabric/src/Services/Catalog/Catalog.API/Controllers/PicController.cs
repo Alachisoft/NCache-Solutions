@@ -1,4 +1,5 @@
-﻿using Alachisoft.NCache.EntityFrameworkCore;
+﻿// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
+using Alachisoft.NCache.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

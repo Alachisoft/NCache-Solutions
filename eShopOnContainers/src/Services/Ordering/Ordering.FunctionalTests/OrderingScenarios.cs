@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Text;

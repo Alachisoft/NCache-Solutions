@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Text;
 
+// TransactionApp.cs constructs SqlDataSource in Start.
 namespace CustomerSample
 {
     /// <summary>

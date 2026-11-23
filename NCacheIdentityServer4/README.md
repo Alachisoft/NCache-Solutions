@@ -291,4 +291,4 @@ Alachisoft &copy; provides various sources of technical support.
 
 ### Copyrights
 
-&copy; 2020 Alachisoft 
+&copy; 2026 Alachisoft 

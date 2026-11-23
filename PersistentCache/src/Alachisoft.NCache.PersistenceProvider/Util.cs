@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace Alachisoft.NCache.PersistenceProvider
         /// <returns></returns>
         public static IPersistenceProvider CreateInstanceWithReflection(string fullyQualifiedName,string cacheName)
         {
-            const string qualifiedInterfaceName = "PersistenceProviders.IPersistenceProvider";
+            string qualifiedInterfaceName = typeof(IPersistenceProvider).FullName;
             var interfaceFilter = new TypeFilter(InterfaceFilter);
 
             var path = Path.Combine(AppUtil.DeployedAssemblyDir,cacheName);

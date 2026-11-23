@@ -1,4 +1,4 @@
-﻿// Copyright (c) Alachisoft. All rights reserved.
+﻿// Copyright (c) 2026 Alachisoft. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE file in the project root for license information.
 // You may obtain a copy of the License from here http://www.apache.org/licenses/LICENSE-2.0
 
@@ -99,6 +99,7 @@ namespace NCommerce.FTSEngine
         {
             var prod = dataProvider.GetProduct(productId);
 
+            // Lucene selects documents to replace by the term passed here. The product ID above selects only the replacement data.
             indexWriter.UpdateDocument(new Term("discountedPrice"), prod.GetLuceneDocument());
             indexWriter.Commit();//Flush and make it ready for search
         }

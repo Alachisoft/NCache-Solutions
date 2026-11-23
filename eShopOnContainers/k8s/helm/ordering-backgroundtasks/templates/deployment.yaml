@@ -1,4 +1,4 @@
-{{- $name := include "ordering-backgroundtasks.fullname" . -}}
+{{/* service.yaml routes to the port named http. Keep the name in sync if the container port changes. */}}{{- $name := include "ordering-backgroundtasks.fullname" . -}}
 {{- $cfgname :=  printf "cfg-%s" $name | trunc 63  }}
 
 apiVersion: apps/v1beta2

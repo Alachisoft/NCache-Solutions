@@ -1,4 +1,5 @@
-﻿using CoreLocation;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using CoreLocation;
 using eShopOnContainers.Core.Models.Permissions;
 using eShopOnContainers.Core.Services.Permissions;
 using Foundation;

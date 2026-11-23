@@ -384,4 +384,4 @@ Alachisoft &copy; provides various sources of technical support.
 
 ### Copyrights
 
-&copy; Copyright 2020 Alachisoft 
+&copy; Copyright 2026 Alachisoft 

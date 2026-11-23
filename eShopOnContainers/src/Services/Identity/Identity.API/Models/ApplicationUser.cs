@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace Microsoft.eShopOnContainers.Services.Identity.API.Models

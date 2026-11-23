@@ -1,4 +1,5 @@
-﻿using IdentityServer4.NCache.Mappers;
+﻿// Copyright (c) 2026 Alachisoft.
+using IdentityServer4.NCache.Mappers;
 using IdentityServer4.NCache.Stores.Interfaces;
 using IdentityServer4.Stores;
 using Microsoft.Extensions.Logging;

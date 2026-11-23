@@ -3,3 +3,7 @@
 *.docx
 bin/
 obj/
+
+# MSBuild binary logs and test result files
+*.binlog
+*.trx

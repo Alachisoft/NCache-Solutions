@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Mvc;

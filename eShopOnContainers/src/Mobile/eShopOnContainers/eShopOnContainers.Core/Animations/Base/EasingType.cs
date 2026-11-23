@@ -1,4 +1,5 @@
-﻿namespace eShopOnContainers.Core.Animations.Base
+﻿// Copyright (c) 2017 Microsoft Corp.
+namespace eShopOnContainers.Core.Animations.Base
 {
     public enum EasingType
     {

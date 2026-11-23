@@ -84,3 +84,7 @@ These files were intended to provide a fast way to start only "infrastructure" c
 * `docker-compose-external.yml`
 
 If you want to start only certain containers use `docker-compose -f ... -f ... up container1 contaner2 containerN` as specified in [compose doc](https://docs.docker.com/compose/reference/up/)
+
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

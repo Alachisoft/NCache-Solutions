@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Helpers;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Helpers;
 using eShopOnContainers.Core.Models.Basket;
 using eShopOnContainers.Core.Models.Orders;
 using eShopOnContainers.Core.Services.RequestProvider;

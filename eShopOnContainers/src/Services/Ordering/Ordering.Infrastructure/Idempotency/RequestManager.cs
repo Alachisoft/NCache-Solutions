@@ -1,4 +1,5 @@
-﻿using Ordering.Domain.Exceptions;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Ordering.Domain.Exceptions;
 using System;
 using System.Threading.Tasks;
 

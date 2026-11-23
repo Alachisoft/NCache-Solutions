@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+// TransactionRequestManager.cs constructs TransactionCompletedMessage in CreateRelevantSubscribtion.
 namespace Common
 {
     // this message is sent back to transaction manager after transaction completion

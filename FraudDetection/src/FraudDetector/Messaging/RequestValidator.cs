@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -55,6 +55,7 @@ namespace FraudDetector.Messaging
             {
                 if (transactionMessage != null)
                 {
+                    // History is keyed by customer ID, so checks for repeat fraud see attempts across that customer's cards.
                     string customerkey = transactionMessage.CustomerID.ToString();
                     IList<FraudRequest> customerInfo = ncache.FetchDataFromCache(customerkey);
                     if (customerInfo != null) // if there was already a failed transaction mark th transaction failure

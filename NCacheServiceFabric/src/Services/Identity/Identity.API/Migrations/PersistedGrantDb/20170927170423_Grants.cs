@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
 namespace Identity.API.Migrations.PersistedGrantDb

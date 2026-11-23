@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using Xamarin.Forms;
 using UI = Windows.UI;
 
 namespace eShopOnContainers.Windows.Helpers

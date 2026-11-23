@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Catalog.API.Infrastructure
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Catalog.API.Infrastructure
 {
     using Extensions.Logging;
     using global::Catalog.API.Extensions;

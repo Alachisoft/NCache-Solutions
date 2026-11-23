@@ -1,4 +1,5 @@
-﻿using Catalog.API.Infrastructure.ActionResults;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Catalog.API.Infrastructure.ActionResults;
 using Catalog.API.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

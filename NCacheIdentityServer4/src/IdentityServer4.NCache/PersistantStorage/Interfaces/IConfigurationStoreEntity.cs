@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) 2026 Alachisoft.
+using System.Collections.Generic;
 
 namespace IdentityServer4.NCache.Stores.Interfaces
 {

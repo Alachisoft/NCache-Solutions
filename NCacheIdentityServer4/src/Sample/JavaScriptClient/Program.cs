@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿// Copyright notices for this sample are in LICENSE-IdentityServer4 and LICENSE-Alachisoft at the sample root.
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace JavaScriptClient

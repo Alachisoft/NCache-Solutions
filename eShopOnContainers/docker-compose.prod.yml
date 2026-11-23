@@ -28,9 +28,7 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - CacheID=basketcache
-      - BasketCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb #IP addresses of NCache cluster nodes separated by hyphen
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy #IP addresses of NCache cluster nodes separated by hyphen
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=BasketSubscription
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
@@ -56,9 +54,7 @@ services:
       - EFCoreCachingEnabled=True
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EFCacheID=CatalogEFCache
-      - CatalogEFCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=CatalogSubscription
       - AzureStorageEnabled=False
@@ -85,7 +81,6 @@ services:
       - IsClusterEnv=False
       - IsNCacheClusterEnv=True
       - CacheID=identitycache 
-      - IdentityCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb #IP addresses of NCache cluster nodes separated by hyphen
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
@@ -105,7 +100,6 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=OrderingSubscription
       - CheckUpdateTime=30000
@@ -128,7 +122,6 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=OrderingTaskSubscription
       - CheckUpdateTime=30000
@@ -158,12 +151,10 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=MarketingSubscription
       - CachingEnabled=False
       - MarketingCacheID=MarketingCache
-      - MarketingCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - AzureStorageEnabled=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
@@ -187,7 +178,6 @@ services:
       - UseCustomizationData=True
       - IsNCacheClusterEnv=False
       - CacheID=spacache
-      - SPACacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
@@ -210,7 +200,6 @@ services:
       - IsClusterEnv=False
       - IsNCacheClusterEnv=True
       - CacheID=mvccache
-      - MVCCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - UseLoadTest=${USE_LOADTEST:-False}
@@ -243,7 +232,6 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=PaymentSubscription
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
@@ -265,11 +253,9 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - LocationCachingEnabled=False
       - CacheID=LocationsCache
-      - LocationCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - EventBusNCacheSubscriptionName=LocationSubscription
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}

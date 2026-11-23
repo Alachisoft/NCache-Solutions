@@ -1,4 +1,5 @@
-﻿using CoreAnimation;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using CoreAnimation;
 using CoreGraphics;
 using eShopOnContainers.Core.Behaviors;
 using eShopOnContainers.iOS.Effects;

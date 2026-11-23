@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.Services.Basket.API.Model;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.Services.Basket.API.Model;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using StackExchange.Redis;

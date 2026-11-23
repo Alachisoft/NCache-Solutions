@@ -108,6 +108,7 @@ namespace Alachisoft.NCache.Samples.Dapper.BackingSources
                 {
                     var providerCacheItem = new ProviderCacheItem(customer)
                     {
+                        // This entry watches one customer row. ResyncOptions enables reloading the value through this provider after a matching SQL change.
                         Dependency = GetCustomerSqlDependency(customerId),
                         ResyncOptions = new ResyncOptions(true)
                     };

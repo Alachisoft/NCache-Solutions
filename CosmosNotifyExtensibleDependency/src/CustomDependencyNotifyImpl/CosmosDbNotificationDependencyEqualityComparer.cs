@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2020 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 
+// CosmosDbNotificationDependency.cs constructs CosmosDbNotificationDependencyEqualityComparer.
 namespace Alachisoft.NCache.Samples
 {
     // The CosmosDbNotificationDependencyEqualityComparer is used to compare the dependency instances added to the 

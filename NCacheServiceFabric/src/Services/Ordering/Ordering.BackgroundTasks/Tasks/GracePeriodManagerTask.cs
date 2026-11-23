@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Dapper;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

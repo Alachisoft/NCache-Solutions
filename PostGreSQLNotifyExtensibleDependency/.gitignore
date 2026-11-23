@@ -220,3 +220,7 @@ FakesAssemblies/
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
+
+# MSBuild binary logs and test result files
+*.binlog
+*.trx

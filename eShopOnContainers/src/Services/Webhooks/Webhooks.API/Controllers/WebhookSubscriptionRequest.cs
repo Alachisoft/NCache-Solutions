@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Webhooks.API.Model;

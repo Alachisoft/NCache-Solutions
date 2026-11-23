@@ -1,4 +1,4 @@
-{{- $name := include "apigwmm.fullname" . -}}
+{{/* deployment.yaml looks up this ConfigMap by the cfg- prefix and the chart fullname. A rename must be reflected in both templates. */}}{{- $name := include "apigwmm.fullname" . -}}
 
 apiVersion: v1
 kind: ConfigMap

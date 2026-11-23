@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 
 namespace Microsoft.eShopOnContainers.Services.Identity.API.Services

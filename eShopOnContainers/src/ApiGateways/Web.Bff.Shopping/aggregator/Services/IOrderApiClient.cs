@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.Web.Shopping.HttpAggregator.Models;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.Web.Shopping.HttpAggregator.Models;
 using System.Threading.Tasks;
 
 namespace Microsoft.eShopOnContainers.Web.Shopping.HttpAggregator.Services

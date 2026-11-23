@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.OrderAggregate;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.OrderAggregate;
 using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
 using System;

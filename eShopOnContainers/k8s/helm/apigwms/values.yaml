@@ -29,6 +29,7 @@ affinity: {}
 env:
   urls:
   # configmap declares variables which value is taken from the config map defined in template configmap.yaml (name is name of var and key the key in configmap).
+  # Each key is looked up in the ConfigMap by deployment.yaml. The corresponding name is what the process sees in its environment.
   configmap:
     - name: IdentityUrl
       key: internalurls__identity

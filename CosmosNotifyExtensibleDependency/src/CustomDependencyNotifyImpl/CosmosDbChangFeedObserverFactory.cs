@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2020 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 using Microsoft.Azure.Documents.ChangeFeedProcessor.FeedProcessing;
 using System;
 
+// CosmosDbNotificationDependency.cs constructs CosmosDbChangFeedObserverFactory in CreateChangeFeedProcessor.
 namespace Alachisoft.NCache.Samples
 {
     // The change feed observer factory that will be used to create the change feed observers

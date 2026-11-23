@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) 2026 Alachisoft.
+using System;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using System.Linq;

@@ -69,3 +69,10 @@
 ###############################################################################
 *.pfx binary
 
+
+# Platform-specific scripts and binary assets
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.png binary
+*.jpg binary
+*.ico binary

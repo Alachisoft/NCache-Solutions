@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopOnContainers.WebMVC.Controllers;
 using Microsoft.eShopOnContainers.WebMVC.Services;
 using Microsoft.eShopOnContainers.WebMVC.ViewModels;

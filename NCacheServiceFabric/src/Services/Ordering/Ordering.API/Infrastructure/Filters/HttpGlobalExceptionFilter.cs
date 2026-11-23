@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Ordering.API.Infrastructure.Filters
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Ordering.API.Infrastructure.Filters
 {
     using AspNetCore.Mvc;
     using global::Ordering.Domain.Exceptions;

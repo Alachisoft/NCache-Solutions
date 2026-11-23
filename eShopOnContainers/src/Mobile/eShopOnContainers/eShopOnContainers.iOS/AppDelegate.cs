@@ -1,4 +1,5 @@
-﻿using FFImageLoading.Forms.Touch;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using FFImageLoading.Forms.Touch;
 using Foundation;
 using UIKit;
 

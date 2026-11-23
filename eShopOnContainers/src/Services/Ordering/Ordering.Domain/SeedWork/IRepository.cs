@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Ordering.Domain.Seedwork
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Ordering.Domain.Seedwork
 {
     public interface IRepository<T> where T : IAggregateRoot
     {

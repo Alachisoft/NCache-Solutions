@@ -1,4 +1,5 @@
-﻿using Basket.API.Infrastructure.ActionResults;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Basket.API.Infrastructure.ActionResults;
 using Basket.API.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

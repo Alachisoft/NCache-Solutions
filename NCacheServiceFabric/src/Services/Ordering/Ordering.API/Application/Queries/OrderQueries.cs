@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.Queries
+﻿// Copyright (c) .NET Foundation and Contributors. NCache integration copyright (c) 2026 Alachisoft.
+namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.Queries
 {
     using Dapper;
     using System.Data.SqlClient;

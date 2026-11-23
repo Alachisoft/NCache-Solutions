@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) 2026 Alachisoft.
+using System;
 
 namespace IdentityServer4.NCache.Entities
 {

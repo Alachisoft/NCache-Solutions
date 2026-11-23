@@ -1,4 +1,5 @@
-﻿using Basket.API.Infrastructure.Middlewares;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Basket.API.Infrastructure.Middlewares;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

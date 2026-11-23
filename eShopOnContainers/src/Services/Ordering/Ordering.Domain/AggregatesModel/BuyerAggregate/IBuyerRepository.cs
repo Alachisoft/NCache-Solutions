@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.Services.Ordering.Domain.Seedwork;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.Services.Ordering.Domain.Seedwork;
 using System.Threading.Tasks;
 
 namespace Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.BuyerAggregate

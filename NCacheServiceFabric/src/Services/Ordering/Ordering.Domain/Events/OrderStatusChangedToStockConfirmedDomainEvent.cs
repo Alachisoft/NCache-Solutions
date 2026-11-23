@@ -1,4 +1,5 @@
-﻿namespace Ordering.Domain.Events
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Ordering.Domain.Events
 {
     using MediatR;
     using System;

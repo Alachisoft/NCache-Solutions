@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Catalog.API.ViewModel
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Catalog.API.ViewModel
 {
     using System.Collections.Generic;
 

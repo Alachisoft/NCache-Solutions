@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System;
 using MediatR;
 using System.Collections.Generic;
 using System.Runtime.Serialization;

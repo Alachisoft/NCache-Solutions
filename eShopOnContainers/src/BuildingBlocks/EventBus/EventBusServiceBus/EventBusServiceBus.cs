@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusServiceBus
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusServiceBus
 {
     using Autofac;
     using Microsoft.Azure.ServiceBus;

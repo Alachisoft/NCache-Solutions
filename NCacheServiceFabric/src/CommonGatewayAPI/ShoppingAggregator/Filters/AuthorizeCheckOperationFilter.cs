@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Web.Shopping.HttpAggregator.Filters
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Web.Shopping.HttpAggregator.Filters
 {
     using Microsoft.AspNetCore.Authorization;
     using Swashbuckle.AspNetCore.Swagger;

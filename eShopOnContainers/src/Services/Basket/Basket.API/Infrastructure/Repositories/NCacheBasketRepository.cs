@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Alachisoft
+﻿// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,6 +48,7 @@ namespace Microsoft.eShopOnContainers.Services.Basket.API.Infrastructure.Reposit
 
         public async Task<CustomerBasket> GetBasketAsync(string customerId)
         {
+            // UpdateBasketAsync stores JSON under BuyerId. The lookup must use that same ID and deserialize the stored string.
             var data = await Task.Run(() => _cache.Get<string>(customerId));
 
             if (string.IsNullOrEmpty(data))

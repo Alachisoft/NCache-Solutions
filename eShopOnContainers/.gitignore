@@ -280,3 +280,7 @@ pub/
 src/**/app.yaml
 src/**/inf.yaml
 
+
+# MSBuild binary logs and test result files
+*.binlog
+*.trx

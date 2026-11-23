@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading;

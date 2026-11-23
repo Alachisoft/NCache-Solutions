@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System.IO;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 

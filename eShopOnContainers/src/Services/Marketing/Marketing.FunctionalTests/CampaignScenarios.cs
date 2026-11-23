@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.Services.Marketing.API.Dto;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.Services.Marketing.API.Dto;
 using Newtonsoft.Json;
 using System;
 using System.Net;

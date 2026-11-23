@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Services.Catalog;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Services.Catalog;
 using System.Threading.Tasks;
 using Xunit;
 

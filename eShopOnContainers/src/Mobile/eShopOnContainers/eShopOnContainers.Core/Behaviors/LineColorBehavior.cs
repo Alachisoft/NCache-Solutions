@@ -1,4 +1,5 @@
-﻿using eShopOnContainers.Core.Effects;
+﻿// Copyright (c) 2017 Microsoft Corp.
+using eShopOnContainers.Core.Effects;
 using System.Linq;
 using Xamarin.Forms;
 

@@ -1,4 +1,5 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Locations.API.Infrastructure.Repositories
+﻿// Copyright (c) .NET Foundation and Contributors.
+namespace Microsoft.eShopOnContainers.Services.Locations.API.Infrastructure.Repositories
 {
     using Microsoft.eShopOnContainers.Services.Locations.API.Model;
     using System.Collections.Generic;

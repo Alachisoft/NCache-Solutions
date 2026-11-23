@@ -1,4 +1,5 @@
-﻿using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

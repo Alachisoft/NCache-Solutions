@@ -1,3 +1,4 @@
+// Copyright (c) 2017 Microsoft Corp.
 using Android.Views;
 
 namespace eShopOnContainers.Droid.Extensions

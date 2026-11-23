@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Authorization;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;

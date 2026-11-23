@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿// Copyright (c) .NET Foundation and Contributors.
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using FluentValidation;
