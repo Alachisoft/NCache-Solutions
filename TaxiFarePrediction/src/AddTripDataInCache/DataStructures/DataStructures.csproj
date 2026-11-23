@@ -10,3 +10,4 @@
   </ItemGroup>
 
 </Project>
+<!-- ../AddTripDataInCache/AddTripDataInCache.csproj references this project directly at build time. -->
