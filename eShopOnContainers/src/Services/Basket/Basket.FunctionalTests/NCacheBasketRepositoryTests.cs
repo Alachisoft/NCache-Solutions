@@ -1,7 +1,7 @@
 ﻿using Alachisoft.NCache.Client;
 using Basket.FunctionalTests.Base;
 using Microsoft.eShopOnContainers.Services.Basket.API.Infrastructure.Repositories;
-// Copyright (c) 2019 Alachisoft
+// Copyright (c) 2026 Alachisoft
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.

@@ -313,4 +313,4 @@ This means that both methods are effective, based on your business need.
 
 # Copyrights
 
-[C] Copyright 2019 Alachisoft 
+[C] Copyright 2026 Alachisoft 

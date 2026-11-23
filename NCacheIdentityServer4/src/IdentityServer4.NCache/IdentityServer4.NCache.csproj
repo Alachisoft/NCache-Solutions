@@ -9,7 +9,7 @@
     <Company>Alachisoft</Company>
     <Description>NCache peristed storage and caching provider for IdentityServer4.</Description>
     <PackageLicenseUrl>http://www.alachisoft.com/license-agreements.html</PackageLicenseUrl>
-    <Copyright>Copyright 2005-2020 Alachisoft. All rights reserved.</Copyright>
+    <Copyright>Copyright 2026 Alachisoft. All rights reserved.</Copyright>
     <PackageProjectUrl>http://www.alachisoft.com/ncache/</PackageProjectUrl>
     <PackageTags>Alachisoft NCache Cache Caching DistributedCache In-Memory ASP DotNet DotNetCore Core IdentityServer4 IdentityServer Store Authentication Authorization OAuth OAuth2 OpenID Connect Security Identity Token</PackageTags>
     <AssemblyVersion>5.3.0.0</AssemblyVersion>

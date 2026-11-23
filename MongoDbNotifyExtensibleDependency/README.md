@@ -335,4 +335,4 @@ Alachisoft &copy; provides various sources of technical support.
 
 ### Copyrights
 
-&copy; Copyright 2021 Alachisoft 
+&copy; Copyright 2026 Alachisoft 
