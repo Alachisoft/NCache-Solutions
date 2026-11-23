@@ -32,3 +32,4 @@
     </Service>
   </DefaultServices>
 </ApplicationManifest>
+<!-- This application imports version 1.0.0 of RabbitMQPkg. A new service package version requires updating its import here. -->

@@ -9,3 +9,4 @@
   <ClusterConnectionParameters />
   <ApplicationParameterFile Path="..\ApplicationParameters\Local.5Node.xml" />
 </PublishProfile>
+<!-- Environment-specific application values come from ..\ApplicationParameters\Local.5Node.xml. The cluster connection is configured in this profile. -->

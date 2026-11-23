@@ -4,3 +4,4 @@
     <Parameter Name="SqlServer_InstanceCount" Value="1" />
   </Parameters>
 </Application>
+<!-- ../PublishProfiles/Cloud.xml selects this file when publishing. Parameter names here must match the application manifest. -->

@@ -50,3 +50,4 @@
     </Service>
   </DefaultServices>
 </ApplicationManifest>
+<!-- This application imports version 1.0.0 of IdentityApiPkg. A new service package version requires updating its import here. -->
