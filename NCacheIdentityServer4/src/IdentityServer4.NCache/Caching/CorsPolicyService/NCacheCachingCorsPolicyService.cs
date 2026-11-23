@@ -30,6 +30,7 @@ namespace IdentityServer4.NCache.Caching
         {
             string cacheKey = GetKey(origin);
 
+            // The cache holds denied decisions as well as allowed ones. A cached denial bypasses the inner policy until the entry expires or is removed.
             var isOriginAllowed = await _cache.GetAsync(cacheKey);
 
             if (isOriginAllowed != null)
