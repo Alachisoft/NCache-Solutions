@@ -10,3 +10,7 @@ Refer to file [README.k8s.md](./README.k8s.md) for detailed information
 Refer to file [README.CICD.k8s.md](./README.CICD.k8s.md) for information about how to set a VSTS build for deploying on k8s
 
 Refer to file [conf-files.md](./conf-files.md) for a brief description of every YAML file in this folder
+
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

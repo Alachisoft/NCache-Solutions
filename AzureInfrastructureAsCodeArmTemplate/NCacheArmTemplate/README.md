@@ -79,22 +79,6 @@ VNET Name
 ### NCacheClusterCreationScriptFileUri
 URI of Blob storage of "NCacheConfiguration.ps1" file. Which will be uploaded by the user before deploying the template. This Script will create a NCache Cluster and is mandatory to upload.
 
+## Copyright
 
-
-
- 
-
-
-
-
-
-
-
- 
-
-
-
- 
-
-
-
+Copyright 2026 Alachisoft.

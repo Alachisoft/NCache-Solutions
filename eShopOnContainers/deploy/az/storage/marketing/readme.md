@@ -35,3 +35,6 @@ create-resources.cmd storage\marketing\deploystorage newResourceGroup -c westus
 
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

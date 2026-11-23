@@ -12,3 +12,6 @@ Check procedures on how to get the sample app started at the Wiki:
 https://github.com/dotnet/eShopOnContainers/wiki
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

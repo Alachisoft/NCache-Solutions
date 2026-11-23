@@ -29,3 +29,6 @@ Using `docker-machine` is the recommended way to create a VM with docker install
 
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

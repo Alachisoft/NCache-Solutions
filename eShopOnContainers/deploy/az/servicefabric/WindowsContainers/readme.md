@@ -136,3 +136,6 @@ Modify the cloud.xml file of each Service Fabric application in PublishProfile d
 
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

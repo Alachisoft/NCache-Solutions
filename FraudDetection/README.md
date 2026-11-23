@@ -281,3 +281,7 @@ Both applications read their settings from *appsettings.json* ([CardPaymentApp](
 NCache is a scaleable and distributed in-memory .net cache. It provides multiple features, that you can use according to your algorithm. You can also add client cache in this application, as client cache is much faster than cluster cache. Client cache is in memory near local cache, and gives result faster than far cache (cluster cache). Its data is updated in cluster cache using write thru. 
 
 All purpose of storing and processing data in local memory is that cost of network transfer can be eliminated, as all processing is done through local copy and results are later updated on data base. But as this copy is local, so their might be a chance of stale data in cache, for some milliseconds. Also if there is lots of network calls it can also effect overall performance.
+
+## Copyright
+
+Copyright 2026 Alachisoft.

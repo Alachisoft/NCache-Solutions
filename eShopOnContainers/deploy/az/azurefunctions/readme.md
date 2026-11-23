@@ -37,3 +37,6 @@ Example:
 
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

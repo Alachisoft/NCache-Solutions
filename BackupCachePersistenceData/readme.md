@@ -62,3 +62,7 @@ Import-Module "C:\Program Files\NCache\bin\tools\ncacheps\ncacheps.psd1"
 Export-CacheData -Name demoCache -Path "C:\CacheBackup" -Server [server-ip]
 Import-CacheData -Name demoCache -Path "C:\CacheBackup" -Server [server-ip]
 ```
+
+## Copyright
+
+Copyright 2026 Alachisoft.

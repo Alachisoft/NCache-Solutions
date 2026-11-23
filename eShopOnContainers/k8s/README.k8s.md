@@ -96,3 +96,7 @@ Deploy k8s using public images that Microsoft provides:
 ```
 ./deploy.ps1 -buildImages $false -configFile conf_local.yml -imageTag master
 ```
+
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

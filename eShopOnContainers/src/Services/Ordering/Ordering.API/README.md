@@ -9,3 +9,6 @@ https://github.com/dotnet/eShopOnContainers/wiki
 
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

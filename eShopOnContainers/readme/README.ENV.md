@@ -65,3 +65,7 @@ For example:
  >ESHOP_AZUREFUNC_CAMPAIGN_DETAILS_URI=https://marketing-functions.azurewebsites.net/api/MarketingDetailsHttpTrigger?code=AzureFunctioncode
  
 See Azure Functions deployment Files and Readme for more details [ARM files](deploy/az/azurefunctions/readme.md)
+
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

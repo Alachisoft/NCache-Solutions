@@ -280,3 +280,6 @@ Now back in Visual Studio, hit the F5 button to launch the NCommerceWeb applicat
 
 > NOTE: Object caching is also used when you view the individual product.
 
+## Copyright
+
+Copyright 2026 Alachisoft.

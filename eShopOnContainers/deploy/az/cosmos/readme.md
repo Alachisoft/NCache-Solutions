@@ -29,3 +29,6 @@ create-resources.cmd cosmos\deploycosmos newResourceGroup -c westus
 
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.

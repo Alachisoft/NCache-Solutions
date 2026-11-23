@@ -126,3 +126,6 @@ Load Testing for eShopOnContainers is described in [this document](ServicesTests
 
 
 
+## Copyright
+
+Copyright (c) .NET Foundation and Contributors.
