@@ -1,4 +1,4 @@
-{{- $name := include "webstatus.fullname" . -}}
+{{/* deployment.yaml looks up this ConfigMap by the cfg- prefix and the chart fullname. A rename must be reflected in both templates. */}}{{- $name := include "webstatus.fullname" . -}}
 {{- $identity := include "url-of" (list .Values.app.ingress.entries.identity .) -}}
 {{- $webshoppingapigw := include "url-of" (list .Values.app.ingress.entries.webshoppingapigw .) -}}
 {{- $mvc := include "url-of" (list .Values.app.ingress.entries.mvc .) -}}

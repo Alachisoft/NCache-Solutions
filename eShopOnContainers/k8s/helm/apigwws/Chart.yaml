@@ -3,3 +3,4 @@ appVersion: "1.0"
 description: A Helm chart for Kubernetes
 name: apigwws
 version: 0.1.0
+# The chart helper uses name and version to build the Kubernetes chart label. appVersion is a separate value.

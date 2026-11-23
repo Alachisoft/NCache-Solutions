@@ -210,3 +210,4 @@ ExecKube -cmd 'apply -f ingress.yaml'
 
 Write-Host "WebSPA is exposed at http://$externalDns, WebMVC at http://$externalDns/webmvc, WebStatus at http://$externalDns/webstatus" -ForegroundColor Yellow
 
+# README.k8s.md invokes this script by its relative path.

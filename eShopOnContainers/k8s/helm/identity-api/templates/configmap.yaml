@@ -1,4 +1,4 @@
-{{- $name := include "identity-api.fullname" . -}}
+{{/* deployment.yaml looks up this ConfigMap by the cfg- prefix and the chart fullname. A rename must be reflected in both templates. */}}{{- $name := include "identity-api.fullname" . -}}
 {{- $sqlsrv := include "sql-name" . -}}
 {{- $mvc_url := include "url-of" (list .Values.app.ingress.entries.mvc  .) -}}
 {{- $spa_url := include "url-of" (list .Values.app.ingress.entries.spa .) -}}

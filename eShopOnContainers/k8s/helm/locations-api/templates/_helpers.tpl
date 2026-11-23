@@ -1,4 +1,4 @@
-{{/* vim: set filetype=mustache: */}}
+{{/* Both the Deployment and Service use locations-api.name for their app label. The Service selector depends on the two values matching. */}}{{/* vim: set filetype=mustache: */}}
 {{/*
 Expand the name of the chart.
 */}}
