@@ -75,3 +75,4 @@
   </Target>
   -->
 </Project>
+<!-- ../GeolocatorSample.iOS/GeolocatorSample.iOS.csproj references this project directly at build time. -->
