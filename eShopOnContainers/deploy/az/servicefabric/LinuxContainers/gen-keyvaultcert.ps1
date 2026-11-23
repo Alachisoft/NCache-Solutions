@@ -51,3 +51,4 @@ While ($Stoploop -eq $false)
 
 # Show Certificate Values
 Get-AzureKeyVaultCertificate -VaultName $vaultName -Name $certName
+# readme.md invokes this script by its relative path.
