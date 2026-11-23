@@ -111,6 +111,7 @@ namespace FraudDetector.Messaging
             try
             {
                 TransactionResult transactionResult = new TransactionResult(transaction.CustomerID, transaction.CustomerName, result,transaction.TransactionID);
+                // TransactionRequestManager subscribes to this topic to receive the detector's decision.
                 _cache.PublishMessageOnTopic(Topics.REPLIESTOPICS, transactionResult, null);
             }
             catch

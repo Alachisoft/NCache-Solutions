@@ -170,6 +170,7 @@ namespace FraudDetector.TrainedLogic
                 validEmail = false;
             }
 
+            // The spelling of invalidEmailDoamin is part of the cache key. A writer using a corrected spelling would populate a different list.
             IList<string> invalidEmailDoamin = learntCache.GetTrainedDataFromCache("invalidEmailDoamin");
 
             if (invalidEmailDoamin.Contains(email))

@@ -83,6 +83,7 @@ namespace FraudDetector.NCacheLogic
                 // gets data from cache against a customer
                 if (cache.Contains(key))
                 {
+                    // The Contains check gates read-through. An absent key returns null without consulting the provider.
                     ReadThruOptions options = new ReadThruOptions(ReadMode.ReadThru);
                     IDistributedList<FraudRequest> list;
 
