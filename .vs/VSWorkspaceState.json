@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\BackingSourceWithDapperUsingNCache"
   ],
+  "SelectedNode": "\\BackingSourceWithDapperUsingNCache\\DapperNCache.sln",
   "PreviewInSolutionExplorer": false
 }
