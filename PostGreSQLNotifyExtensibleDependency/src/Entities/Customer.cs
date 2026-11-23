@@ -1,5 +1,6 @@
 ﻿using System;
 
+// PostGreSQLReadThruProvider.cs constructs Customer in LoadFromSource.
 namespace Entities
 {
     [Serializable]
