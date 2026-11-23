@@ -48,6 +48,7 @@ namespace Microsoft.eShopOnContainers.Services.Basket.API.Infrastructure.Reposit
 
         public async Task<CustomerBasket> GetBasketAsync(string customerId)
         {
+            // UpdateBasketAsync stores JSON under BuyerId. The lookup must use that same ID and deserialize the stored string.
             var data = await Task.Run(() => _cache.Get<string>(customerId));
 
             if (string.IsNullOrEmpty(data))

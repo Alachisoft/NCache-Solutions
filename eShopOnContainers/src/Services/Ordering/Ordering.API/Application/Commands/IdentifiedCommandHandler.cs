@@ -50,6 +50,7 @@ namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands
         /// <returns>Return value of inner command or default value if request same ID was found</returns>
         public async Task<R> Handle(IdentifiedCommand<T, R> message, CancellationToken cancellationToken)
         {
+            // The request ID is the retry key. Reusing it returns the duplicate result before the inner command is dispatched.
             var alreadyExists = await _requestManager.ExistAsync(message.Id);
             if (alreadyExists)
             {
