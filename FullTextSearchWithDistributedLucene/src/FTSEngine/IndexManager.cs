@@ -99,6 +99,7 @@ namespace NCommerce.FTSEngine
         {
             var prod = dataProvider.GetProduct(productId);
 
+            // Lucene selects documents to replace by the term passed here. The product ID above selects only the replacement data.
             indexWriter.UpdateDocument(new Term("discountedPrice"), prod.GetLuceneDocument());
             indexWriter.Commit();//Flush and make it ready for search
         }

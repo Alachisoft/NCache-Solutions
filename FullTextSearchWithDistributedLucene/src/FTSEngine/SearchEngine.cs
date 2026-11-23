@@ -36,6 +36,7 @@ namespace NCommerce.FTSEngine
                 query.Add(queryParser.Parse(searchTerm), Occur.MUST);
 
                 //--- Split the search term into multiple search words to make fuzzy query ...
+                // Each fuzzy term is required alongside the original parsed query. A fuzzy hit alone cannot satisfy this search.
                 string[] terms = searchTerm.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string term in terms)
                     query.Add(queryParser.Parse(term.Replace("~", "") + "~"), Occur.MUST);// remove the duplicate ~, if already exists
