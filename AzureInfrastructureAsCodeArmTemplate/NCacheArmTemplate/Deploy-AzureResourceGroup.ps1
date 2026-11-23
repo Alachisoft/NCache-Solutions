@@ -30,6 +30,7 @@ $OptionalParameters = New-Object -TypeName Hashtable
 $TemplateFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $TemplateFile))
 $TemplateParametersFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $TemplateParametersFile))
 
+# Artifact upload runs before the ValidateOnly check, so combining both switches still writes blobs.
 if ($UploadArtifacts) {
     # Convert relative paths to absolute paths if needed
     $ArtifactStagingDirectory = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $ArtifactStagingDirectory))
