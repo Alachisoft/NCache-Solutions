@@ -29,6 +29,7 @@ namespace Ordering.API.Application.Validations
 
         private bool BeValidExpirationDate(DateTime dateTime)
         {
+            // Expiration is checked to the instant. A date supplied at midnight UTC expires at the start of that day.
             return dateTime >= DateTime.UtcNow;
         }
 
