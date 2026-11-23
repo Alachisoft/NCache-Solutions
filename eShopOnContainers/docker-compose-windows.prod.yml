@@ -24,11 +24,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - CacheID=basketcache
-      - BasketCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb #IP addresses of NCache cluster nodes separated by hyphen
       - EventBusNCachID=pubsubcache
       - EventBusNCachTopicID=IntegrationEvents
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy #IP addresses of NCache cluster nodes separated by hyphen
-      - EnableNCacheClientLogs=False
     ports:
       - "5103:5103"
 
@@ -47,13 +44,10 @@ services:
       - RabbitMQBusEnabled=False
       - AzureStorageEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EnableEFClientLogs=False
       - EFCacheID=CatalogEFCache
-      - CatalogEFCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=CatalogSubscription
-      - EnableNCacheClientLogs=False
     ports:
       - "5101:80"
 
@@ -73,7 +67,6 @@ services:
       - IsClusterEnv=False
       - IsNCacheClusterEnv=True
       - CacheID=identitycache
-      - IdentityCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb #IP addresses of NCache cluster nodes separated by hyphen
     ports:
       - "5105:80"
 
@@ -90,10 +83,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=OrderingSubscription
-      - EnableNCacheClientLogs=False
     ports:
       - "5102:80"
   
@@ -109,8 +100,6 @@ services:
       - EventBusNCachID=pubsubcache
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=OrderingTaskSubscription
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
-      - EnableNCacheClientLogs=False
     ports:
       - "5111:80"
 
@@ -131,7 +120,6 @@ services:
       - UseCustomizationData=True
       - IsNCacheClusterEnv=False
       - CacheID=spacache
-      - SPACacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb      
     ports:
       - "5104:80"
 
@@ -148,7 +136,6 @@ services:
       - IsClusterEnv=False
       - IsNCacheClusterEnv=True
       - CacheID=mvccache
-      - MVCCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
     ports:
       - "5100:80"
   
@@ -169,13 +156,10 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=MarketingSubscription
-      - EnableNCacheClientLogs=False
       - CachingEnabled=False
       - MarketingCacheID=MarketingCache
-      - MarketingCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - AzureStorageEnabled=False
     ports:
       - "5110:80"
@@ -215,7 +199,6 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=PaymentSubscription
     ports:
@@ -233,12 +216,9 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=LocationSubscription
-      - EnableNCacheClientLogs=False
       - LocationCachingEnabled=False
       - CacheID=LocationsCache
-      - LocationCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
     ports:
       - "5109:80"

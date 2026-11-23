@@ -38,7 +38,6 @@ services:
       - IsClusterEnv=False
       - IsNCacheClusterEnv=True
       - CacheID=identitycache
-      - IdentityCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb #IP addresses of NCache
       - UseCustomizationData=True  
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
@@ -58,11 +57,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - CacheID=basketcache
-      - BasketCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb #IP addresses of NCache cluster nodes separated by hyphen
       - EventBusNCachID=pubsubcache
       - EventBusNCachTopicID=IntegrationEvents
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy #IP addresses of NCache cluster nodes separated by hyphen
-      - EnableNCacheClientLogs=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - UseLoadTest=${USE_LOADTEST:-False}
@@ -87,11 +83,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - CacheID=basketcache
-      - BasketCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb #IP addresses of NCache cluster nodes separated by hyphen
       - EventBusNCachID=pubsubcache
       - EventBusNCachTopicID=IntegrationEvents
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy #IP addresses of NCache cluster nodes separated by hyphen
-      - EnableNCacheClientLogs=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - UseLoadTest=${USE_LOADTEST:-False}
@@ -120,13 +113,10 @@ services:
       - AzureStorageEnabled=False
       - EFCoreCachingEnabled=True
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EnableEFClientLogs=False
       - EFCacheID=CatalogEFCache
-      - CatalogEFCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=CatalogSubscription
-      - EnableNCacheClientLogs=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
@@ -154,13 +144,10 @@ services:
       - AzureStorageEnabled=False
       - EFCoreCachingEnabled=True
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EnableEFClientLogs=False
       - EFCacheID=CatalogEFCache
-      - CatalogEFCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=CatalogSubscription
-      - EnableNCacheClientLogs=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
@@ -185,10 +172,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=OrderingSubscription
-      - EnableNCacheClientLogs=False
       - CheckUpdateTime=30000
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
@@ -215,10 +200,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=OrderingSubscription
-      - EnableNCacheClientLogs=False
       - CheckUpdateTime=30000
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
@@ -250,13 +233,10 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=MarketingSubscription
-      - EnableNCacheClientLogs=False
       - CachingEnabled=False
       - MarketingCacheID=MarketingCache
-      - MarketingCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - AzureStorageEnabled=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
@@ -279,10 +259,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=PaymentSubscription
-      - EnableNCacheClientLogs=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
@@ -302,13 +280,10 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=LocationSubscription
-      - EnableNCacheClientLogs=False
       - LocationCachingEnabled=False
       - CacheID=LocationsCache
-      - LocationCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - UseLoadTest=${USE_LOADTEST:-False}

@@ -54,7 +54,6 @@ services:
       - IsClusterEnv=False
       - IsNCacheClusterEnv=True
       - CacheID=identitycache
-      - IdentityCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb #IP addresses of NCache cluster nodes separated by hyphen
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
@@ -72,12 +71,9 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - CacheID=basketcache
-      - BasketCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb #IP addresses of NCache cluster nodes separated by hyphen
       - EventBusNCachID=pubsubcache
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=BasketSubscription
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy #IP addresses of NCache cluster nodes separated by hyphen
-      - EnableNCacheClientLogs=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - UseLoadTest=${USE_LOADTEST:-False}
@@ -103,13 +99,10 @@ services:
       - RabbitMQBusEnabled=False
       - AzureStorageEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EnableEFClientLogs=False
       - EFCacheID=CatalogEFCache
-      - CatalogEFCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=CatalogSubscription
-      - EnableNCacheClientLogs=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
@@ -130,10 +123,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=OrderingSubscription
-      - EnableNCacheClientLogs=False
       - CheckUpdateTime=30000
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
@@ -160,8 +151,6 @@ services:
       - EventBusNCachID=pubsubcache
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=OrderingTaskSubscription
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
-      - EnableNCacheClientLogs=False
       - CheckUpdateTime=30000
       - GracePeriodTime=1
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
@@ -191,13 +180,10 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=MarketingSubscription
-      - EnableNCacheClientLogs=False
       - CachingEnabled=False
       - MarketingCacheID=MarketingCache
-      - MarketingCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - AzureStorageEnabled=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
@@ -216,10 +202,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=PaymentSubscription
-      - EnableNCacheClientLogs=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - Serilog__MinimumLevel__Override__Payment.API.IntegrationEvents.EventHandling=Verbose
@@ -243,13 +227,10 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=LocationSubscription
-      - EnableNCacheClientLogs=False
       - LocationCachingEnabled=False
       - CacheID=LocationsCache
-      - LocationCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - UseLoadTest=${USE_LOADTEST:-False}
@@ -268,10 +249,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=WebHooksSubscription
-      - EnableNCacheClientLogs=False
       - IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
     ports:
       - "5113:80"   # Important: In a production environment your should remove the external port (5109) kept here for microservice debugging purposes. 
@@ -391,10 +370,8 @@ services:
       - AzureServiceBusEnabled=False
       - RabbitMQBusEnabled=False
       - EventBusNCachID=pubsubcache
-      - PubSubCacheIPAddresses=xxxx.xxxx.xxxx.xxxx-yyyy.yyyy.yyyy.yyyy
       - EventBusNCachTopicID=IntegrationEvents
       - EventBusNCacheSubscriptionName=OrderingSignalRSubscription
-      - EnableNCacheClientLogs=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - identityUrl=http://identity.api              #Local: You need to open your local dev-machine firewall at range 5100-5110.
@@ -459,7 +436,6 @@ services:
       - UseCustomizationData=True
       - IsNCacheClusterEnv=False
       - CacheID=spacache
-      - SPACacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - SignalrHubUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5202
@@ -481,7 +457,6 @@ services:
       - IsClusterEnv=False
       - IsNCacheClusterEnv=True
       - CacheID=mvccache
-      - MVCCacheIPAddresses=aaaa.aaaa.aaaa.aaaa-bbbb.bbbb.bbbb.bbbb
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - UseLoadTest=${USE_LOADTEST:-False}
