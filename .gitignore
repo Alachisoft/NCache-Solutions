@@ -221,3 +221,7 @@ FakesAssemblies/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 /CosmosNotifyExtensibleDependency/src/CustomDependencyNotifyImpl/CosmosDBNotifyExtensibleDependencyClassDiagram.cd
+
+# MSBuild binary logs and test result files
+*.binlog
+*.trx

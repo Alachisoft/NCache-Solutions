@@ -218,3 +218,7 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+# Angular and TypeScript build caches
+.angular/cache/
+*.tsbuildinfo
