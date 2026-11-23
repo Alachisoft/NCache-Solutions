@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+// TransactionRequestManager.cs constructs TransactionCompletedMessage in CreateRelevantSubscribtion.
 namespace Common
 {
     // this message is sent back to transaction manager after transaction completion

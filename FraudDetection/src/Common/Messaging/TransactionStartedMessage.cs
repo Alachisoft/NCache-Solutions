@@ -14,6 +14,7 @@
 using Alachisoft.NCache.Runtime.Caching;
 using System;
 
+// FraudDetectionManager.cs constructs TransactionStartedMessage in CreateRelevantSubscribtion.
 namespace Common
 {
     // this message is sent to fraud manager for starting a transaction

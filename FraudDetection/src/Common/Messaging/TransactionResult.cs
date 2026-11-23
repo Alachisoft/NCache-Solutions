@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+// FraudDetectionManager.cs constructs TransactionResult in PublishResult.
 namespace Common
 {
     /// <summary>

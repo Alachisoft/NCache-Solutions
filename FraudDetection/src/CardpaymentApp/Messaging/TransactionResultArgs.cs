@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+// TransactionRequestManager.cs constructs TransactionResultArgs in OnRequest.
 namespace CardPaymentApp.Messaging
 {
     /// <summary>

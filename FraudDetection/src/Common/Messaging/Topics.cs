@@ -18,6 +18,7 @@ namespace Common
     // topics on which messages will be published
     public class Topics
     {
+        // The card payment app publishes on TRANSACTIONTOPICS and listens on REPLIESTOPICS for the detector's decision.
         public const string REPLIESTOPICS = "REPLIESTOPICS";
         public const string TRANSACTIONTOPICS = "TRANSACTIONTOPICS";
     }    

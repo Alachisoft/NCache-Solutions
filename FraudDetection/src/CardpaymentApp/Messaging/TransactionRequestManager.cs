@@ -58,6 +58,7 @@ namespace CardPaymentApp.Messaging
             if (customer != null)
             {
                 TransactionRequest transactionRequest = CreateTransactionFromCustomer(customer);
+                // FraudDetectionManager consumes this request. Its decision comes back on REPLIESTOPICS.
                 _cache.PublishMessageOnTopic(Topics.TRANSACTIONTOPICS, transactionRequest, null);
                 return transactionRequest.TransactionID ;
             }
