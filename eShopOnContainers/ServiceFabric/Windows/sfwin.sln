@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27323.2
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D88620DA-E2D4-40CD-BB7E-1E8C5121470E}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\deploy\az\servicefabric\WindowsContainers\readme.md = ..\..\deploy\az\servicefabric\WindowsContainers\readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
