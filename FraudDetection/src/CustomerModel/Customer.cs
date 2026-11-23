@@ -15,6 +15,7 @@
 
 using System;
 
+// SqlDataSource.cs constructs Customer in GetCustomerInfo.
 namespace CustomerSample
 {
 

@@ -19,6 +19,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Text;
 
+// TransactionApp.cs constructs SqlDataSource in Start.
 namespace CustomerSample
 {
     /// <summary>

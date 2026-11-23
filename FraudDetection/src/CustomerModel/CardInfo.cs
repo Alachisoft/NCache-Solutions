@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+// SqlDataSource.cs constructs CardInfo in GetCustomerInfo.
 namespace CustomerSample
 {
     [Serializable]
