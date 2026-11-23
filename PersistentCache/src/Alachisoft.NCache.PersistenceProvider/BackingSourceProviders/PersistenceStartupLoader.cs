@@ -12,84 +12,120 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Alachisoft.NCache.Runtime.CacheLoader;
-using Alachisoft.NCache.Runtime.Caching;
-using Alachisoft.NCache.SocketServer.CacheLoader;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using Alachisoft.NCache.Client;
+using Alachisoft.NCache.Runtime.CacheLoader;
+using Alachisoft.NCache.Runtime.Caching;
 
 namespace Alachisoft.NCache.PersistenceProvider
 {
-    /// <summary>
-    /// PersistenceStartupLoader implementation which use IPersistenceStore
-    /// to fetch items from persisted store on cache stratup
-    /// </summary>
+
     public class PersistenceStartupLoader : ProviderBase, ICacheLoader
     {
-        private string _hint=null;
-        private int _currentIndex=0;
-        private int _singleIterationSize = 1000;
-        private IEnumerator<KeyValuePair<string, ProviderItemBase>> _persistentItems = null;
-        /// <summary>
-        /// Init is need to be override as a more specific implementation in startup loader is needed
-        /// </summary>
-        /// <param name="parameters"> parameters passed at cache configuration</param>
-        /// <param name="cacheId">cache name</param>
-        public override void Init(IDictionary parameters, string cacheId)
+        private const int DefaultCachePort = 9800;
+
+        private string _hint = null;
+
+        private readonly int _singleIterationSize = 1000;
+
+        private ICache _cache = null;
+
+        public void Init(IDictionary<string, string> parameters, string cacheName)
         {
             try
             {
-                base.Init(parameters, cacheId);
-                // Get distribution hints – distributionhint is a keyword
-                if (parameters.Contains("distributionhint"))
+                base.Init(new Hashtable(new Dictionary<string, string>(parameters)), cacheName);
+                if (parameters.ContainsKey("distributionhint"))
                 {
-                    _hint = parameters["distributionhint"].ToString();
+                    _hint = parameters["distributionhint"];
                 }
+                _cache = CacheManager.GetCache(cacheName, CreateConnectionOptions(parameters));
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex.ToString());
-                throw ex;
+                throw;
             }
-
         }
-        /// <summary>
-        /// Load Next is to be call till HasMoreData is false
-        /// </summary>
-        /// <param name="userContext">user object to be fetched in next LoadNext call</param>
-        /// <returns></returns>
-        public LoaderResult LoadNext(object userContext)
+
+        public object LoadDatasetOnStartup(string dataset)
         {
             try
             {
-                if (_persistentItems == null)
+                Dictionary<string, CacheItem> batch = new Dictionary<string, CacheItem>();
+                foreach (KeyValuePair<string, ProviderItemBase> item in PersistenceProvider.GetAll(_hint))
                 {
-                    _persistentItems = PersistenceProvider.GetAll(_hint).GetEnumerator();
-                }
-                LoaderResult result = new LoaderResult();
-                result.UserContext = userContext;
-                result.HasMoreData = false;
-                
-                while (_persistentItems.MoveNext())
-                {
-                    result.Data.Add(_persistentItems.Current);
-                    _currentIndex++;
-                    if (_currentIndex % _singleIterationSize == 0)
+                    if (item.Value is ProviderCacheItem providerCacheItem)
                     {
-                        result.HasMoreData = true;
-                        break;
+                        batch.Add(item.Key, ToCacheItem(providerCacheItem));
+                    }
+                    if (batch.Count == _singleIterationSize)
+                    {
+                        _cache.InsertBulk(batch);
+                        batch.Clear();
                     }
                 }
-                return result;
+                if (batch.Count > 0)
+                {
+                    _cache.InsertBulk(batch);
+                }
+                return null;
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex.ToString());
-                throw ex;
+                throw;
             }
+        }
 
+        public object RefreshDataset(string dataset, object userContext)
+        {
+            return userContext;
+        }
+
+        public IDictionary<string, RefreshPreference> GetDatasetsToRefresh(IDictionary<string, object> userContexts)
+        {
+            return new Dictionary<string, RefreshPreference>();
+        }
+
+        public override void Dispose()
+        {
+            _cache?.Dispose();
+            base.Dispose();
+        }
+
+        private static ConnectionOptions CreateConnectionOptions(IDictionary<string, string> parameters)
+        {
+            if (!parameters.TryGetValue("cacheserver", out var server) || string.IsNullOrWhiteSpace(server))
+            {
+                throw new ArgumentException("The 'cacheserver' parameter of the startup loader is missing.");
+            }
+            int result = DefaultCachePort;
+            if (parameters.TryGetValue("cacheport", out var portText) && !int.TryParse(portText, out result))
+            {
+                throw new ArgumentException("The 'cacheport' parameter of the startup loader is not a valid port: '" + portText + "'.");
+            }
+            return new ConnectionOptions
+            {
+                Servers = new List<ServerInfo>
+                {
+                    new ServerInfo(server, result)
+                }
+            };
+        }
+
+        private static CacheItem ToCacheItem(ProviderCacheItem providerCacheItem)
+        {
+            return new CacheItem(providerCacheItem.GetValue<object>())
+            {
+                Expiration = providerCacheItem.Expiration,
+                Group = providerCacheItem.Group,
+                Tags = providerCacheItem.Tags,
+                NamedTags = providerCacheItem.NamedTags,
+                Priority = providerCacheItem.ItemPriority
+            };
         }
     }
 }

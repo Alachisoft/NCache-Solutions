@@ -32,7 +32,7 @@ namespace Alachisoft.NCache.PersistenceProvider
         /// <returns></returns>
         public static IPersistenceProvider CreateInstanceWithReflection(string fullyQualifiedName,string cacheName)
         {
-            const string qualifiedInterfaceName = "PersistenceProviders.IPersistenceProvider";
+            string qualifiedInterfaceName = typeof(IPersistenceProvider).FullName;
             var interfaceFilter = new TypeFilter(InterfaceFilter);
 
             var path = Path.Combine(AppUtil.DeployedAssemblyDir,cacheName);

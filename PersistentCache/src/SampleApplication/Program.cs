@@ -36,7 +36,8 @@ namespace Test
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.Error.WriteLine(ex.ToString());
+                Environment.ExitCode = 1;
             }
         }
     }
