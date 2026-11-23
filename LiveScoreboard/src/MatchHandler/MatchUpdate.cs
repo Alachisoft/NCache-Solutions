@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+// ScoreUpdateController.cs constructs MatchUpdate in StartMatch.
 namespace MatchHandler
 {
     [Serializable]

@@ -34,6 +34,7 @@ namespace LiveScoreLeaderboard.SignalR
         /// <returns></returns>
         public async Task SendUpdate(MatchUpdate update)
         {
+            // MatchUpdate goes to every connection on the hub. Subscribing to a match in NCache does not scope this SignalR broadcast.
             await Clients.All.SendAsync("MatchUpdate", new JsonResult(update));
         }
     }
