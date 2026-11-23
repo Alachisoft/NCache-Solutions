@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
+// NotifyCustomDependencyProvider.cs constructs CosmosDbNotificationDependency in CreateDependency.
 namespace Alachisoft.NCache.Samples
 {
     // The CosmosDbNotificationDependency class implements NotifyExtensibleDependency and provides

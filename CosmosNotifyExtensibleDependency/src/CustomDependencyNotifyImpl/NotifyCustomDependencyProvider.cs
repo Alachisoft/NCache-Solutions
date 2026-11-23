@@ -84,6 +84,7 @@ namespace Alachisoft.NCache.Samples
                 }
             }
 
+            // The monitored collection supplies the change feed. The lease collection tracks processor progress and has its own connection settings.
             return new CosmosDbNotificationDependency(
                 parameters["Key"],
                 parameters["CacheId"],

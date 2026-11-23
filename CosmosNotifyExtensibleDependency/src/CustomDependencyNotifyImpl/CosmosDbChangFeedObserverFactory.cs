@@ -15,6 +15,7 @@
 using Microsoft.Azure.Documents.ChangeFeedProcessor.FeedProcessing;
 using System;
 
+// CosmosDbNotificationDependency.cs constructs CosmosDbChangFeedObserverFactory in CreateChangeFeedProcessor.
 namespace Alachisoft.NCache.Samples
 {
     // The change feed observer factory that will be used to create the change feed observers

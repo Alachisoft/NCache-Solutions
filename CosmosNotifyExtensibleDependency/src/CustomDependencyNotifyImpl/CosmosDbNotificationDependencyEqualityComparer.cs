@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 
+// CosmosDbNotificationDependency.cs constructs CosmosDbNotificationDependencyEqualityComparer.
 namespace Alachisoft.NCache.Samples
 {
     // The CosmosDbNotificationDependencyEqualityComparer is used to compare the dependency instances added to the 

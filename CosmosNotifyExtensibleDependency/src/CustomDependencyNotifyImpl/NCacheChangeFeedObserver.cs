@@ -20,6 +20,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+// CosmosDbChangFeedObserverFactory.cs constructs NCacheChangeFeedObserver in CreateObserver.
 namespace Alachisoft.NCache.Samples
 {
     // The NCacheChangeFeedObserver is used to process changes in the monitored collection
